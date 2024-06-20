@@ -1,22 +1,63 @@
 ---
 import { Image } from "astro:assets";
 import GridItem from "../bento/Item.astro";
-import ProfileImg from "../../assets/profile.jpg";
+import ProfileImg from "/src/assets/profile.jpg";
+import GithubIcon from "../icon/github";
+import LinkedinIcon from "../icon/linkedin";
+import DiscordIcon from "../icon/discord";
+import DevToIcon from "../icon/devto";
+
+const socials = [
+  {
+    href: "https://github.com/manethpak",
+    icon: GithubIcon,
+  },
+  {
+    href: "https://www.linkedin.com/in/maneth-pak",
+    icon: LinkedinIcon,
+  },
+  {
+    href: "https://dev.to/manethpak",
+    icon: DevToIcon,
+  },
+  {
+    href: "https://discordapp.com/users/304261357979566081",
+    icon: DiscordIcon,
+  },
+];
 ---
 
 <GridItem
   className="justify-between gap-4 flex-col-reverse md:flex-row"
-  rowSpan="row-span-3"
+  rowSpan="row-span-4 md:row-span-3"
   colSpan="col-span-1 sm:col-span-2 lg:col-span-3"
 >
-  <div>
-    <p class="text-lg">Hi there!</p>
-    <h1 class="text-2xl">
-      I'm <span class="font-bold">Maneth</span>, Software Engineer.
-    </h1>
-    <p class="text-lg mt-2">
-      Experienced in designing, developing and delivering software products.
-    </p>
+  <div class="flex flex-col gap-4 justify-between">
+    <div>
+      <p class="text-lg">Hi there!</p>
+      <h1 class="text-2xl">
+        I'm <span class="font-bold">Maneth</span>, Software Engineer.
+      </h1>
+      <p class="text-lg mt-2">
+        Experienced in designing, developing and delivering software products.
+        Curious and Passionate. Love to learn and try new things, especially
+        foods and technologies.
+      </p>
+    </div>
+
+    <div class="flex gap-4 items-end w-full mt-2">
+      {
+        socials.map(({ href, icon: Icon }) => (
+          <a
+            href={href}
+            target="_blank"
+            class="border-2 p-2 rounded-lg border-neutral-300 flex items-center justify-center hover:-translate-y-1 transition-all duration-300 aspect-square hover:shadow-lg hover:shadow-white/20"
+          >
+            <Icon className="w-8 h-8" />
+          </a>
+        ))
+      }
+    </div>
   </div>
 
   <div class="rounded-xl max-w-[300px] overflow-hidden self-end md:self-center">
