@@ -1,0 +1,30 @@
+---
+import { Image } from "astro:assets";
+import GridItem from "../bento/Item.astro";
+import ProfileImg from "../../assets/profile.jpg";
+---
+
+<GridItem
+  className="justify-between gap-4 flex-col-reverse md:flex-row"
+  rowSpan="row-span-3"
+  colSpan="col-span-1 sm:col-span-2 lg:col-span-3"
+>
+  <div>
+    <p class="text-lg">Hi there!</p>
+    <h1 class="text-2xl">
+      I'm <span class="font-bold">Maneth</span>, Software Engineer.
+    </h1>
+    <p class="text-lg mt-2">
+      Experienced in designing, developing and delivering software products.
+    </p>
+  </div>
+
+  <div class="rounded-xl max-w-[300px] overflow-hidden self-end md:self-center">
+    <Image
+      loading="eager"
+      src={ProfileImg}
+      alt="Profile"
+      class="object-contain object-top"
+    />
+  </div>
+</GridItem>

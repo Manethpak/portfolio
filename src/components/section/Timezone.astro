@@ -1,0 +1,42 @@
+---
+import { IconClock, IconMapPin } from "@tabler/icons-react";
+import GridItem from "../bento/Item.astro";
+---
+
+<script>
+  function updateTime() {
+    const timeElement = document.getElementById("time");
+
+    // Calculate the current time in UTC+7
+    const utcPlus7 = new Date(new Date().getTime() + 7 * 60 * 60 * 1000);
+
+    // Format the time as HH:MM:SS
+    const hours = String(utcPlus7.getUTCHours()).padStart(2, "0");
+    const minutes = String(utcPlus7.getUTCMinutes()).padStart(2, "0");
+    const seconds = String(utcPlus7.getUTCSeconds()).padStart(2, "0");
+
+    // Display the time
+    timeElement.textContent = `${hours}:${minutes}:${seconds}`;
+  }
+
+  // Update the time every second
+  setInterval(updateTime, 1000);
+
+  // Initial call to display the time immediately when the page loads
+  updateTime();
+</script>
+
+<GridItem className="p-4">
+  <div class="flex flex-col justify-evenly">
+    <h2 class="text-xl font-bold">Timezone</h2>
+    <div class="flex items-center gap-1">
+      <IconMapPin className="w-4 h-4" />
+      <p>Phnom Penh, Cambodia</p>
+    </div>
+    <div class="flex items-center gap-1">
+      <IconClock className="w-4 h-4" />
+      <time id="time" class="w-16"></time>
+      <span id="timezone">UTC+7</span>
+    </div>
+  </div>
+</GridItem>

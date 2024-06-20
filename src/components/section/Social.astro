@@ -1,0 +1,47 @@
+---
+import GithubIcon from "../icon/github";
+import LinkedinIcon from "../icon/linkedin";
+import DiscordIcon from "../icon/discord";
+import DevToIcon from "../icon/devto";
+
+import GridItem from "../bento/Item.astro";
+
+const socials = [
+  {
+    name: "GitHub",
+    href: "https://github.com/manethpak",
+    icon: GithubIcon,
+  },
+  {
+    name: "LinkedIn",
+    href: "https://www.linkedin.com/in/maneth-pak",
+    icon: LinkedinIcon,
+  },
+  {
+    name: "Dev.to",
+    href: "https://dev.to/manethpak",
+    icon: DevToIcon,
+  },
+  {
+    name: "Discord",
+    href: "https://discordapp.com/users/304261357979566081",
+    icon: DiscordIcon,
+  },
+];
+---
+
+<GridItem className="p-4">
+  <div class="flex justify-around items-center w-full h-full">
+    {
+      socials.map(({ name, href, icon: Icon }) => (
+        <a
+          href={href}
+          target="_blank"
+          class="border-2 p-2 rounded-lg border-neutral-300 flex items-center justify-center hover:-translate-y-1 transition-all duration-300 aspect-square hover:shadow-lg hover:shadow-white/20"
+        >
+          <Icon className="w-8 h-8" />
+        </a>
+      ))
+    }
+  </div>
+</GridItem>
