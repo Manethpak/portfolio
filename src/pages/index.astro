@@ -6,8 +6,17 @@ import {
   IntroSection,
   TimezoneSection,
   ContactSection,
+  AboutMeSection,
+  ExperienceSection,
+  CreditSection,
 } from "../components/section";
 ---
+
+<style is:global>
+  h2 {
+    @apply text-lg font-bold;
+  }
+</style>
 
 <script>
   import { stagger, spring, timeline, type TimelineDefinition } from "motion";
@@ -38,13 +47,17 @@ import {
       <IntroSection />
       <TimezoneSection />
       <ContactSection />
-
-      <GridItem className="sm:row-span-2" />
-      <GridItem className="sm:col-span-2" />
-      <GridItem className="sm:row-span-3" />
-      <GridItem className="sm:col-span-2" />
-      <GridItem className="sm:col-span-2" />
-      <GridItem className="sm:col-span-1" />
+      <AboutMeSection />
+      <ExperienceSection />
+      <GridItem rowSpan="row-span-2" colSpan="sm:col-span-2">
+        🚧 Site Under construction 🚧
+      </GridItem>
+      <GridItem className="p-0">
+        <a href="/article" class="w-full cursor-pointer p-4">
+          <h2>My Article</h2>
+        </a>
+      </GridItem>
+      <CreditSection />
     </Grid>
   </main>
 </Layout>

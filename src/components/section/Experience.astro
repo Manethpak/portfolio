@@ -1,0 +1,48 @@
+---
+import GridItem from "../bento/Item.astro";
+---
+
+<style>
+  h3 {
+    @apply text-lg font-medium;
+  }
+  h4 {
+    @apply italic mt-1;
+  }
+  time {
+    @apply text-sm;
+  }
+</style>
+
+<GridItem
+  className="p-4"
+  colSpan="lg:col-span-2 xl:col-span-1"
+  rowSpan="row-span-3 lg:row-span-2 xl:row-span-3"
+>
+  <div class="space-y-[10px] w-full">
+    <h2 class="text-lg font-bold">Experience</h2>
+    <div>
+      <h3>Dreamslab</h3>
+      <h4>Chief Technology Officer</h4>
+      <time>Apr 2024 - Present</time>
+      <h4>Lead Software Engineer</h4>
+      <time>Feb 2023 - Apr 2024</time>
+    </div>
+
+    <div>
+      <h3>GOGO Food delivery</h3>
+      <h4>Lead Frontend Developer</h4>
+      <time>Apr 2024 - Present</time>
+    </div>
+
+    <div>
+      <h3>MangoByte</h3>
+      <h4>Web developer intern</h4>
+      <time>Jun 2022 - Oct 2022</time>
+    </div>
+
+    <a href="/experience" class="flex justify-end w-full">
+      <button class="underline">Read more >>></button>
+    </a>
+  </div>
+</GridItem>

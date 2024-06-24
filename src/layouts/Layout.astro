@@ -1,4 +1,6 @@
 ---
+import { ViewTransitions } from "astro:transitions";
+
 interface Props {
   title: string;
   desc: string;
@@ -15,10 +17,11 @@ const { title, desc } = Astro.props;
     <link rel="icon" type="image/jpeg" href="/icon.jpg" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
+    <ViewTransitions />
   </head>
-  <body class="bg-neutral-900 bg-grid-white/10">
+  <body class="bg-neutral-900 bg-grid-white/10 text-neutral-300">
     <div
-      class="fixed pointer-events-none bottom-0 inset-0 flex items-center justify-center bg-black [mask-image:linear-gradient(transparent,#fff)]"
+      class="fixed pointer-events-none bottom-0 inset-0 flex items-center justify-center bg-black [mask-image:linear-gradient(transparent,#fff)] -z-10"
     >
     </div>
     <slot />

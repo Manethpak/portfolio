@@ -1,0 +1,11 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { fade } from "astro:transitions";
+---
+
+<Layout
+  title="Experience"
+  desc="More about Maneth experience as a software engineer."
+>
+  <h1 transition:animate={fade({ duration: "0.4s" })}>Experience</h1>
+</Layout>
