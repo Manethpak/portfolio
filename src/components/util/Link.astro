@@ -1,0 +1,14 @@
+---
+import { cn } from "../../helper/cn";
+
+export interface Props extends astroHTML.JSX.AnchorHTMLAttributes {}
+
+const { class: className = "", ...props } = Astro.props;
+---
+
+<a
+  {...props}
+  class={cn("underline hover:opacity-90 transition-colors", className)}
+>
+  <slot />
+</a>
