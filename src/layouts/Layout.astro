@@ -24,6 +24,8 @@ const { title, desc } = Astro.props;
       class="fixed pointer-events-none bottom-0 inset-0 flex items-center justify-center bg-black [mask-image:linear-gradient(transparent,#fff)] -z-10"
     >
     </div>
-    <slot />
+    <main class="p-10 max-w-6xl mx-auto">
+      <slot />
+    </main>
   </body>
 </html>

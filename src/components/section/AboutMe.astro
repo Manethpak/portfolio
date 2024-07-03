@@ -4,23 +4,29 @@ import Link from "../util/Link.astro";
 ---
 
 <GridItem className="p-4" rowSpan="row-span-3">
-  <div class="space-y-2 text-sm">
-    <h2 class="text-lg font-bold">More about me</h2>
+  <div class="flex flex-col justify-between">
+    <div class="space-y-2 text-sm">
+      <h2 class="text-lg font-bold">More about me</h2>
 
-    <p>
-      Graduated with a degree in Software Engineering in 2023, currently serving
-      as the CTO at
-      <Link href="https://dreamslab.dev" target="_blank">dreamslab</Link>.
-    </p>
-    <p>
-      Beyond coding, I find myself enjoying online games, R&B music, reading
-      fiction story and trying out new food. I also like to gym or in-door
-      bouldering with friends.
-    </p>
-    <p>
-      While I have some preferred tools for my work. I'm always open to
-      exploring new tech and challenge, and is not afraid to try and use the
-      best tools for the job.
-    </p>
+      <p>
+        Graduated with a degree in Software Engineering in 2023, currently
+        serving as the CTO at
+        <Link href="https://dreamslab.dev" target="_blank">dreamslab</Link>.
+      </p>
+      <p>
+        Beyond coding, I find myself enjoying online games, R&B music, reading
+        fiction story and trying out new food. I also like to gym or in-door
+        bouldering with friends.
+      </p>
+      <p>
+        While I have some preferred tools for my work. I'm always open to
+        exploring new tech and challenge, and is not afraid to try and use the
+        best tools for the job.
+      </p>
+    </div>
+
+    <Link href="/experience" class="flex justify-end w-full">
+      Read more >>>
+    </Link>
   </div>
 </GridItem>

@@ -1,0 +1,18 @@
+---
+import { IconChevronLeft } from "@tabler/icons-react";
+import Link from "../components/util/Link.astro";
+import Layout from "./Layout.astro";
+
+export interface Props {
+  title: string;
+  desc: string;
+}
+---
+
+<Layout {...Astro.props}>
+  <Link href="/" class="flex items-center no-underline w-fit">
+    <IconChevronLeft className="w-6 h-6" />
+    <span> Back </span>
+  </Link>
+  <slot />
+</Layout>

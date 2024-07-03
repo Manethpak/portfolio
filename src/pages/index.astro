@@ -10,6 +10,13 @@ import {
   ExperienceSection,
   CreditSection,
 } from "../components/section";
+import { IconArrowUpRight } from "@tabler/icons-react";
+
+const links = [
+  { title: "Skills and Tools", href: "/skill-and-tool" },
+  { title: "Projects", href: "/project" },
+  { title: "Articles", href: "/article" },
+];
 ---
 
 <style is:global>
@@ -22,42 +29,55 @@ import {
   import { stagger, spring, timeline, type TimelineDefinition } from "motion";
   const cards = document.querySelectorAll(".card");
 
-  const sequence = [
+  const isFirefox = navigator.userAgent.toLowerCase().indexOf("firefox") > -1;
+
+  const sequence: TimelineDefinition = [
     [
       cards,
       { y: ["40%", "0%"], opacity: [0, 1] },
       {
         at: "-0.1",
         duration: 0.4,
-        delay: stagger(0.3),
+        delay: stagger(0.3, { easing: "ease-in" }),
         easing: spring({ velocity: 100, stiffness: 50, damping: 10 }),
       },
     ],
   ];
 
-  timeline(sequence as TimelineDefinition);
+  // Firefox doesn't support timeline
+  // if (!isFirefox) timeline(sequence);
 </script>
 
 <Layout
   title="About Maneth"
   desc="A website about Maneth, your family friendly software engineer based in Cambodia."
 >
-  <main class="p-10">
-    <Grid>
-      <IntroSection />
-      <TimezoneSection />
-      <ContactSection />
-      <AboutMeSection />
-      <ExperienceSection />
-      <GridItem rowSpan="row-span-2" colSpan="sm:col-span-2">
-        🚧 Site Under construction 🚧
-      </GridItem>
-      <GridItem className="p-0">
-        <a href="/article" class="w-full cursor-pointer p-4">
-          <h2>My Article</h2>
-        </a>
-      </GridItem>
-      <CreditSection />
-    </Grid>
-  </main>
+  <Grid>
+    <IntroSection />
+    <TimezoneSection />
+    <ContactSection />
+    <AboutMeSection />
+    <ExperienceSection />
+
+    {
+      links.map((link) => (
+        <GridItem className="p-0 group">
+          <a
+            href={link.href}
+            class="w-full cursor-pointer p-4 h-full flex flex-col justify-between"
+          >
+            <h2>{link.title}</h2>
+            <div class="self-end items-end">
+              <IconArrowUpRight
+                size={32}
+                className="group-hover:-translate-y-2 transition delay-75"
+              />
+            </div>
+          </a>
+        </GridItem>
+      ))
+    }
+
+    <CreditSection />
+  </Grid>
 </Layout>
