@@ -10,8 +10,11 @@ export interface Props {
 ---
 
 <Layout {...Astro.props}>
-  <Link href="/" class="flex items-center no-underline w-fit">
-    <IconChevronLeft className="w-6 h-6" />
+  <Link
+    href="/"
+    class="flex items-center no-underline w-fit px-4 py-2 rounded-xl border-white/20 bg-neutral-800 border transition duration-200 hover:border-white/40"
+  >
+    <IconChevronLeft size={18} />
     <span> Back </span>
   </Link>
   <slot />

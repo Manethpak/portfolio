@@ -1,10 +1,48 @@
 ---
 import ExtraLayout from "../layouts/ExtraLayout.astro";
+import Grid from "../components/bento/Grid.astro";
+import GridItem from "../components/bento/Item.astro";
 ---
+
+<style>
+  h2 {
+    @apply text-2xl font-semibold;
+  }
+  h3 {
+    @apply text-xl italic;
+  }
+  time {
+    @apply text-sm text-neutral-300;
+  }
+  p {
+    @apply text-neutral-300;
+  }
+</style>
 
 <ExtraLayout
   title="Maneth | Experience"
   desc="More about my experience as a software engineer."
 >
-  <h1>🚧Under construction🚧</h1>
+  <section id="experience" class="max-w-2xl mx-auto">
+    <h1 class="text-4xl font-semibold my-4">Profesional Experience</h1>
+    <Grid className="grid-cols-1">
+      <GridItem className="flex-col gap-2 row-span-3">
+        <h2>Workplace</h2>
+        <div>
+          <h3>Position</h3>
+          <time>timeframe</time>
+          <p>description</p>
+        </div>
+        <div>
+          <h3>Position</h3>
+          <time>timeframe</time>
+          <p>description</p>
+        </div>
+      </GridItem>
+      <GridItem> My latest experience goes here </GridItem>
+      <GridItem> My latest experience goes here </GridItem>
+      <GridItem> My latest experience goes here </GridItem>
+      <GridItem> My latest experience goes here </GridItem>
+    </Grid>
+  </section>
 </ExtraLayout>
