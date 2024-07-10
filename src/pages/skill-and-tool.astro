@@ -1,10 +1,74 @@
 ---
 import ExtraLayout from "../layouts/ExtraLayout.astro";
+import Grid from "../components/bento/Grid.astro";
+import GridItem from "../components/bento/Item.astro";
 ---
+
+<style>
+  h2 {
+    @apply text-2xl font-semibold;
+  }
+  h3 {
+    @apply text-xl italic;
+  }
+  time {
+    @apply text-sm text-neutral-300;
+  }
+  p {
+    @apply text-neutral-300;
+  }
+  ul {
+    @apply list-disc list-inside;
+  }
+</style>
 
 <ExtraLayout
   title="Maneth | Skill and Tool"
   desc="More about my skills, certifications and preferred tools"
 >
-  <h1>🚧Under construction🚧</h1>
+  <section>
+    <h1 class="text-4xl font-semibold my-4">My skills and tools</h1>
+    <Grid className="grid-cols-2">
+      <GridItem className="flex-col gap-2" rowSpan="row-span-3">
+        <h2>Skills</h2>
+        <p>
+          I have a strong background in software engineering, with a focus on
+          building scalable and maintainable applications. I had learn and
+          experience with a variety of programming languages, including:
+        </p>
+        <ul>
+          <li>Obviously, HTML and CSS</li>
+          <li>JavaScript</li>
+          <li>Python</li>
+          <li>TypeScript</li>
+          <li>Go</li>
+        </ul>
+        <p>
+          Beside the programming languages, I also have experience working with
+          databases, APIs, and cloud services.
+        </p>
+      </GridItem>
+      <GridItem className="flex-col gap-2" rowSpan="row-span-3">
+        <h2>Frameworks & Libraries</h2>
+        <p>
+          When building software, frameworks and libraries are essential to
+          speed up development and ensure code quality. Throughout my years of
+          programming, I have used a variety of frameworks and libraries,
+          including:
+        </p>
+        <ul class="list-disc list-inside">
+          <li>SPA - React, Vue, Svelte</li>
+          <li>SSR - Next.js, Nuxt</li>
+          <li>SSG - Astro</li>
+          <li>TypeScript</li>
+          <li>Go</li>
+          <li>PHP</li>
+        </ul>
+        <p>
+          Beside the programming languages, I also have experience working with
+          databases, APIs, and cloud services.
+        </p>
+      </GridItem>
+    </Grid>
+  </section>
 </ExtraLayout>

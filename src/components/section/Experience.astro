@@ -1,6 +1,5 @@
 ---
 import GridItem from "../bento/Item.astro";
-import Link from "../util/Link.astro";
 ---
 
 <style>
@@ -8,7 +7,7 @@ import Link from "../util/Link.astro";
     @apply text-lg font-medium;
   }
   h4 {
-    @apply italic mt-1;
+    @apply italic mt-1 capitalize;
   }
   time {
     @apply text-sm;
@@ -22,13 +21,13 @@ import Link from "../util/Link.astro";
       <h3>Dreamslab</h3>
       <h4>Chief Technology Officer</h4>
       <time>Apr 2024 - Present</time>
-      <h4>Lead Software Engineer</h4>
+      <h4>Lead software engineer</h4>
       <time>Feb 2023 - Apr 2024</time>
     </div>
 
     <div>
       <h3>Non-disclosure Client</h3>
-      <h4>Lead frontend developer</h4>
+      <h4>Frontend developer</h4>
       <time>Apr 2022 - Nov 2022</time>
     </div>
 
@@ -37,9 +36,5 @@ import Link from "../util/Link.astro";
       <h4>Web developer intern</h4>
       <time>Jun 2021 - Oct 2021</time>
     </div>
-
-    <Link href="/experience" class="flex justify-end w-full">
-      Read more >>>
-    </Link>
   </div>
 </GridItem>

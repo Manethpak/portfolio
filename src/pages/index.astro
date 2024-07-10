@@ -17,6 +17,8 @@ const links = [
   { title: "Projects", href: "/project" },
   { title: "Articles", href: "/article" },
 ];
+
+export const prerender = true;
 ---
 
 <style is:global>
@@ -44,13 +46,13 @@ const links = [
     ],
   ];
 
-  // Firefox doesn't support timeline
+  // Doesn't support firefox
   if (!isFirefox) timeline(sequence);
 </script>
 
 <Layout
   title="Pak Maneth | Software Engineer"
-  desc="A website about Maneth, your average software engineer based in Cambodia."
+  desc="A website about Maneth, your average software engineer."
 >
   <Grid className="sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
     <IntroSection />
