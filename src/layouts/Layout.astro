@@ -1,12 +1,8 @@
 ---
 import { ViewTransitions } from "astro:transitions";
+import type Props from "./props.type";
 
-interface Props {
-  title: string;
-  desc: string;
-}
-
-const { title, desc } = Astro.props;
+const { title, desc, meta } = Astro.props;
 ---
 
 <html lang="en">
@@ -16,6 +12,13 @@ const { title, desc } = Astro.props;
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/jpeg" href="/icon.jpg" />
     <meta name="generator" content={Astro.generator} />
+    <!-- Custom meta tags for the website -->
+    {
+      meta &&
+        Object.entries(meta).map(([key, value]) => (
+          <meta name={key} content={value} />
+        ))
+    }
     <!-- import the umami script on production only -->
     {
       import.meta.env.PROD && (
