@@ -1,7 +1,18 @@
 ---
 import ExtraLayout from "../layouts/ExtraLayout.astro";
+<<<<<<< Updated upstream
 import Grid from "../components/bento/Grid.astro";
 import GridItem from "../components/bento/Item.astro";
+=======
+
+import Grid from "../components/bento/Grid.astro";
+import GridItem from "../components/bento/Item.astro";
+import type { Article } from "../types/article.type";
+import { Image } from "astro:assets";
+
+const data = await fetch(`https://dev.to/api/articles?username=manethpak`);
+const articles: Article[] = await data.json();
+>>>>>>> Stashed changes
 ---
 
 <style>
@@ -29,10 +40,36 @@ import GridItem from "../components/bento/Item.astro";
   title="Maneth | Blogs"
   desc="Technical and non-technical Blogs by me"
 >
+<<<<<<< Updated upstream
   <section>
     <h1 class="text-4xl font-semibold my-4">Articles and Blogs</h1>
     <Grid className="grid-cols-2">
       <GridItem className="flex-col gap-2" rowSpan="row-span-3" />
     </Grid>
   </section>
+=======
+  <h1 class="text-4xl font-semibold my-4">My skills and tools</h1>
+  <Grid className="grid-cols-2 gap-4">
+    {
+      articles.map((article) => {
+        return (
+          <a href={article.slug} class="row-span-3">
+            <GridItem className="flex-col gap-2">
+              {article.cover_image && (
+                <Image
+                  inferSize
+                  src={article.cover_image}
+                  alt={article.title}
+                  class="object-contain object-center rounded-lg"
+                />
+              )}
+              <h2 class="text-xl font-semibold">{article.title}</h2>
+              <p>{article.description}</p>
+            </GridItem>
+          </a>
+        );
+      })
+    }
+  </Grid>
+>>>>>>> Stashed changes
 </ExtraLayout>
