@@ -26,6 +26,11 @@ export interface Article {
   user: User;
 }
 
+export interface DetailArticle extends Article {
+  body_html: string;
+  body_markdown: string;
+}
+
 export interface User {
   name: string;
   username: string;
