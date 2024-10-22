@@ -1,0 +1,55 @@
+---
+import ExtraLayout from "../../layouts/ExtraLayout.astro";
+import type { DetailArticle } from "../../types/article.type";
+import GridItem from "../../components/bento/Item.astro";
+import { formatDate } from "../../helper/formatDate";
+import { Image } from "astro:assets";
+import { JSDOM } from "jsdom";
+
+const { slug } = Astro.params;
+
+const data = await fetch(`https://dev.to/api/articles/manethpak/${slug}`);
+const article = (await data.json()) as DetailArticle;
+
+// Remove SVG from HTML string
+function parsedHtml(htmlString: string) {
+  const dom = new JSDOM(htmlString);
+  const document = dom.window.document;
+
+  const svgElements = document.querySelectorAll("svg");
+  svgElements.forEach((svg) => svg.remove());
+
+  return dom.serialize();
+}
+
+export const prerender = false;
+---
+
+<ExtraLayout title={article.title} desc={article.description}>
+  <GridItem className="mt-10">
+    <article
+      class="prose prose-neutral prose-invert font-mono w-full max-w-none"
+    >
+      {
+        article.cover_image && (
+          <Image
+            src={article.cover_image}
+            alt={article.title}
+            width={1038}
+            height={400}
+            class="rounded-lg object-cover object-center"
+          />
+        )
+      }
+      <h1 class="text-4xl font-bold">{article.title}</h1>
+      <time class="">{formatDate(article.published_at)}</time>
+      <Fragment set:html={parsedHtml(article.body_html)} />
+    </article>
+  </GridItem>
+</ExtraLayout>
+
+<style>
+  svg {
+    display: none;
+  }
+</style>

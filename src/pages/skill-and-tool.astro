@@ -32,6 +32,9 @@ const certifications = [
 ---
 
 <style>
+  h1 {
+    @apply text-4xl font-semibold my-4;
+  }
   h2 {
     @apply text-2xl font-semibold;
   }
@@ -54,7 +57,7 @@ const certifications = [
   desc="More about my skills, certifications and preferred tools"
 >
   <section>
-    <h1 class="text-4xl font-semibold my-4">My skills and tools</h1>
+    <h1>My skills and tools</h1>
     <Grid className="grid-cols-2">
       <GridItem className="flex-col gap-2" rowSpan="row-span-3">
         <h2>Skills</h2>
@@ -83,18 +86,16 @@ const certifications = [
           programming, I have used a variety of frameworks and libraries,
           including:
         </p>
-        <ul class="list-disc list-inside">
+        <ul>
           <li>SPA - React, Vue, Svelte</li>
           <li>SSR - Next.js, Nuxt</li>
           <li>SSG - Astro</li>
-          <li>TypeScript</li>
-          <li>Go</li>
-          <li>PHP</li>
+          <li>Client libraries - Tanstack Query, SWR, Jotai, etc.</li>
+          <li>Server API - NestJS, FastAPI</li>
+          <li>Database - MongoDB, PostgreSQL, Redis</li>
+          <li>Cloud - Digital Ocean, AWS, Vercel</li>
+          <li>Tools - Git, VSCode, Docker, Postman, etc.</li>
         </ul>
-        <p>
-          Beside the programming languages, I also have experience working with
-          databases, APIs, and cloud services.
-        </p>
       </GridItem>
       <GridItem className="flex-col gap-2" rowSpan="row-span-2">
         <h2>Certifications</h2>
