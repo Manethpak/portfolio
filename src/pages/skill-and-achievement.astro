@@ -2,33 +2,7 @@
 import ExtraLayout from "../layouts/ExtraLayout.astro";
 import Grid from "../components/bento/Grid.astro";
 import GridItem from "../components/bento/Item.astro";
-
-const certifications = [
-  {
-    name: "Web Application and Software Architecture 101",
-    url: "https://www.educative.io/verify-certificate/02Gkvk3prQ1uY6onwD9GZJconY0NBgPkgsP",
-    issuedBy: "Educative, Inc.",
-    issuedAt: "2023/03",
-  },
-  {
-    name: "AWS Cloud Quest: Cloud Practitioner",
-    url: "https://www.credly.com/badges/c3dc1213-4830-425e-a289-c19c1773b209/linked_in_profile",
-    issuedBy: "AWS",
-    issuedAt: "2022/09",
-  },
-  {
-    name: "The Road to React: The One with Hooks",
-    url: "https://www.educative.io/verify-certificate/JZmo10Cy1JGv82YypckAXqW82E62C3",
-    issuedBy: "Educative, Inc.",
-    issuedAt: "2022/05",
-  },
-  {
-    name: "Become a Front End Developer",
-    url: "https://www.educative.io/verify-certificate/487B21t6BlRxKORXyc3y0p8oP2mPHG",
-    issuedBy: "Educative, Inc.",
-    issuedAt: "2022/04",
-  },
-];
+import { CERTS, TOOLS, ACHIEVEMENTS } from "../constants";
 ---
 
 <style>
@@ -53,8 +27,8 @@ const certifications = [
 </style>
 
 <ExtraLayout
-  title="Maneth | Skill and Tool"
-  desc="More about my skills, certifications and preferred tools"
+  title="Maneth | Skill and achievement"
+  desc="More about my skills, certifications, achievements and preferred tools"
 >
   <section>
     <h1>My skills and tools</h1>
@@ -87,21 +61,22 @@ const certifications = [
           including:
         </p>
         <ul>
-          <li>SPA - React, Vue, Svelte</li>
-          <li>SSR - Next.js, Nuxt</li>
-          <li>SSG - Astro</li>
-          <li>Client libraries - Tanstack Query, SWR, Jotai, etc.</li>
-          <li>Server API - NestJS, FastAPI</li>
-          <li>Database - MongoDB, PostgreSQL, Redis</li>
-          <li>Cloud - Digital Ocean, AWS, Vercel</li>
-          <li>Tools - Git, VSCode, Docker, Postman, etc.</li>
+          {
+            Object.entries(TOOLS).map(([category, tools]) => {
+              return (
+                <li class="flex flex-col gap-2">
+                  {category} - {tools.join(", ")}
+                </li>
+              );
+            })
+          }
         </ul>
       </GridItem>
       <GridItem className="flex-col gap-2" rowSpan="row-span-2">
         <h2>Certifications</h2>
         <ul class="flex flex-col gap-2">
           {
-            certifications.map(({ name, url, issuedBy, issuedAt }) => {
+            CERTS.map(({ name, url, issuedBy, issuedAt }) => {
               return (
                 <li class="flex flex-col w-fit">
                   <a href={url} class="underline">
@@ -116,9 +91,22 @@ const certifications = [
           }
         </ul>
       </GridItem>
-      <GridItem className="flex-col gap-2">
+      <GridItem className="flex-col gap-2" rowSpan="row-span-2">
         <h2>Achivements</h2>
-        <p>Staying alive.</p>
+        <ul class="flex flex-col gap-2">
+          {
+            ACHIEVEMENTS.map(({ name, organizedBy, issuedAt }) => {
+              return (
+                <li class="flex flex-col w-fit">
+                  <p class="font-semibold">{name}</p>
+                  <time>
+                    Organized by {organizedBy} on {issuedAt}
+                  </time>
+                </li>
+              );
+            })
+          }
+        </ul>
       </GridItem>
     </Grid>
   </section>
