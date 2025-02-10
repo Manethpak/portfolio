@@ -1,16 +1,18 @@
 ---
-import GridItem from "../bento/Item.astro";
 import Link from "../util/Link.astro";
 ---
 
-<GridItem className=" flex-col items-center justify-center text-center text-sm">
+<div
+  class="flex flex-col items-center justify-center py-8 text-sm text-neutral-400"
+>
   <p>
-    © 2024 · Design and crafted with ❤️ by
+    © 2025 · Design and crafted with ❤️ by
     <Link target="_blank" href="https://github.com/manethpak"> Maneth. </Link>
   </p>
   <p>
     Powered by
-
-    <Link target="_blank" href="https://astro.build/"> Astro </Link>
+    <Link target="_blank" href="https://astro.build/">Astro</Link>
+    <span>&</span>
+    <Link target="_blank" href="https://vercel.com">Vercel</Link>
   </p>
-</GridItem>
+</div>

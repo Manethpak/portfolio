@@ -1,5 +1,5 @@
 ---
-import { IconArrowLeft } from "@tabler/icons-react";
+import { ArrowLeftIcon } from "astro-feather";
 import Layout from "../layouts/Layout.astro";
 import Button from "../components/util/Button.astro";
 ---
@@ -43,7 +43,7 @@ import Button from "../components/util/Button.astro";
 
       <div class="flex justify-center gap-4">
         <Button onclick="window.history.back()">
-          <IconArrowLeft className="mr-2 h-5 w-5" />
+          <ArrowLeftIcon customClasses="mr-2" size={20} />
           Go Back
         </Button>
 

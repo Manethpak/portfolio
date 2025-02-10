@@ -1,5 +1,6 @@
 ---
 import GridItem from "../bento/Item.astro";
+const { rowSpan, colSpan } = Astro.props;
 ---
 
 <style>
@@ -14,7 +15,7 @@ import GridItem from "../bento/Item.astro";
   }
 </style>
 
-<GridItem className="p-4" rowSpan="row-span-3">
+<GridItem className="p-4" colSpan={colSpan} rowSpan={rowSpan}>
   <div class="space-y-[10px] w-full">
     <h2 class="text-lg font-bold">Experience</h2>
     <div>
