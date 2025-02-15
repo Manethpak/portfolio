@@ -1,6 +1,4 @@
 ---
-import { IconChevronLeft } from "@tabler/icons-react";
-import Link from "../components/util/Link.astro";
 import Layout from "./Layout.astro";
 import type Props from "./props.type";
 
@@ -8,12 +6,5 @@ const props = Astro.props;
 ---
 
 <Layout {...props}>
-  <button
-    onclick="window.history.back()"
-    class="flex items-center no-underline w-fit px-4 py-2 rounded-xl border-white/20 bg-neutral-800 border transition duration-200 hover:border-white/40"
-  >
-    <IconChevronLeft size={18} />
-    <span> Back </span>
-  </button>
   <slot />
 </Layout>

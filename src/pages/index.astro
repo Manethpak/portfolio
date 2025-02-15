@@ -1,7 +1,7 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import Grid from "../components/bento/Grid.astro";
-import GridItem from "../components/bento/Item.astro";
+import Layout from "@/layouts/Layout.astro";
+import Grid from "@/components/bento/Grid.astro";
+import GridItem from "@/components/bento/Item.astro";
 import {
   IntroSection,
   TimezoneSection,
@@ -10,7 +10,7 @@ import {
   ExperienceSection,
   CreditSection,
 } from "../components/section";
-import { IconArrowUpRight } from "@tabler/icons-react";
+import { ArrowUpRightIcon } from "astro-feather";
 
 const links = [
   { title: "Skills and Tools", href: "/skill-and-tool" },
@@ -70,9 +70,9 @@ export const prerender = true;
           >
             <h2>{link.title}</h2>
             <div class="self-end items-end">
-              <IconArrowUpRight
+              <ArrowUpRightIcon
                 size={32}
-                className="group-hover:-translate-y-2 transition delay-75"
+                customClasses="group-hover:-translate-y-2 transition delay-75"
               />
             </div>
           </a>

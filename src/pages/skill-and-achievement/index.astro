@@ -1,0 +1,128 @@
+---
+import ExtraLayout from "@/layouts/ExtraLayout.astro";
+import Grid from "@/components/bento/Grid.astro";
+import GridItem from "@/components/bento/Item.astro";
+import { CERTS, TOOLS, ACHIEVEMENTS } from "@/constants";
+import { ChevronLeftIcon } from "astro-feather";
+---
+
+<style>
+  h1 {
+    @apply text-3xl font-semibold;
+  }
+  h2 {
+    @apply text-2xl font-semibold;
+  }
+  h3 {
+    @apply text-xl italic;
+  }
+  time {
+    @apply text-sm text-neutral-300/60;
+  }
+  p {
+    @apply text-neutral-200/80;
+  }
+  ul {
+    @apply list-disc list-inside;
+  }
+</style>
+
+<ExtraLayout
+  title="Maneth | Skill and achievement"
+  desc="More about my skills, certifications, achievements and preferred tools"
+>
+  <section>
+    <Grid className="auto-rows-auto">
+      <GridItem>
+        <div class="my-2">
+          <div class="flex items-center gap-4">
+            <button onclick="window.history.back()">
+              <ChevronLeftIcon customClasses="size-6" />
+            </button>
+            <h1>My skills and tools</h1>
+          </div>
+          <p class="text-gray-400">
+            A comprehensive overview of my technical expertise, certifications,
+            and notable achievements throughout my career.
+          </p>
+        </div>
+      </GridItem>
+      <GridItem className="flex-col gap-2">
+        <h2>Skills</h2>
+        <p>
+          I have a strong background in software engineering, with a focus on
+          building scalable and maintainable applications. I had learn and
+          experience with a variety of programming languages, including:
+        </p>
+        <ul>
+          <li>Obviously, HTML and CSS</li>
+          <li>JavaScript</li>
+          <li>Python</li>
+          <li>TypeScript</li>
+          <li>Go</li>
+        </ul>
+        <p>
+          Beside the programming languages, I also have experience working with
+          databases, APIs, and cloud services.
+        </p>
+      </GridItem>
+      <GridItem className="flex-col gap-2">
+        <h2>Frameworks & Libraries</h2>
+        <p>
+          When building software, frameworks and libraries are essential to
+          speed up development and ensure code quality. Throughout my years of
+          programming, I have used a variety of frameworks and libraries,
+          including:
+        </p>
+        <ul>
+          {
+            Object.entries(TOOLS).map(([category, tools]) => {
+              return (
+                <li class="flex flex-col gap-2">
+                  {category} - {tools.join(", ")}
+                </li>
+              );
+            })
+          }
+        </ul>
+      </GridItem>
+      <GridItem className="flex-col gap-2">
+        <h2>Certifications</h2>
+        <ul class="flex flex-col gap-2">
+          {
+            CERTS.map(({ name, url, issuedBy, issuedAt }) => {
+              return (
+                <li class="flex flex-col w-fit">
+                  <a href={url} class="underline">
+                    {name}
+                  </a>
+                  <time>
+                    Issued by {issuedBy} on {issuedAt}
+                  </time>
+                </li>
+              );
+            })
+          }
+        </ul>
+      </GridItem>
+      <GridItem className="flex-col gap-2 ">
+        <h2>Achivements</h2>
+        <ul class="flex flex-col gap-4 p-4">
+          {
+            ACHIEVEMENTS.map(({ name, organizedBy, issuedAt, description }) => {
+              return (
+                <li class="flex flex-col bg-gradient-to-br from-neutral-600/20 to-gray-500/20 rounded-lg border border-white/10 hover:border-neutral-500/50 transition-colors p-4 gap-2">
+                  <p class="font-semibold text-lg">{name}</p>
+                  <time class="text-white/50">
+                    Organized by {organizedBy} on {issuedAt}
+                  </time>
+                  <p>{description}</p>
+                </li>
+              );
+            })
+          }
+        </ul>
+      </GridItem>
+    </Grid>
+  </section>
+</ExtraLayout>
