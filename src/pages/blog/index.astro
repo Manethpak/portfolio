@@ -6,6 +6,7 @@ import { Image } from "astro:assets";
 import { formatDate } from "@/helper/formatDate";
 import { ChevronLeftIcon } from "astro-feather";
 import Grid from "@/components/bento/Grid.astro";
+import Header from "@/components/util/Header.astro";
 
 const data = await fetch(`https://dev.to/api/articles?username=manethpak`);
 const articles: Article[] = await data.json();
@@ -34,25 +35,16 @@ export const prerender = true;
 </style>
 
 <ExtraLayout
-  title="Maneth | Blogs"
-  desc="Technical and non-technical Blogs by me"
+  title="Pak Maneth | Articles and Blogs"
+  desc="Thoughts, tutorials, and insights about software development and technology"
 >
   <section>
     <Grid className="auto-rows-auto">
-      <GridItem>
-        <div class="my-2">
-          <div class="flex items-center gap-4">
-            <button onclick="window.history.back()">
-              <ChevronLeftIcon customClasses="size-6" />
-            </button>
-            <h1>Articles and Blogs</h1>
-          </div>
-          <p class="text-gray-400">
-            A comprehensive overview of my technical expertise, certifications,
-            and notable achievements throughout my career.
-          </p>
-        </div>
-      </GridItem>
+      <Header
+        heading="Articles and Blogs"
+        subtitle="Thoughts, tutorials, and insights about software development and technology"
+      />
+
       <div class="grid grid-cols-2 gap-8">
         {
           articles.map((article) => {

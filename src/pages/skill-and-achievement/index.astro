@@ -2,8 +2,18 @@
 import ExtraLayout from "@/layouts/ExtraLayout.astro";
 import Grid from "@/components/bento/Grid.astro";
 import GridItem from "@/components/bento/Item.astro";
-import { CERTS, TOOLS, ACHIEVEMENTS } from "@/constants";
-import { ChevronLeftIcon } from "astro-feather";
+import Header from "@/components/util/Header.astro";
+import InnerCard from "@/components/util/InnerCard.astro";
+
+import { AwardIcon, CalendarIcon, CodeIcon, PackageIcon } from "astro-feather";
+import {
+  CERTS,
+  TOOLS,
+  ACHIEVEMENTS,
+  LANGUAGES,
+  FRAMEWORKS_LIBRARIES,
+  DATABASES_CLOUDS,
+} from "@/constants";
 ---
 
 <style>
@@ -14,7 +24,7 @@ import { ChevronLeftIcon } from "astro-feather";
     @apply text-2xl font-semibold;
   }
   h3 {
-    @apply text-xl italic;
+    @apply text-xl;
   }
   time {
     @apply text-sm text-neutral-300/60;
@@ -25,99 +35,116 @@ import { ChevronLeftIcon } from "astro-feather";
   ul {
     @apply list-disc list-inside;
   }
+
+  .tag {
+    @apply px-4 py-2  rounded-full text-neutral-300 hover:-translate-y-[2px] transition-all hover:bg-neutral-300/20 cursor-default text-sm bg-gradient-to-br from-neutral-300/20 to-gray-500/20;
+  }
 </style>
 
 <ExtraLayout
-  title="Maneth | Skill and achievement"
-  desc="More about my skills, certifications, achievements and preferred tools"
+  title="Pak Maneth | Skills and Achievements"
+  desc="Comprehensive overview of my technical expertise, certifications, and notable achievements throughout my career."
 >
   <section>
     <Grid className="auto-rows-auto">
-      <GridItem>
-        <div class="my-2">
-          <div class="flex items-center gap-4">
-            <button onclick="window.history.back()">
-              <ChevronLeftIcon customClasses="size-6" />
-            </button>
-            <h1>My skills and tools</h1>
+      <Header
+        heading="My Skills and Achivements"
+        subtitle="Comprehensive overview of my technical expertise, certifications, and notable achievements throughout my career."
+      />
+
+      <GridItem className="flex-col gap-8">
+        <h2>Technical skills</h2>
+        <div>
+          <h3 class="text-lg text-primary mb-2 flex items-center gap-2">
+            <CodeIcon customClasses="size-5" />
+            Programming Languages
+          </h3>
+          <div class="flex flex-wrap gap-3">
+            {LANGUAGES.map((skill) => <span class="tag">{skill}</span>)}
           </div>
-          <p class="text-gray-400">
-            A comprehensive overview of my technical expertise, certifications,
-            and notable achievements throughout my career.
-          </p>
+        </div>
+
+        <div>
+          <h3 class="text-lg text-primary mb-2 flex items-center gap-2">
+            <PackageIcon customClasses="size-5" />
+            Frameworks & Libraries
+          </h3>
+          <div class="flex flex-wrap gap-3">
+            {
+              FRAMEWORKS_LIBRARIES.map((skill) => (
+                <span class="tag">{skill}</span>
+              ))
+            }
+          </div>
+        </div>
+
+        <div>
+          <h3 class="text-lg text-primary mb-2 flex items-center gap-2">
+            <CodeIcon customClasses="size-5" />
+            Databases & Clouds
+          </h3>
+          <div class="flex flex-wrap gap-3">
+            {DATABASES_CLOUDS.map((skill) => <span class="tag">{skill}</span>)}
+          </div>
+        </div>
+
+        <div>
+          <h3 class="text-lg text-primary mb-2 flex items-center gap-2">
+            <CodeIcon customClasses="size-5" />
+            Development Tools & Other
+          </h3>
+          <div class="flex flex-wrap gap-3">
+            {TOOLS.map((skill) => <span class="tag">{skill}</span>)}
+          </div>
         </div>
       </GridItem>
-      <GridItem className="flex-col gap-2">
-        <h2>Skills</h2>
-        <p>
-          I have a strong background in software engineering, with a focus on
-          building scalable and maintainable applications. I had learn and
-          experience with a variety of programming languages, including:
-        </p>
-        <ul>
-          <li>Obviously, HTML and CSS</li>
-          <li>JavaScript</li>
-          <li>Python</li>
-          <li>TypeScript</li>
-          <li>Go</li>
-        </ul>
-        <p>
-          Beside the programming languages, I also have experience working with
-          databases, APIs, and cloud services.
-        </p>
-      </GridItem>
-      <GridItem className="flex-col gap-2">
-        <h2>Frameworks & Libraries</h2>
-        <p>
-          When building software, frameworks and libraries are essential to
-          speed up development and ensure code quality. Throughout my years of
-          programming, I have used a variety of frameworks and libraries,
-          including:
-        </p>
-        <ul>
-          {
-            Object.entries(TOOLS).map(([category, tools]) => {
-              return (
-                <li class="flex flex-col gap-2">
-                  {category} - {tools.join(", ")}
-                </li>
-              );
-            })
-          }
-        </ul>
-      </GridItem>
+
       <GridItem className="flex-col gap-2">
         <h2>Certifications</h2>
-        <ul class="flex flex-col gap-2">
+
+        <div class="grid md:grid-cols-2 gap-4">
           {
-            CERTS.map(({ name, url, issuedBy, issuedAt }) => {
+            CERTS.map(({ name, url, issuedBy, issuedAt, icon: Icon }) => {
               return (
-                <li class="flex flex-col w-fit">
-                  <a href={url} class="underline">
-                    {name}
+                <InnerCard>
+                  <a href={url}>
+                    <div class="flex justify-between items-start mb-4">
+                      <div>
+                        <h3 class="text-lg font-medium mb-1">{name}</h3>
+                        <p class="text-gray-400">{issuedBy}</p>
+                      </div>
+                      <Icon customClasses="size-5 " />
+                    </div>
+                    <div class="flex items-center gap-2 text-sm text-gray-400">
+                      <CalendarIcon customClasses="size-4" />
+                      <span>{issuedAt}</span>
+                    </div>
                   </a>
-                  <time>
-                    Issued by {issuedBy} on {issuedAt}
-                  </time>
-                </li>
+                </InnerCard>
               );
             })
           }
-        </ul>
+        </div>
       </GridItem>
+
       <GridItem className="flex-col gap-2 ">
-        <h2>Achivements</h2>
+        <h2>Notable Achivements</h2>
         <ul class="flex flex-col gap-4 p-4">
           {
             ACHIEVEMENTS.map(({ name, organizedBy, issuedAt, description }) => {
               return (
-                <li class="flex flex-col bg-gradient-to-br from-neutral-600/20 to-gray-500/20 rounded-lg border border-white/10 hover:border-neutral-500/50 transition-colors p-4 gap-2">
-                  <p class="font-semibold text-lg">{name}</p>
-                  <time class="text-white/50">
-                    Organized by {organizedBy} on {issuedAt}
-                  </time>
-                  <p>{description}</p>
-                </li>
+                <InnerCard el="li" className="list-none flex">
+                  <div class="flex-shrink-0 size-10 bg-neutral-200/10 rounded-full flex items-center justify-center">
+                    <AwardIcon />
+                  </div>
+                  <div>
+                    <p class="font-semibold text-lg">{name}</p>
+                    <time class="text-white/50">
+                      Organized by {organizedBy} on {issuedAt}
+                    </time>
+                    <p>{description}</p>
+                  </div>
+                </InnerCard>
               );
             })
           }
