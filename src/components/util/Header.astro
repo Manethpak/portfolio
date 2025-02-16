@@ -1,0 +1,25 @@
+---
+import GridItem from "@/components/bento/Item.astro";
+import { ChevronLeftIcon } from "astro-feather";
+
+interface Props {
+  heading: string;
+  subtitle: string;
+}
+
+const { heading, subtitle } = Astro.props;
+---
+
+<GridItem>
+  <div class="my-2">
+    <div class="flex items-center gap-4">
+      <a href="/" id="back">
+        <ChevronLeftIcon customClasses="size-6" />
+      </a>
+      <h1 class="text-3xl font-semibold">{heading}</h1>
+    </div>
+    <p class="text-gray-400">
+      {subtitle}
+    </p>
+  </div>
+</GridItem>
