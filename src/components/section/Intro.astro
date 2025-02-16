@@ -2,30 +2,26 @@
 import { Image } from "astro:assets";
 import GridItem from "../bento/Item.astro";
 import ProfileImg from "/src/assets/profile.jpg";
-import GithubIcon from "../icon/github";
-import LinkedinIcon from "../icon/linkedin";
-import DiscordIcon from "../icon/discord";
+import { GithubIcon, LinkedinIcon } from "astro-feather";
+
+const { rowSpan, colSpan } = Astro.props;
 
 const socials = [
-  {
-    href: "https://github.com/manethpak",
-    icon: GithubIcon,
-  },
   {
     href: "https://www.linkedin.com/in/maneth-pak",
     icon: LinkedinIcon,
   },
   {
-    href: "https://discordapp.com/users/304261357979566081",
-    icon: DiscordIcon,
+    href: "https://github.com/manethpak",
+    icon: GithubIcon,
   },
 ];
 ---
 
 <GridItem
   className="justify-between gap-4 flex-col-reverse md:flex-row"
-  rowSpan="row-span-4 md:row-span-3"
-  colSpan="col-span-1 sm:col-span-2 lg:col-span-3"
+  rowSpan={rowSpan}
+  colSpan={colSpan}
 >
   <div class="flex flex-col gap-4 justify-between">
     <div>
@@ -35,8 +31,8 @@ const socials = [
       </h1>
       <p class="text-lg mt-2">
         Experienced in designing, developing and delivering software products.
-        Curious, passionate and love to learn and try new things. Currently on a
-        journey to find peace and happiness in life.
+        Curious, passionate and love to learn and try new things. On a journey
+        to find peace and happiness in life.
       </p>
     </div>
 
@@ -46,20 +42,22 @@ const socials = [
           <a
             href={href}
             target="_blank"
-            class="border-2 p-2 rounded-lg border-neutral-300 flex items-center justify-center hover:-translate-y-1 transition-all duration-300 aspect-square hover:shadow-lg hover:shadow-white/20"
+            class="p-2 flex items-center justify-center hover:-translate-y-1 transition-color duration-300 aspect-square text-white/80 hover:text-white"
           >
-            <Icon className="w-8 h-8" />
+            <Icon size={32} />
           </a>
         ))
       }
     </div>
   </div>
 
-  <div class="rounded-xl max-w-[300px] overflow-hidden self-end md:self-center">
+  <div class="rounded-xl overflow-hidden self-center">
     <Image
       loading="eager"
       src={ProfileImg}
       alt="Profile"
+      width={500}
+      height={500}
       class="object-contain object-top"
     />
   </div>

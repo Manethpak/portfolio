@@ -1,5 +1,5 @@
 ---
-import { IconClock, IconMapPin } from "@tabler/icons-react";
+import { ClockIcon, MapPinIcon } from "astro-feather";
 import GridItem from "../bento/Item.astro";
 ---
 
@@ -30,11 +30,11 @@ import GridItem from "../bento/Item.astro";
   <div class="flex flex-col justify-evenly">
     <h2 class="text-xl font-bold">Timezone</h2>
     <div class="flex items-center gap-1">
-      <IconMapPin className="w-4 h-4" />
+      <MapPinIcon size={16} />
       <p>Phnom Penh, Cambodia</p>
     </div>
     <div class="flex items-center gap-1">
-      <IconClock className="w-4 h-4" />
+      <ClockIcon size={16} />
       <time id="time" class="w-16"></time>
       <span id="timezone">UTC+7</span>
     </div>

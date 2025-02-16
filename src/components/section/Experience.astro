@@ -1,40 +1,69 @@
 ---
 import GridItem from "../bento/Item.astro";
+const { rowSpan, colSpan } = Astro.props;
 ---
 
 <style>
   h3 {
-    @apply text-lg font-medium;
+    @apply text-lg font-medium mt-1 capitalize;
   }
   h4 {
-    @apply italic mt-1 capitalize;
+    @apply italic font-medium;
   }
   time {
     @apply text-sm;
   }
+  .timeline-dot {
+    position: relative;
+  }
+  .timeline-dot::before {
+    content: "";
+    position: absolute;
+    left: -28px;
+    top: 8px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: white;
+  }
+  .timeline-line {
+    position: relative;
+  }
+  .timeline-line::after {
+    content: "";
+    position: absolute;
+    left: -24.5px;
+    top: 16px;
+    width: 1.5px;
+    height: calc(100% - 20px);
+    background: rgba(256, 256, 256, 0.4);
+  }
 </style>
 
-<GridItem className="p-4" rowSpan="row-span-3">
+<GridItem className="p-4" colSpan={colSpan} rowSpan={rowSpan}>
   <div class="space-y-[10px] w-full">
     <h2 class="text-lg font-bold">Experience</h2>
-    <div>
-      <h3>Dreamslab</h3>
-      <h4>Chief Technology Officer</h4>
-      <time>Apr 2024 - Present</time>
-      <h4>Lead software engineer</h4>
-      <time>Feb 2023 - Apr 2024</time>
-    </div>
+    <div class="mb-8 pl-8">
+      <div class="timeline-dot timeline-line">
+        <h3>Chief Technology Officer</h3>
+        <h4>dreamsLAB</h4>
+        <time>Apr 2024 - Present</time>
+        <h3>Lead software engineer</h3>
+        <h4>dreamsLAB</h4>
+        <time>Feb 2023 - Apr 2024</time>
+      </div>
 
-    <div>
-      <h3>Non-disclosure Client</h3>
-      <h4>Frontend developer</h4>
-      <time>Apr 2022 - Nov 2022</time>
-    </div>
+      <div class="timeline-dot timeline-line">
+        <h3>Frontend developer</h3>
+        <h4>Non-disclosure Client</h4>
+        <time>Apr 2022 - Nov 2022</time>
+      </div>
 
-    <div>
-      <h3>MangoByte</h3>
-      <h4>Web developer intern</h4>
-      <time>Jun 2021 - Oct 2021</time>
+      <div class="timeline-dot timeline-line">
+        <h3>Web developer intern</h3>
+        <h4>MangoByte</h4>
+        <time>Jun 2021 - Oct 2021</time>
+      </div>
     </div>
   </div>
 </GridItem>

@@ -8,12 +8,11 @@ import {
   ContactSection,
   AboutMeSection,
   ExperienceSection,
-  CreditSection,
 } from "../components/section";
 import { ArrowUpRightIcon } from "astro-feather";
 
 const links = [
-  { title: "Skills and Tools", href: "/skill-and-tool" },
+  { title: "Skills and Achievements", href: "/skill-and-achievement" },
   { title: "Projects", href: "/project" },
   { title: "Blogs", href: "/blog" },
 ];
@@ -54,12 +53,18 @@ export const prerender = true;
   title="Pak Maneth | Software Engineer"
   desc="A website about Maneth, your average software engineer."
 >
-  <Grid className="sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-    <IntroSection />
+  <Grid className="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+    <IntroSection
+      rowSpan="row-span-4 md:row-span-2"
+      colSpan="sm:col-span-2 lg:col-span-3"
+    />
     <TimezoneSection />
     <ContactSection />
-    <AboutMeSection />
-    <ExperienceSection />
+    <AboutMeSection
+      rowSpan="row-span-2 lg:row-span-3"
+      colSpan="sm:col-span-2 lg:col-span-1"
+    />
+    <ExperienceSection rowSpan="row-span-3" colSpan="sm:col-span-2" />
 
     {
       links.map((link) => (
@@ -79,7 +84,5 @@ export const prerender = true;
         </GridItem>
       ))
     }
-
-    <CreditSection />
   </Grid>
 </Layout>

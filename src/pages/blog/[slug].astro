@@ -9,6 +9,9 @@ import { JSDOM } from "jsdom";
 const { slug } = Astro.params;
 
 const data = await fetch(`https://dev.to/api/articles/manethpak/${slug}`);
+if (data.status === 404) {
+  return new Response(null, { status: 404 });
+}
 const article = (await data.json()) as DetailArticle;
 
 // Remove SVG from HTML string
