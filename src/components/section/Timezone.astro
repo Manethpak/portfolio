@@ -4,6 +4,8 @@ import GridItem from "../bento/Item.astro";
 ---
 
 <script>
+  let intervalId: null | NodeJS.Timeout = null;
+
   function updateTime() {
     const timeElement = document.getElementById("time");
 
@@ -19,11 +21,31 @@ import GridItem from "../bento/Item.astro";
     timeElement.textContent = `${hours}:${minutes}:${seconds}`;
   }
 
-  // Update the time every second
-  setInterval(updateTime, 1000);
+  function startInterval() {
+    updateTime();
+    intervalId = setInterval(updateTime, 1000);
+  }
 
-  // Initial call to display the time immediately when the page loads
-  updateTime();
+  function stopInterval() {
+    clearInterval(intervalId);
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          startInterval();
+        } else {
+          stopInterval();
+        }
+      });
+    });
+
+    const timeElement = document.getElementById("time");
+    if (timeElement) {
+      observer.observe(timeElement);
+    }
+  });
 </script>
 
 <GridItem className="p-4">
