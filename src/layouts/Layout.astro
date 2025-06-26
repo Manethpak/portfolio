@@ -11,9 +11,11 @@ const {
   meta,
 } = Astro.props;
 
+const url = import.meta.env.PUBLIC_URL || Astro.url;
+
 const ogImageUrl = image.startsWith("http")
   ? image
-  : new URL(image, Astro.url).toString();
+  : new URL(image, url).toString();
 ---
 
 <html lang="en">
@@ -26,7 +28,7 @@ const ogImageUrl = image.startsWith("http")
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
-    <meta property="og:url" content={Astro.url} />
+    <meta property="og:url" content={url} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={desc} />
     <meta property="og:image" content={ogImageUrl} />
@@ -34,7 +36,7 @@ const ogImageUrl = image.startsWith("http")
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content={Astro.url} />
+    <meta property="twitter:url" content={url} />
     <meta property="twitter:title" content={title} />
     <meta property="twitter:description" content={desc} />
     <meta property="twitter:image" content={ogImageUrl} />
