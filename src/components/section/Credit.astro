@@ -1,18 +1,30 @@
 ---
-import Link from "../util/Link.astro";
+const links = [
+  { href: "/writing", title: "Writing" },
+  { href: "/project", title: "Project" },
+  { href: "/experience", title: "Experience" },
+];
+
+const currentPath = Astro.url.pathname;
+const isCurrentPage = (path: string) => currentPath.startsWith(path);
 ---
 
 <div
-  class="flex flex-col items-center justify-center py-8 text-sm text-neutral-400"
+  class="flex flex-col items-center justify-center py-12 text-xs text-neutral-400"
 >
+  <div class="flex justify-evenly p-6 w-full">
+    {
+      links.map((link) => (
+        <a href={link.href} class="text-base">
+          {link.title + (isCurrentPage(link.href) ? '"' : "")}
+        </a>
+      ))
+    }
+  </div>
+  <p class="mb-1">© 2025 · Maneth Pak</p>
   <p>
-    © 2025 · Design and crafted with ❤️ by
-    <Link target="_blank" href="https://github.com/manethpak"> Maneth. </Link>
-  </p>
-  <p>
-    Powered by
-    <Link target="_blank" href="https://astro.build/">Astro</Link>
-    <span>&</span>
-    <Link target="_blank" href="https://vercel.com">Vercel</Link>
+    <a target="_blank" href="https://astro.build/"> Astro </a>
+    <span class="mx-1">·</span>
+    <a target="_blank" href="https://vercel.com"> Vercel </a>
   </p>
 </div>

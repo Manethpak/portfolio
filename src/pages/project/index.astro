@@ -1,17 +1,159 @@
 ---
 import Grid from "@/components/bento/Grid.astro";
+import GridItem from "@/components/bento/Item.astro";
 import Header from "@/components/util/Header.astro";
-import ExtraLayout from "@/layouts/ExtraLayout.astro";
+import Layout from "@/layouts/Layout.astro";
+import { Image } from "astro:assets";
+
+const projects = [
+  {
+    title: "Slecret",
+    description:
+      "A content publishing platform aim to localize technical content for Cambodian developers.",
+    image: "/profile.jpg",
+    year: "2021",
+    url: "#",
+    tags: ["Vue", "Nestjs", "PostgreSQL"],
+    category: "study",
+  },
+  {
+    title: "Project Two",
+    description:
+      "This is Project Two. It solves a real-world problem by leveraging modern web technologies.",
+    image: "/profile.jpg",
+    year: "2024",
+    url: "#",
+    tags: ["Open Source", "TypeScript"],
+    category: "personal",
+  },
+  {
+    title: "Project Three",
+    description:
+      "Project Three is a personal project I built to learn more about a specific technology or to create something fun.",
+    image: "/profile.jpg",
+    year: "2024",
+    url: "#",
+    tags: ["React", "Node.js"],
+    category: "study",
+  },
+  {
+    title: "Project Four",
+    description:
+      "Project Four is a personal project I built to learn more about a specific technology or to create something fun.",
+    image: "/profile.jpg",
+    year: "2024",
+    url: "#",
+    tags: ["React", "Node.js"],
+    category: "client",
+  },
+];
+
+const workProjects = projects.filter(
+  (project) => project.category === "work" || project.category === "client"
+);
+const personalProjects = projects.filter(
+  (project) => project.category === "personal" || project.category === "study"
+);
 ---
 
-<ExtraLayout
-  title="Pak Maneth | Projects"
-  desc="A collection of my projects, applications, and open-source contributions."
->
+<style>
+  .badge {
+    @apply text-xs px-2 py-1 bg-neutral-100 text-neutral-600;
+  }
+</style>
+
+<Layout title="Pak Maneth | Projects" desc="A collection of things I've built.">
   <Grid className="auto-rows-auto">
-    <Header
-      heading="Projects"
-      subtitle="A collection of my projects, applications, and open-source contributions. 🚧Under construction🚧"
-    />
+    <Header heading="Projects" subtitle="A collection of things I've built." />
   </Grid>
-</ExtraLayout>
+
+  <!-- Work & Client Projects -->
+  <div class="mt-8">
+    <h2 class="text-xl font-semibold mb-4 text-neutral-800">
+      Work & Client Projects
+    </h2>
+    <div class="grid md:grid-cols-2 gap-4">
+      {
+        workProjects
+          .sort((a, b) => b.year.localeCompare(a.year))
+          .map((project) => (
+            <a href={project.url} target="_blank" class="no-underline">
+              <GridItem className="h-full flex-col group hover:border-neutral-400 transition-colors ">
+                <div class="w-full h-40 overflow-hidden rounded-md">
+                  <Image
+                    src={project.image}
+                    alt={project.title}
+                    width={600}
+                    height={400}
+                    class="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                  />
+                </div>
+                <div class="mt-4">
+                  <div class="flex items-center gap-2">
+                    <h3 class="text-lg font-semibold text-neutral-800">
+                      {project.title}
+                    </h3>
+                    <span class="badge capitalize">{project.category}</span>
+                  </div>
+                  <p class="text-neutral-500 text-sm mt-1">{project.year}</p>
+                  <p class="text-neutral-500 text-sm mt-1">
+                    {project.description}
+                  </p>
+                  <div class="flex flex-wrap gap-2 mt-3">
+                    {project.tags.map((tag) => (
+                      <span class="badge">{tag}</span>
+                    ))}
+                  </div>
+                </div>
+              </GridItem>
+            </a>
+          ))
+      }
+    </div>
+  </div>
+
+  <!-- Personal & Study Projects -->
+  <div class="mt-8">
+    <h2 class="text-xl font-semibold mb-4 text-neutral-800">
+      Personal & Study Projects
+    </h2>
+    <div class="grid md:grid-cols-2 gap-4">
+      {
+        personalProjects
+          .sort((a, b) => b.year.localeCompare(a.year))
+          .map((project) => (
+            <a href={project.url} target="_blank" class="no-underline">
+              <GridItem className="h-full flex-col group hover:border-neutral-400 transition-colors">
+                <div class="w-full h-40 overflow-hidden rounded-md">
+                  <Image
+                    src={project.image}
+                    alt={project.title}
+                    width={600}
+                    height={400}
+                    class="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                  />
+                </div>
+                <div class="mt-4">
+                  <div class="flex items-center gap-2">
+                    <h3 class="text-lg font-semibold text-neutral-800">
+                      {project.title}
+                    </h3>
+                    <span class="badge capitalize">{project.category}</span>
+                  </div>
+                  <p class="text-neutral-500 text-sm mt-1">{project.year}</p>
+                  <p class="text-neutral-500 text-sm mt-1">
+                    {project.description}
+                  </p>
+                  <div class="flex flex-wrap gap-2 mt-3">
+                    {project.tags.map((tag) => (
+                      <span class="badge">{tag}</span>
+                    ))}
+                  </div>
+                </div>
+              </GridItem>
+            </a>
+          ))
+      }
+    </div>
+  </div>
+</Layout>

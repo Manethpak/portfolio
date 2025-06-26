@@ -54,28 +54,24 @@ export const CERTS = [
     url: "https://www.educative.io/verify-certificate/02Gkvk3prQ1uY6onwD9GZJconY0NBgPkgsP",
     issuedBy: "Educative, Inc.",
     issuedAt: "2023/03",
-    icon: ServerIcon,
   },
   {
     name: "AWS Cloud Quest: Cloud Practitioner",
     url: "https://www.credly.com/badges/c3dc1213-4830-425e-a289-c19c1773b209/linked_in_profile",
     issuedBy: "AWS",
     issuedAt: "2022/09",
-    icon: CloudIcon,
   },
   {
     name: "The Road to React: The One with Hooks",
     url: "https://www.educative.io/verify-certificate/JZmo10Cy1JGv82YypckAXqW82E62C3",
     issuedBy: "Educative, Inc.",
     issuedAt: "2022/05",
-    icon: AwardIcon,
   },
   {
     name: "Become a Front End Developer",
     url: "https://www.educative.io/verify-certificate/487B21t6BlRxKORXyc3y0p8oP2mPHG",
     issuedBy: "Educative, Inc.",
     issuedAt: "2022/04",
-    icon: LayoutIcon,
   },
 ];
 

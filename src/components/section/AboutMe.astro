@@ -1,29 +1,30 @@
 ---
 import GridItem from "../bento/Item.astro";
-import Link from "../util/Link.astro";
-const { rowSpan, colSpan } = Astro.props;
+
+const { colSpan } = Astro.props;
 ---
 
-<GridItem className="p-4" rowSpan={rowSpan} colSpan={colSpan}>
-  <div class="flex flex-col justify-between">
-    <div class="space-y-2 text-sm">
-      <h2 class="text-lg font-bold">More about me</h2>
+<GridItem className="p-4" colSpan={colSpan}>
+  <div class="flex flex-col space-y-2">
+    <h2>About me</h2>
 
-      <p>
-        Graduated with a degree in Software Engineering in 2023, currently
-        serving as the CTO at
-        <Link href="https://dreamslab.dev" target="_blank">dreamslab.</Link>
-      </p>
-      <p>
-        Beyond coding, I find myself enjoying online games, R&B music, reading
-        fiction story and trying out new food. I also like to gym or in-door
-        bouldering with friends.
-      </p>
-      <p>
-        While I have some preferred tools for my work. I'm always open to
-        exploring new tech and challenge, and is not afraid to try and use the
-        best tools for the job.
-      </p>
-    </div>
+    <p class="text-sm">
+      Graduated with a Software Engineering degree in 2023. Currently leading
+      technical vision at <a href="https://dreamslab.dev" target="_blank">
+        dreamslab
+      </a>
+      as CTO.
+    </p>
+    <p class="text-sm">
+      I thrive in team-based strategy games like Dota 2 and Valorant, where
+      tactical thinking meets collaborative execution - much like my approach to
+      software development. During downtime, I unwind with lo-fi beats and
+      bedroom pop, dive into anime worlds, or get lost in the latest manga.
+    </p>
+    <p class="text-sm">
+      I believe in bringing the same energy to both work and play - always
+      learning, adapting, and pushing boundaries. Whether it's coding or
+      mastering a new skill, I'm all about embracing the challenge
+    </p>
   </div>
 </GridItem>

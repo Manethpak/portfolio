@@ -1,0 +1,32 @@
+body {
+  @apply font-sans;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  @apply font-serif font-semibold;
+}
+
+h2 {
+  @apply font-normal text-lg;
+}
+
+p {
+  @apply text-neutral-600 font-sans;
+}
+
+a {
+  @apply text-neutral-600 hover:text-neutral-800 transition-all underline underline-offset-2 hover:underline-offset-4;
+}
+
+.btn-primary {
+  @apply bg-neutral-800 text-white px-4 py-2 cursor-pointer transition-colors hover:bg-neutral-800/80 hover:text-white flex items-center;
+}
+
+.btn-secondary {
+  @apply bg-neutral-100 text-neutral-800 px-4 py-2 cursor-pointer transition-colors hover:bg-neutral-200 flex items-center;
+}

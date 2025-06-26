@@ -4,82 +4,35 @@ import Grid from "@/components/bento/Grid.astro";
 import GridItem from "@/components/bento/Item.astro";
 import {
   IntroSection,
-  TimezoneSection,
-  ContactSection,
   AboutMeSection,
   ExperienceSection,
-} from "../components/section";
-import { ArrowUpRightIcon } from "astro-feather";
+} from "@/components/section";
+import { ArrowRightIcon } from "astro-feather";
 
 const links = [
-  { title: "Skills and Achievements", href: "/skill-and-achievement" },
+  { title: "Experience & Achievements", href: "/experience" },
   { title: "Projects", href: "/project" },
-  { title: "Blogs", href: "/blog" },
+  { title: "Writing", href: "/writing" },
 ];
 
 export const prerender = true;
 ---
 
-<style is:global>
-  h2 {
-    @apply text-lg font-bold;
-  }
-</style>
-
-<script>
-  import { stagger, spring, timeline, type TimelineDefinition } from "motion";
-  const cards = document.querySelectorAll(".card");
-
-  const isFirefox = navigator.userAgent.toLowerCase().indexOf("firefox") > -1;
-
-  const sequence: TimelineDefinition = [
-    [
-      cards,
-      { y: ["40%", "0%"], opacity: [0, 1] },
-      {
-        at: "-0.1",
-        duration: 0.4,
-        delay: stagger(0.3, { easing: "ease-in" }),
-        easing: spring({ velocity: 100, stiffness: 50, damping: 10 }),
-      },
-    ],
-  ];
-
-  // Doesn't support firefox
-  if (!isFirefox) timeline(sequence);
-</script>
-
-<Layout
-  title="Pak Maneth | Software Engineer"
-  desc="A website about Maneth, your average software engineer."
->
-  <Grid className="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-    <IntroSection
-      rowSpan="row-span-4 md:row-span-2"
-      colSpan="sm:col-span-2 lg:col-span-3"
-    />
-    <TimezoneSection />
-    <ContactSection />
-    <AboutMeSection
-      rowSpan="row-span-2 lg:row-span-3"
-      colSpan="sm:col-span-2 lg:col-span-1"
-    />
-    <ExperienceSection rowSpan="row-span-3" colSpan="sm:col-span-2" />
+<Layout>
+  <Grid className="grid-cols-1 md:grid-cols-2 gap-y-6">
+    <IntroSection colSpan="md:col-span-2" />
+    <AboutMeSection colSpan="md:col-span-1" />
+    <ExperienceSection colSpan="md:col-span-1" />
 
     {
       links.map((link) => (
-        <GridItem className="p-0 group">
+        <GridItem className="p-0 hover:bg-neutral-50 transition-colors">
           <a
             href={link.href}
-            class="w-full cursor-pointer p-4 h-full flex flex-col justify-between"
+            class="w-full cursor-pointer p-4 h-full flex flex-row justify-between items-center"
           >
             <h2>{link.title}</h2>
-            <div class="self-end items-end">
-              <ArrowUpRightIcon
-                size={32}
-                customClasses="group-hover:-translate-y-2 transition delay-75"
-              />
-            </div>
+            <ArrowRightIcon size={16} />
           </a>
         </GridItem>
       ))

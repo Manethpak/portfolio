@@ -1,68 +1,40 @@
 ---
 import GridItem from "../bento/Item.astro";
-const { rowSpan, colSpan } = Astro.props;
+const { colSpan } = Astro.props;
 ---
 
 <style>
   h3 {
-    @apply text-lg font-medium mt-1 capitalize;
+    @apply text-base font-normal;
   }
   h4 {
-    @apply italic font-medium;
+    @apply text-sm text-neutral-500 font-normal font-sans;
   }
   time {
-    @apply text-sm;
+    @apply text-xs text-neutral-400;
   }
-  .timeline-dot {
-    position: relative;
+  .description {
+    @apply text-sm mt-2 text-neutral-600;
   }
-  .timeline-dot::before {
-    content: "";
-    position: absolute;
-    left: -28px;
-    top: 8px;
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: white;
-  }
-  .timeline-line {
-    position: relative;
-  }
-  .timeline-line::after {
-    content: "";
-    position: absolute;
-    left: -24.5px;
-    top: 16px;
-    width: 1.5px;
-    height: calc(100% - 20px);
-    background: rgba(256, 256, 256, 0.4);
+  .view-more {
+    @apply mt-4 text-sm;
   }
 </style>
 
-<GridItem className="p-4" colSpan={colSpan} rowSpan={rowSpan}>
-  <div class="space-y-[10px] w-full">
-    <h2 class="text-lg font-bold">Experience</h2>
-    <div class="mb-8 pl-8">
-      <div class="timeline-dot timeline-line">
-        <h3>Chief Technology Officer</h3>
-        <h4>dreamsLAB</h4>
-        <time>Apr 2024 - Present</time>
-        <h3>Lead software engineer</h3>
-        <h4>dreamsLAB</h4>
-        <time>Feb 2023 - Apr 2024</time>
-      </div>
+<GridItem className="p-4" colSpan={colSpan}>
+  <div class="w-full">
+    <h2 class="mb-3">Current Role</h2>
 
-      <div class="timeline-dot timeline-line">
-        <h3>Frontend developer</h3>
-        <h4>Non-disclosure Client</h4>
-        <time>Apr 2022 - Nov 2022</time>
-      </div>
+    <div>
+      <h3>Chief Technology Officer</h3>
+      <h4>dreamsLAB</h4>
+      <time>Apr 2024 - Present</time>
+      <p class="description">
+        Leading technical strategy and overseeing all technology operations.
+      </p>
 
-      <div class="timeline-dot timeline-line">
-        <h3>Web developer intern</h3>
-        <h4>MangoByte</h4>
-        <time>Jun 2021 - Oct 2021</time>
+      <div class="view-more">
+        <a href="/experience">View full work history →</a>
       </div>
     </div>
   </div>

@@ -4,7 +4,7 @@ import GridItem from "../bento/Item.astro";
 import ProfileImg from "/src/assets/profile.jpg";
 import { GithubIcon, LinkedinIcon } from "astro-feather";
 
-const { rowSpan, colSpan } = Astro.props;
+const { colSpan } = Astro.props;
 
 const socials = [
   {
@@ -18,47 +18,37 @@ const socials = [
 ];
 ---
 
-<GridItem
-  className="justify-between gap-4 flex-col-reverse md:flex-row"
-  rowSpan={rowSpan}
-  colSpan={colSpan}
->
-  <div class="flex flex-col gap-4 justify-between">
+<GridItem className="justify-between gap-6 flex-col" colSpan={colSpan}>
+  <div class="flex flex-col gap-6 justify-between">
     <div>
-      <p class="text-lg">Hi there!</p>
-      <h1 class="text-2xl">
-        I'm <span class="font-bold">PAK Maneth</span>, A Software Engineer.
-      </h1>
-      <p class="text-lg mt-2">
-        Experienced in designing, developing and delivering software products.
-        Curious, passionate and love to learn and try new things. On a journey
-        to find peace and happiness in life.
-      </p>
+      <h1 class="text-2xl font-normal mb-3 font-serif">Hey this is, Maneth</h1>
+      <div class="flex flex-col gap-2">
+        <p>
+          Software engineer by day, eternal explorer by nature. By day, I'm a
+          software engineer with a passion for building products that help
+          people live better lives.
+        </p>
+        <p>
+          I'm constantly seeking new challenges - whether it's solving complex
+          puzzles, assembling builds, discovering new hobbies or even trying out
+          new taste and experiences from different cultures.
+        </p>
+      </div>
     </div>
 
-    <div class="flex gap-4 items-end w-full mt-2">
+    <div class="flex gap-6 mt-2 items-center">
       {
         socials.map(({ href, icon: Icon }) => (
           <a
             href={href}
             target="_blank"
-            class="p-2 flex items-center justify-center hover:-translate-y-1 transition-color duration-300 aspect-square text-white/80 hover:text-white"
+            class="text-neutral-500 hover:text-neutral-800 transition-colors"
           >
-            <Icon size={32} />
+            <Icon size={24} />
           </a>
         ))
       }
+      <a href="mailto:manethpak.dev@gmail.com"> manethpak.dev@gmail.com </a>
     </div>
-  </div>
-
-  <div class="rounded-xl overflow-hidden self-center">
-    <Image
-      loading="eager"
-      src={ProfileImg}
-      alt="Profile"
-      width={500}
-      height={500}
-      class="object-contain object-top"
-    />
   </div>
 </GridItem>
