@@ -1,10 +1,21 @@
 ---
-import { ClientRouter } from "astro:transitions";
 import type Props from "./props.type";
 import { CreditSection } from "../components/section";
 import SpeedInsights from "@vercel/speed-insights/astro";
+import "./global.css";
 
-const { title, desc, image, meta } = Astro.props;
+const {
+  title = "Maneth Pak | Software Engineer",
+  desc = "Software engineer by day, eternal explorer by nature.",
+  image = "/og-image.png",
+  meta,
+} = Astro.props;
+
+const url = import.meta.env.PUBLIC_URL || Astro.url;
+
+const ogImageUrl = image.startsWith("http")
+  ? image
+  : new URL(image, url).toString();
 ---
 
 <html lang="en">
@@ -14,10 +25,22 @@ const { title, desc, image, meta } = Astro.props;
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/jpeg" href="/icon.jpg" />
     <meta name="generator" content={Astro.generator} />
+
+    <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
+    <meta property="og:url" content={url} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={desc} />
-    <meta property="og:image" content={image} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:alt" content={title} />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={url} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={desc} />
+    <meta property="twitter:image" content={ogImageUrl} />
+
     <!-- Custom meta tags for the website -->
     {
       meta &&
@@ -25,6 +48,24 @@ const { title, desc, image, meta } = Astro.props;
           <meta property={key} content={value} />
         ))
     }
+
+    <!-- essential meta tags -->
+    <meta
+      name="keywords"
+      content="Maneth Pak, Software Engineer, Khmer, Cambodia"
+    />
+    <meta name="author" content="Maneth Pak" />
+    <meta name="robots" content="index, follow" />
+    <meta name="googlebot" content="index, follow" />
+    <meta name="google" content="notranslate" />
+
+    <!-- Load fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Roboto+Slab:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
 
     <title>{title}</title>
 
@@ -36,12 +77,8 @@ const { title, desc, image, meta } = Astro.props;
       )
     }
   </head>
-  <body class="bg-neutral-900 bg-grid-white/10 text-neutral-300">
-    <div
-      class="fixed pointer-events-none bottom-0 inset-0 flex items-center justify-center bg-black [mask-image:linear-gradient(transparent,#fff)] -z-10"
-    >
-    </div>
-    <main class="p-4 md:p-10 max-w-6xl mx-auto">
+  <body class="bg-neutral-50 text-neutral-800">
+    <main class="p-4 md:p-8 max-w-3xl mx-auto">
       <slot />
 
       <CreditSection />

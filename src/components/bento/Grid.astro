@@ -8,6 +8,6 @@ interface Props {
 const { className } = Astro.props;
 ---
 
-<div class={cn("grid auto-rows-[8rem] gap-4", className)}>
+<div class={cn("grid auto-rows-auto gap-6", className)}>
   <slot />
 </div>

@@ -1,0 +1,97 @@
+---
+import GridItem from "@/components/bento/Item.astro";
+import type { Article } from "@/types/article.type";
+import { Image } from "astro:assets";
+import { formatDate } from "@/helper/formatDate";
+
+import Grid from "@/components/bento/Grid.astro";
+import Header from "@/components/util/Header.astro";
+import Layout from "@/layouts/Layout.astro";
+
+const data = await fetch(`https://dev.to/api/articles?username=manethpak`);
+const articles: Article[] = await data.json();
+export const prerender = true;
+
+// Personal thoughts data
+const thoughts = [
+  {
+    date: "2025-06-23",
+    content:
+      "When redesigning this website, I finally understood: Good design isn't about making things pretty. It's about delivering your message to the audience. The real purpose of design is communication.",
+  },
+];
+---
+
+<style>
+  h2.title {
+    @apply text-2xl font-bold mb-2;
+  }
+  time {
+    @apply text-sm text-neutral-400;
+  }
+
+  p {
+    @apply text-neutral-500;
+  }
+
+  ul {
+    @apply list-disc list-inside;
+  }
+</style>
+
+<Layout
+  title="Pak Maneth | Articles and Blogs"
+  desc="Random thoughts, Journals and articles about life, technology"
+>
+  <section>
+    <Grid className="auto-rows-auto">
+      <Header
+        heading="Thoughts and Articles"
+        subtitle="Random thoughts, Journals and articles about life, health, personal development and technology"
+      />
+
+      <div>
+        <h2 class="title">Thoughts</h2>
+
+        {
+          thoughts.map((thought) => (
+            <GridItem className="flex-col">
+              <time datetime={thought.date} class="text-xs mb-0">
+                {formatDate(thought.date)}"
+              </time>
+              <p class="mt-0 text-sm text-neutral-500">{thought.content}</p>
+            </GridItem>
+          ))
+        }
+      </div>
+
+      <div>
+        <h2 class="title">Articles</h2>
+        <div class="flex flex-col gap-4">
+          {
+            articles.map((article) => {
+              return (
+                <GridItem className="flex gap-2 group hover:bg-neutral-100/80 transition-colors">
+                  <a
+                    href={"/writing/blog/" + article.slug}
+                    class=" no-underline"
+                  >
+                    <h1 class="text-xl font-semibold group-hover:text-neutral-800 transition-colors">
+                      {article.title}
+                    </h1>
+                    <time class="text-neutral-600 group-hover:text-neutral-800 transition-colors">
+                      {formatDate(article.published_at)}
+                    </time>
+                    <p>{article.description}</p>
+                    <p>{article.tag_list.map((tag) => "#" + tag).join(", ")}</p>
+                    <span class="text-sm self-end">{`${article.reading_time_minutes} min read`}</span>
+                  </a>
+                </GridItem>
+              );
+            })
+          }
+        </div>
+      </div>
+    </Grid>
+  </section>
+</Layout>

@@ -1,10 +1,11 @@
 ---
-import ExtraLayout from "../../layouts/ExtraLayout.astro";
-import type { DetailArticle } from "../../types/article.type";
-import GridItem from "../../components/bento/Item.astro";
-import { formatDate } from "../../helper/formatDate";
+import Layout from "@/layouts/Layout.astro";
+import type { DetailArticle } from "@/types/article.type";
+import GridItem from "@/components/bento/Item.astro";
+import { formatDate } from "@/helper/formatDate";
 import { Image } from "astro:assets";
 import { JSDOM } from "jsdom";
+import { ArrowLeftIcon } from "astro-feather";
 
 const { slug } = Astro.params;
 
@@ -28,11 +29,13 @@ function parsedHtml(htmlString: string) {
 export const prerender = false;
 ---
 
-<ExtraLayout title={article.title} desc={article.description}>
-  <GridItem className="mt-10">
-    <article
-      class="prose prose-neutral prose-invert font-mono w-full max-w-none"
-    >
+<Layout title={article.title} desc={article.description}>
+  <a href="/writing" class="text-neutral-500 flex items-center gap-2 w-fit">
+    <ArrowLeftIcon size={16} />
+    Back to all articles
+  </a>
+  <GridItem className="mt-4">
+    <article class="prose prose-neutral font-mono w-full max-w-none">
       {
         article.cover_image && (
           <Image
@@ -49,7 +52,7 @@ export const prerender = false;
       <Fragment set:html={parsedHtml(article.body_html)} />
     </article>
   </GridItem>
-</ExtraLayout>
+</Layout>
 
 <style>
   svg {
