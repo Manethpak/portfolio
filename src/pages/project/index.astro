@@ -2,63 +2,184 @@
 import Grid from "@/components/bento/Grid.astro";
 import GridItem from "@/components/bento/Item.astro";
 import Header from "@/components/util/Header.astro";
+import { category, projects } from "@/constants/project.const";
 import Layout from "@/layouts/Layout.astro";
-import { Image } from "astro:assets";
+import { ChevronDownIcon, ChevronUpIcon } from "astro-feather";
 
-const projects = [
-  {
-    title: "Slecret",
-    description:
-      "A content publishing platform aim to localize technical content for Cambodian developers.",
-    image: "/profile.jpg",
-    year: "2021",
-    url: "#",
-    tags: ["Vue", "Nestjs", "PostgreSQL"],
-    category: "study",
-  },
-  {
-    title: "Project Two",
-    description:
-      "This is Project Two. It solves a real-world problem by leveraging modern web technologies.",
-    image: "/profile.jpg",
-    year: "2024",
-    url: "#",
-    tags: ["Open Source", "TypeScript"],
-    category: "personal",
-  },
-  {
-    title: "Project Three",
-    description:
-      "Project Three is a personal project I built to learn more about a specific technology or to create something fun.",
-    image: "/profile.jpg",
-    year: "2024",
-    url: "#",
-    tags: ["React", "Node.js"],
-    category: "study",
-  },
-  {
-    title: "Project Four",
-    description:
-      "Project Four is a personal project I built to learn more about a specific technology or to create something fun.",
-    image: "/profile.jpg",
-    year: "2024",
-    url: "#",
-    tags: ["React", "Node.js"],
-    category: "client",
-  },
-];
+const displayProjects = projects.filter(
+  (project) =>
+    project.category === category.work ||
+    project.category === category.client ||
+    project.category === category.personal ||
+    project.category === category.study
+);
 
-const workProjects = projects.filter(
-  (project) => project.category === "work" || project.category === "client"
-);
-const personalProjects = projects.filter(
-  (project) => project.category === "personal" || project.category === "study"
-);
+// Get unique categories from projects
+const categories = Object.values(category);
 ---
+
+<script>
+  // Client-side filtering and sorting logic
+  document.addEventListener("DOMContentLoaded", () => {
+    const projectItems = document.querySelectorAll(".project-item");
+    const filterButtons = document.querySelectorAll(".filter-btn");
+    const sortToggle = document.getElementById("sort-toggle");
+    const sortText = document.getElementById("sort-text");
+    const sortIconContainer = document.getElementById("sort-icon-container");
+    const projectsContainer = document.getElementById("projects-container");
+
+    // Get initial values from URL parameters or use defaults
+    const urlParams = new URLSearchParams(window.location.search);
+    let currentCategory = urlParams.get("category") || "all";
+    let currentSort = urlParams.get("sort") || "newest";
+
+    // Function to update sort icon visibility
+    function updateSortIcon() {
+      if (sortIconContainer) {
+        const icons = sortIconContainer.querySelectorAll(".sort-icon");
+        if (currentSort === "newest") {
+          icons[0].classList.remove("hidden");
+          icons[1].classList.add("hidden");
+        } else {
+          icons[0].classList.add("hidden");
+          icons[1].classList.remove("hidden");
+        }
+      }
+    }
+
+    // Filter projects by category
+    function filterProjects() {
+      projectItems.forEach((item) => {
+        const itemCategory = item.getAttribute("data-category");
+        if (currentCategory === "all" || itemCategory === currentCategory) {
+          (item as HTMLElement).style.display = "";
+        } else {
+          (item as HTMLElement).style.display = "none";
+        }
+      });
+    }
+
+    // Sort projects by year
+    function sortProjects() {
+      const items = Array.from(projectItems);
+      items.sort((a, b) => {
+        const yearA = parseInt(a.getAttribute("data-year") || "0");
+        const yearB = parseInt(b.getAttribute("data-year") || "0");
+
+        return currentSort === "newest" ? yearB - yearA : yearA - yearB;
+      });
+
+      // Remove all items and append them in the new order
+      items.forEach((item) => {
+        projectsContainer?.appendChild(item);
+      });
+    }
+
+    // Update URL with current filter and sort parameters
+    function updateURL() {
+      const url = new URL(window.location.href);
+
+      // Set or update parameters
+      if (currentCategory === "all") {
+        url.searchParams.delete("category");
+      } else {
+        url.searchParams.set("category", currentCategory);
+      }
+
+      if (currentSort === "newest") {
+        url.searchParams.delete("sort");
+      } else {
+        url.searchParams.set("sort", currentSort);
+      }
+
+      // Update URL without reloading the page
+      window.history.pushState({}, "", url);
+    }
+
+    // Apply both filtering and sorting
+    function applyFiltersAndSort() {
+      filterProjects();
+      sortProjects();
+      updateSortIcon();
+      updateURL();
+    }
+
+    // Set initial active state for filter buttons based on URL
+    function setInitialActiveState() {
+      filterButtons.forEach((btn) => {
+        const btnCategory = btn.getAttribute("data-category");
+        if (btnCategory === currentCategory) {
+          btn.classList.add("active");
+        } else {
+          btn.classList.remove("active");
+        }
+      });
+
+      // Update sort text based on current sort
+      if (sortText) {
+        sortText.textContent =
+          currentSort === "newest" ? "Newest First" : "Oldest First";
+      }
+    }
+
+    // Set up event listeners for filter buttons
+    filterButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        // Update active state
+        filterButtons.forEach((btn) => btn.classList.remove("active"));
+        button.classList.add("active");
+
+        // Update current category and apply filters
+        currentCategory = button.getAttribute("data-category") || "all";
+        applyFiltersAndSort();
+      });
+    });
+
+    // Set up event listener for sort toggle
+    sortToggle?.addEventListener("click", () => {
+      // Toggle sort order
+      currentSort = currentSort === "newest" ? "oldest" : "newest";
+
+      // Update toggle text
+      if (sortText) {
+        sortText.textContent =
+          currentSort === "newest" ? "Newest First" : "Oldest First";
+      }
+
+      applyFiltersAndSort();
+    });
+
+    // Set initial active state based on URL parameters
+    setInitialActiveState();
+
+    // Initial application of filters and sort
+    applyFiltersAndSort();
+  });
+</script>
 
 <style>
   .badge {
     @apply text-xs px-2 py-1 bg-neutral-100 text-neutral-600;
+  }
+
+  .filter-btn {
+    @apply px-3 py-1 rounded-md text-sm transition-colors;
+  }
+
+  .filter-btn.active {
+    @apply bg-neutral-800 text-white;
+  }
+
+  .filter-btn:not(.active) {
+    @apply bg-neutral-100 text-neutral-600 hover:bg-neutral-200;
+  }
+
+  .sort-toggle {
+    @apply flex items-center gap-2 px-3 py-1 rounded-md text-sm bg-neutral-100 text-neutral-600 hover:bg-neutral-200 transition-colors;
+  }
+
+  .hidden {
+    display: none;
   }
 </style>
 
@@ -67,92 +188,62 @@ const personalProjects = projects.filter(
     <Header heading="Projects" subtitle="A collection of things I've built." />
   </Grid>
 
-  <!-- Work & Client Projects -->
   <div class="mt-8">
-    <h2 class="text-xl font-semibold mb-4 text-neutral-800">
-      Work & Client Projects
-    </h2>
-    <div class="grid md:grid-cols-2 gap-4">
-      {
-        workProjects
-          .sort((a, b) => b.year.localeCompare(a.year))
-          .map((project) => (
-            <a href={project.url} target="_blank" class="no-underline">
-              <GridItem className="h-full flex-col group hover:border-neutral-400 transition-colors ">
-                <div class="w-full h-40 overflow-hidden rounded-md">
-                  <Image
-                    src={project.image}
-                    alt={project.title}
-                    width={600}
-                    height={400}
-                    class="w-full h-full object-cover group-hover:scale-105 transition-transform"
-                  />
-                </div>
-                <div class="mt-4">
-                  <div class="flex items-center gap-2">
-                    <h3 class="text-lg font-semibold text-neutral-800">
-                      {project.title}
-                    </h3>
-                    <span class="badge capitalize">{project.category}</span>
-                  </div>
-                  <p class="text-neutral-500 text-sm mt-1">{project.year}</p>
-                  <p class="text-neutral-500 text-sm mt-1">
-                    {project.description}
-                  </p>
-                  <div class="flex flex-wrap gap-2 mt-3">
-                    {project.tags.map((tag) => (
-                      <span class="badge">{tag}</span>
-                    ))}
-                  </div>
-                </div>
-              </GridItem>
-            </a>
+    <!-- Filter and Sort Controls -->
+    <div class="flex flex-col sm:flex-row justify-between mb-6 gap-4">
+      <div class="flex flex-wrap gap-2">
+        <button class="filter-btn active" data-category="all">All</button>
+        {
+          categories.map((cat) => (
+            <button class="filter-btn" data-category={cat}>
+              {cat}
+            </button>
           ))
-      }
-    </div>
-  </div>
+        }
+      </div>
+      <div>
+        <button id="sort-toggle" class="sort-toggle">
+          <span id="sort-icon-container">
+            <ChevronDownIcon size={16} customClasses="sort-icon" />
+            <ChevronUpIcon size={16} customClasses="sort-icon hidden" />
+          </span>
 
-  <!-- Personal & Study Projects -->
-  <div class="mt-8">
-    <h2 class="text-xl font-semibold mb-4 text-neutral-800">
-      Personal & Study Projects
-    </h2>
-    <div class="grid md:grid-cols-2 gap-4">
+          <span id="sort-text">Newest First</span>
+        </button>
+      </div>
+    </div>
+
+    <div id="projects-container" class="grid md:grid-cols-2 gap-4">
       {
-        personalProjects
-          .sort((a, b) => b.year.localeCompare(a.year))
-          .map((project) => (
-            <a href={project.url} target="_blank" class="no-underline">
-              <GridItem className="h-full flex-col group hover:border-neutral-400 transition-colors">
-                <div class="w-full h-40 overflow-hidden rounded-md">
-                  <Image
-                    src={project.image}
-                    alt={project.title}
-                    width={600}
-                    height={400}
-                    class="w-full h-full object-cover group-hover:scale-105 transition-transform"
-                  />
+        displayProjects.map((project) => (
+          <a
+            href={project.url}
+            target="_blank"
+            class="no-underline project-item"
+            data-category={project.category}
+            data-year={project.year}
+          >
+            <GridItem className="h-full flex-col group hover:border-neutral-400 transition-colors ">
+              <div class="mt-2">
+                <div class="flex items-center gap-2">
+                  <h3 class="text-lg font-semibold text-neutral-800">
+                    {project.title}
+                  </h3>
+                  <span class="badge capitalize">{project.category}</span>
                 </div>
-                <div class="mt-4">
-                  <div class="flex items-center gap-2">
-                    <h3 class="text-lg font-semibold text-neutral-800">
-                      {project.title}
-                    </h3>
-                    <span class="badge capitalize">{project.category}</span>
-                  </div>
-                  <p class="text-neutral-500 text-sm mt-1">{project.year}</p>
-                  <p class="text-neutral-500 text-sm mt-1">
-                    {project.description}
-                  </p>
-                  <div class="flex flex-wrap gap-2 mt-3">
-                    {project.tags.map((tag) => (
-                      <span class="badge">{tag}</span>
-                    ))}
-                  </div>
+                <p class="text-neutral-500 text-sm mt-1">{project.year}</p>
+                <p class="text-neutral-500 text-sm mt-1">
+                  {project.description}
+                </p>
+                <div class="flex flex-wrap gap-2 mt-3">
+                  {project.tags.map((tag) => (
+                    <span class="badge">{tag}</span>
+                  ))}
                 </div>
-              </GridItem>
-            </a>
-          ))
+              </div>
+            </GridItem>
+          </a>
+        ))
       }
     </div>
   </div>

@@ -3,7 +3,8 @@ import Grid from "@/components/bento/Grid.astro";
 import GridItem from "@/components/bento/Item.astro";
 import Header from "@/components/util/Header.astro";
 import Layout from "@/layouts/Layout.astro";
-import { CERTS, ACHIEVEMENTS } from "@/constants";
+import { CERTS, ACHIEVEMENTS, TALKS } from "@/constants";
+import { Image } from "astro:assets";
 ---
 
 <style>
@@ -12,6 +13,9 @@ import { CERTS, ACHIEVEMENTS } from "@/constants";
   }
   h3 {
     @apply font-semibold;
+  }
+  h4 {
+    @apply text-neutral-600 font-normal;
   }
 
   time {
@@ -23,7 +27,7 @@ import { CERTS, ACHIEVEMENTS } from "@/constants";
   }
 
   .timeline-item {
-    @apply mb-8 relative pl-6 border-l border-neutral-200;
+    @apply mb-8 relative pl-6 border-l-2 border-neutral-200;
   }
 </style>
 
@@ -44,12 +48,6 @@ import { CERTS, ACHIEVEMENTS } from "@/constants";
           <h3>Bachelor of Engineering in Software Engineering</h3>
           <h4>Kirirom Institute of Technology</h4>
           <time>2019 - 2023</time>
-          <p>
-            Studied software engineering, focusing on design, build and
-            maintaining software, computer systems, and development
-            methodologies. Specializing in areas like web/app development and
-            artificial intelligence.
-          </p>
         </div>
       </section>
     </GridItem>
@@ -95,8 +93,7 @@ import { CERTS, ACHIEVEMENTS } from "@/constants";
         <h2>Relevant Experience</h2>
 
         <div class="timeline-item">
-          <h4>Co-Founded <span class="font-bold">Slecret</span></h4>
-          <h5>Self-Employed</h5>
+          <h3>Co-Founded <span class="font-bold">Slecret</span></h3>
           <time>Oct 2021 - Nov 2022</time>
           <p>
             Co-founded a content publishing platform allowing users to create
@@ -140,6 +137,64 @@ import { CERTS, ACHIEVEMENTS } from "@/constants";
               </div>
             </div>
           ))
+        }
+      </section>
+    </GridItem>
+
+    <GridItem className="p-6 flex-col">
+      <section class="section">
+        <h2>Talks & Sharing</h2>
+
+        {
+          TALKS.sort((a, b) => b.date.localeCompare(a.date)).map(
+            ({
+              title,
+              event,
+              location,
+              date,
+              description,
+              slides,
+              video,
+              thumbnail,
+            }) => (
+              <div class="timeline-item flex items-start gap-4 flex-col-reverse sm:flex-row">
+                <div>
+                  <h3>{title}</h3>
+                  <h4>{event}</h4>
+                  <p class="text-neutral-500 mb-2 italic">{location}</p>
+                  <time>{date}</time>
+                  <p class="mt-2">{description}</p>
+                  <div class="flex gap-4 mt-3">
+                    {slides && (
+                      <a
+                        href={slides}
+                        class="text-blue-600 hover:text-blue-800 text-sm"
+                      >
+                        View Slides →
+                      </a>
+                    )}
+                    {video && (
+                      <a
+                        href={video}
+                        class="text-blue-600 hover:text-blue-800 text-sm"
+                      >
+                        Watch Video →
+                      </a>
+                    )}
+                  </div>
+                </div>
+                {thumbnail && (
+                  <Image
+                    src={thumbnail}
+                    alt={title}
+                    width={120}
+                    height={120}
+                    class="aspect-auto rounded-md object-cover object-center"
+                  />
+                )}
+              </div>
+            )
+          )
         }
       </section>
     </GridItem>

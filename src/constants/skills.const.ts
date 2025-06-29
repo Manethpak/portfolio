@@ -1,53 +1,3 @@
-import { AwardIcon, CloudIcon, LayoutIcon, ServerIcon } from "astro-feather";
-
-export const LANGUAGES = [
-  "HTML",
-  "CSS",
-  "JavaScript",
-  "TypeScript",
-  "Python",
-  "Go",
-];
-
-export const FRAMEWORKS_LIBRARIES = [
-  "React",
-  "Vue",
-  "Svelte",
-  "Next.js",
-  "Nuxt",
-  "Astro",
-  "NestJS",
-  "Hono",
-  "TailwindCSS",
-  "shadcn/ui",
-  "SWR",
-  "Jotai",
-  "Better auth",
-  "Prisma ORM",
-  "PayloadCMS",
-];
-
-export const DATABASES_CLOUDS = [
-  "PostgreSQL",
-  "MongoDB",
-  "Redis",
-  "Supabase",
-  "Vercel",
-  "Cloudflare",
-  "Coolify",
-  "DigitalOcean",
-  "AWS",
-];
-
-export const TOOLS = [
-  "Git",
-  "Github",
-  "Gitlab",
-  "Github Action",
-  "docker",
-  "postman",
-];
-
 export const CERTS = [
   {
     name: "Web Application and Software Architecture 101",
@@ -93,5 +43,48 @@ export const ACHIEVEMENTS = [
     organizedBy: "Paragon International University",
     issuedAt: "2021/08",
     description: "",
+  },
+];
+
+export const TALKS = [
+  {
+    title: "How AI is shaping the future of work across professions",
+    event: "Tech & Auto Expo",
+    location: "Chipmong 271 Mega Mall, Phnom Penh",
+    date: "2025/05",
+    description:
+      "Presented the fundamentals of AI and how it is shaping the future of work across professions.",
+    slides: "",
+    video: "",
+    thumbnail: "/talks/ai.jpg",
+  },
+  {
+    title: "TON - Digital economy of the future",
+    event: "Cambodia Blockchain Summit",
+    location: "National University of Management, Phnom Penh",
+    date: "2025/03",
+    description:
+      "Shared insights on TON, a blockchain platform on Telegram and how it is revolutionizing the digital economy.",
+    slides: "",
+    video: "",
+    thumbnail: "/talks/ton.jpg",
+  },
+  {
+    title: "Build your first Tech Startup",
+    event: "Startup Nation",
+    location: "Connexion, Phnom Penh",
+    date: "2025/01",
+    description:
+      "Conducted a workshop on building your first tech startup with a focus on AI and blockchain.",
+    thumbnail: "/talks/startup.jpg",
+  },
+  {
+    title: "Charii & Smart wallet: Bringing web3 closer to the user",
+    event: "CODE-C 2024",
+    location: "Cambodia Academy of Digital Technology, Phnom Penh",
+    date: "2024/06",
+    description:
+      "Presented the integration of Charii, a crowdfunding platform, with Smart wallet (ERC-4337).",
+    thumbnail: "/talks/code-c.jpg",
   },
 ];
