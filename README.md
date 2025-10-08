@@ -1,6 +1,8 @@
 # Portfolio Website
 
-A modern, responsive portfolio website built with Astro, showcasing my professional journey, projects, and writings.
+A minimalistic and responsive portfolio website built with Astro, showcasing my professional journey, projects, and writings.
+
+![Portfolio Website Open Graph Image](public/og-image.png)
 
 ## 🛠️ Tech Stack
 
