@@ -12,7 +12,7 @@ const { el: Tag = "div", className, ...props } = Astro.props;
 
 <Tag
   class={cn(
-    "bg-gradient-to-br from-neutral-600/20 to-gray-500/20 rounded-lg border border-white/10 hover:border-neutral-500/80 transition-all p-4 gap-2 hover:-translate-y-1",
+    "bg-gradient-to-br from-[rgb(var(--color-gradient-from)/0.2)] to-[rgb(var(--color-gradient-to)/0.2)] rounded-lg border border-primary-border/20 hover:border-primary-border/80 transition-all p-4 gap-2 hover:-translate-y-1",
     className
   )}
   {...props}

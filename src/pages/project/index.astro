@@ -159,7 +159,7 @@ const categories = Object.values(category);
 
 <style>
   .badge {
-    @apply text-xs px-2 py-1 bg-neutral-100 text-neutral-600;
+    @apply text-xs px-2 py-1 bg-secondary-bg text-secondary-text;
   }
 
   .filter-btn {
@@ -167,15 +167,15 @@ const categories = Object.values(category);
   }
 
   .filter-btn.active {
-    @apply bg-neutral-800 text-white;
+    @apply bg-primary-accent text-white;
   }
 
   .filter-btn:not(.active) {
-    @apply bg-neutral-100 text-neutral-600 hover:bg-neutral-200;
+    @apply bg-secondary-bg text-secondary-text hover:bg-tertiary-bg;
   }
 
   .sort-toggle {
-    @apply flex items-center gap-2 px-3 py-1 rounded-md text-sm bg-neutral-100 text-neutral-600 hover:bg-neutral-200 transition-colors;
+    @apply flex items-center gap-2 px-3 py-1 rounded-md text-sm bg-secondary-bg text-secondary-text hover:bg-tertiary-bg transition-colors;
   }
 
   .hidden {
@@ -223,16 +223,16 @@ const categories = Object.values(category);
             data-category={project.category}
             data-year={project.year}
           >
-            <GridItem className="h-full flex-col group hover:border-neutral-400 transition-colors ">
+            <GridItem className="h-full flex-col group hover:border-primary-border transition-colors ">
               <div class="mt-2">
                 <div class="flex items-center gap-2">
-                  <h3 class="text-lg font-semibold text-neutral-800">
+                  <h3 class="text-lg font-semibold text-primary-text">
                     {project.title}
                   </h3>
                   <span class="badge capitalize">{project.category}</span>
                 </div>
-                <p class="text-neutral-500 text-sm mt-1">{project.year}</p>
-                <p class="text-neutral-500 text-sm mt-1">
+                <p class="text-tertiary-text text-sm mt-1">{project.year}</p>
+                <p class="text-tertiary-text text-sm mt-1">
                   {project.description}
                 </p>
                 <div class="flex flex-wrap gap-2 mt-3">

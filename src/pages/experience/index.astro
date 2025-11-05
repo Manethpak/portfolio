@@ -15,11 +15,11 @@ import { Image } from "astro:assets";
     @apply font-semibold;
   }
   h4 {
-    @apply text-neutral-600 font-normal;
+    @apply text-tertiary-text font-normal;
   }
 
   time {
-    @apply text-sm text-neutral-400 block mb-2;
+    @apply text-sm text-muted-text block mb-2;
   }
 
   .cert-item {
@@ -27,7 +27,7 @@ import { Image } from "astro:assets";
   }
 
   .timeline-item {
-    @apply mb-8 relative pl-6 border-l-2 border-neutral-200;
+    @apply mb-8 relative pl-6 border-l-2 border-secondary-border;
   }
 </style>
 
@@ -114,7 +114,7 @@ import { Image } from "astro:assets";
                 <a href={url}>
                   <h3>{name}</h3>
                 </a>
-                <p class="text-neutral-500">{issuedBy}</p>
+                <p class="text-tertiary-text">{issuedBy}</p>
                 <time>{issuedAt}</time>
               </div>
             </div>
@@ -161,7 +161,7 @@ import { Image } from "astro:assets";
                 <div>
                   <h3>{title}</h3>
                   <h4>{event}</h4>
-                  <p class="text-neutral-500 mb-2 italic">{location}</p>
+                  <p class="text-tertiary-text mb-2 italic">{location}</p>
                   <time>{date}</time>
                   <p class="mt-2">{description}</p>
                   <div class="flex gap-4 mt-3">
