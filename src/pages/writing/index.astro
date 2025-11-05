@@ -27,11 +27,11 @@ const thoughts = [
     @apply text-2xl font-bold mb-2;
   }
   time {
-    @apply text-sm text-neutral-400;
+    @apply text-sm text-muted-text;
   }
 
   p {
-    @apply text-neutral-500;
+    @apply text-secondary-text;
   }
 
   ul {
@@ -59,7 +59,7 @@ const thoughts = [
               <time datetime={thought.date} class="text-xs mb-0">
                 {formatDate(thought.date)}"
               </time>
-              <p class="mt-0 text-sm text-neutral-500">{thought.content}</p>
+              <p class="mt-0 text-sm text-secondary-text">{thought.content}</p>
             </GridItem>
           ))
         }
@@ -71,15 +71,15 @@ const thoughts = [
           {
             articles.map((article) => {
               return (
-                <GridItem className="flex gap-2 group hover:bg-neutral-100/80 transition-colors">
+                <GridItem className="flex gap-2 group hover:bg-secondary-bg transition-colors">
                   <a
                     href={"/writing/blog/" + article.slug}
                     class=" no-underline"
                   >
-                    <h1 class="text-xl font-semibold group-hover:text-neutral-800 transition-colors">
+                    <h1 class="text-xl font-semibold group-hover:text-primary-text transition-colors">
                       {article.title}
                     </h1>
-                    <time class="text-neutral-600 group-hover:text-neutral-800 transition-colors">
+                    <time class="text-secondary-text group-hover:text-primary-text transition-colors">
                       {formatDate(article.published_at)}
                     </time>
                     <p>{article.description}</p>

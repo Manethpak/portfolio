@@ -1,6 +1,7 @@
 ---
 import type Props from "./props.type";
 import { CreditSection } from "../components/section";
+import ThemeToggle from "../components/util/ThemeToggle.astro";
 import SpeedInsights from "@vercel/speed-insights/astro";
 import "./global.css";
 
@@ -69,6 +70,16 @@ const ogImageUrl = image.startsWith("http")
 
     <title>{title}</title>
 
+    <script is:inline>
+      const theme = localStorage.getItem("theme");
+      const prefersDark = window.matchMedia(
+        "(prefers-color-scheme: dark)"
+      ).matches;
+      if (theme === "dark" || (!theme && prefersDark)) {
+        document.documentElement.classList.add("dark");
+      }
+    </script>
+
     {
       import.meta.env.PROD && (
         <>
@@ -77,7 +88,7 @@ const ogImageUrl = image.startsWith("http")
       )
     }
   </head>
-  <body class="bg-neutral-50 text-neutral-800">
+  <body class="bg-primary-bg text-primary-text transition-colors">
     <main class="p-4 md:p-8 max-w-3xl mx-auto">
       <slot />
 
