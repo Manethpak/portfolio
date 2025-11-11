@@ -1,7 +1,6 @@
 ---
 import type Props from "./props.type";
 import { CreditSection } from "../components/section";
-import ThemeToggle from "../components/util/ThemeToggle.astro";
 import SpeedInsights from "@vercel/speed-insights/astro";
 import "./global.css";
 
@@ -24,7 +23,18 @@ const ogImageUrl = image.startsWith("http")
     <meta charset="UTF-8" />
     <meta name="description" content={desc} />
     <meta name="viewport" content="width=device-width" />
-    <link rel="icon" type="image/jpeg" href="/icon.jpg" />
+    <link
+      rel="icon"
+      type="image/png"
+      href="/icon-light.png"
+      media="(prefers-color-scheme: light)"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      href="/icon-dark.png"
+      media="(prefers-color-scheme: dark)"
+    />
     <meta name="generator" content={Astro.generator} />
 
     <!-- Open Graph / Facebook -->

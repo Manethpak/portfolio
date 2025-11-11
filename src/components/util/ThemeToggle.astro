@@ -1,14 +1,27 @@
 ---
-import { MoonIcon, SunIcon } from "astro-feather";
+import { Image } from "astro:assets";
 ---
 
 <button
   id="theme-toggle"
-  class="p-2 rounded-lg bg-secondary-bg hover:bg-tertiary-bg transition-colors"
+  class="hover:rotate-12 transition-transform"
   aria-label="Toggle theme"
 >
-  <SunIcon customClasses="w-5 h-5 text-primary-text dark:hidden" />
-  <MoonIcon customClasses="w-5 h-5 text-primary-text hidden dark:block" />
+  <Image
+    src="/icon-light-transparent.png"
+    alt="Maneth"
+    width={120}
+    height={120}
+    class="aspect-auto h-fit self-end sm:self-center dark:hidden"
+  />
+  <Image
+    src="/icon-dark-transparent.png"
+    alt="Maneth"
+    width={120}
+    height={120}
+    class="aspect-auto h-fit self-end sm:self-center hidden dark:block"
+  />
+  <p class="text-xs">click me!</p>
 </button>
 
 <script>
