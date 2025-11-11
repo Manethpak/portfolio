@@ -1,9 +1,7 @@
 /// <reference types="astro/client" />
 
 interface ImportMetaEnv {
-  readonly DEV_API_KEY: string;
-  readonly PUBLIC_DEV_API_URL: string;
-  // more env variables...
+  readonly NOTION_API_KEY: string;
 }
 
 interface ImportMeta {

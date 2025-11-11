@@ -4,7 +4,7 @@ import { Image } from "astro:assets";
 
 <button
   id="theme-toggle"
-  class="hover:rotate-12 transition-transform"
+  class="self-end max-w-[80px] sm:max-w-[120px]"
   aria-label="Toggle theme"
 >
   <Image
@@ -12,17 +12,33 @@ import { Image } from "astro:assets";
     alt="Maneth"
     width={120}
     height={120}
-    class="aspect-auto h-fit self-end sm:self-center dark:hidden"
+    class="dark:hidden w-20 h-20 sm:w-[120px] sm:h-[120px]"
   />
   <Image
     src="/icon-dark-transparent.png"
     alt="Maneth"
     width={120}
     height={120}
-    class="aspect-auto h-fit self-end sm:self-center hidden dark:block"
+    class="hidden dark:block w-20 h-20 sm:w-[120px] sm:h-fit"
   />
-  <p class="text-xs">click me!</p>
+  <p class="text-[10px] w-fit text-center">click me to toggle theme!</p>
 </button>
+
+<style>
+  @keyframes jump {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-12px);
+    }
+  }
+
+  #theme-toggle.jump {
+    animation: jump 0.4s ease-in-out;
+  }
+</style>
 
 <script>
   const themeToggle = document.getElementById("theme-toggle");
@@ -47,6 +63,11 @@ import { Image } from "astro:assets";
   themeToggle?.addEventListener("click", () => {
     const isDark = htmlElement.classList.toggle("dark");
     localStorage.setItem("theme", isDark ? "dark" : "light");
+
+    // Trigger jump animation
+    themeToggle.classList.remove("jump");
+    void themeToggle.offsetWidth; // Force reflow to restart animation
+    themeToggle.classList.add("jump");
   });
 
   window
