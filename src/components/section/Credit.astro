@@ -1,6 +1,4 @@
 ---
-import ThemeToggle from "../util/ThemeToggle.astro";
-
 const links = [
   { href: "/writing", title: "Writing" },
   { href: "/project", title: "Project" },
@@ -14,9 +12,6 @@ const isCurrentPage = (path: string) => currentPath.startsWith(path);
 <div
   class="flex flex-col items-center justify-center py-12 text-xs text-muted-text"
 >
-  <div class="flex justify-end w-full">
-    <ThemeToggle />
-  </div>
   <div class="flex justify-evenly p-6 w-full">
     {
       links.map((link) => (

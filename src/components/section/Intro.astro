@@ -3,6 +3,7 @@ import { Image } from "astro:assets";
 import GridItem from "../bento/Item.astro";
 import ProfileImg from "/src/assets/profile.jpg";
 import { GithubIcon, LinkedinIcon } from "astro-feather";
+import ThemeToggle from "../util/ThemeToggle.astro";
 
 const { colSpan } = Astro.props;
 
@@ -33,20 +34,7 @@ const socials = [
             side projects, or exploring different cultures and cuisines.
           </p>
         </div>
-        <Image
-          src="/icon-light-transparent.png"
-          alt="Maneth"
-          width={120}
-          height={120}
-          class="aspect-auto h-fit self-end sm:self-center dark:hidden"
-        />
-        <Image
-          src="/icon-dark-transparent.png"
-          alt="Maneth"
-          width={120}
-          height={120}
-          class="aspect-auto h-fit self-end sm:self-center hidden dark:block"
-        />
+        <ThemeToggle />
       </div>
     </div>
 
