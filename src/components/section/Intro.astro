@@ -22,17 +22,31 @@ const socials = [
   <div class="flex flex-col gap-6 justify-between">
     <div>
       <h1 class="text-2xl font-normal mb-3 font-serif">Hey this is, Maneth</h1>
-      <div class="flex flex-col gap-2">
-        <p>
-          Software engineer by day, eternal explorer by nature. By day, I'm a
-          software engineer with a passion for building products that help
-          people live better lives.
-        </p>
-        <p>
-          I'm constantly seeking new challenges - whether it's solving complex
-          puzzles, assembling builds, discovering new hobbies or even trying out
-          new taste and experiences from different cultures.
-        </p>
+      <div class="flex flex-col sm:flex-row">
+        <div class="space-y-2">
+          <p>
+            I build software that solves real problems. Currently focused on
+            creating products that improve how people work and live.
+          </p>
+          <p>
+            When I'm not coding, I'm usually tinkering with new tech, working on
+            side projects, or exploring different cultures and cuisines.
+          </p>
+        </div>
+        <Image
+          src="/icon-light-transparent.png"
+          alt="Maneth"
+          width={120}
+          height={120}
+          class="aspect-auto h-fit self-end sm:self-center dark:hidden"
+        />
+        <Image
+          src="/icon-dark-transparent.png"
+          alt="Maneth"
+          width={120}
+          height={120}
+          class="aspect-auto h-fit self-end sm:self-center hidden dark:block"
+        />
       </div>
     </div>
 
