@@ -1,25 +1,19 @@
 ---
+import { getCollection } from "astro:content";
 import Grid from "@/components/bento/Grid.astro";
 import GridItem from "@/components/bento/Item.astro";
 import Header from "@/components/util/Header.astro";
-import { category, projects } from "@/constants/project.const";
 import Layout from "@/layouts/Layout.astro";
-import { ChevronDownIcon, ChevronUpIcon } from "astro-feather";
+import { ChevronDownIcon, ChevronUpIcon, ArrowRightIcon } from "astro-feather";
 
-const displayProjects = projects.filter(
-  (project) =>
-    project.category === category.work ||
-    project.category === category.client ||
-    project.category === category.personal ||
-    project.category === category.study
-);
+const projects = await getCollection("projects");
+const sortedProjects = projects.sort((a, b) => b.data.year - a.data.year);
 
-// Get unique categories from projects
-const categories = Object.values(category);
+// Get unique categories
+const categories = [...new Set(projects.map((p) => p.data.category))];
 ---
 
 <script>
-  // Client-side filtering and sorting logic
   document.addEventListener("DOMContentLoaded", () => {
     const projectItems = document.querySelectorAll(".project-item");
     const filterButtons = document.querySelectorAll(".filter-btn");
@@ -28,12 +22,10 @@ const categories = Object.values(category);
     const sortIconContainer = document.getElementById("sort-icon-container");
     const projectsContainer = document.getElementById("projects-container");
 
-    // Get initial values from URL parameters or use defaults
     const urlParams = new URLSearchParams(window.location.search);
     let currentCategory = urlParams.get("category") || "all";
     let currentSort = urlParams.get("sort") || "newest";
 
-    // Function to update sort icon visibility
     function updateSortIcon() {
       if (sortIconContainer) {
         const icons = sortIconContainer.querySelectorAll(".sort-icon");
@@ -47,7 +39,6 @@ const categories = Object.values(category);
       }
     }
 
-    // Filter projects by category
     function filterProjects() {
       projectItems.forEach((item) => {
         const itemCategory = item.getAttribute("data-category");
@@ -59,44 +50,34 @@ const categories = Object.values(category);
       });
     }
 
-    // Sort projects by year
     function sortProjects() {
       const items = Array.from(projectItems);
       items.sort((a, b) => {
         const yearA = parseInt(a.getAttribute("data-year") || "0");
         const yearB = parseInt(b.getAttribute("data-year") || "0");
-
         return currentSort === "newest" ? yearB - yearA : yearA - yearB;
       });
 
-      // Remove all items and append them in the new order
       items.forEach((item) => {
         projectsContainer?.appendChild(item);
       });
     }
 
-    // Update URL with current filter and sort parameters
     function updateURL() {
       const url = new URL(window.location.href);
-
-      // Set or update parameters
       if (currentCategory === "all") {
         url.searchParams.delete("category");
       } else {
         url.searchParams.set("category", currentCategory);
       }
-
       if (currentSort === "newest") {
         url.searchParams.delete("sort");
       } else {
         url.searchParams.set("sort", currentSort);
       }
-
-      // Update URL without reloading the page
       window.history.pushState({}, "", url);
     }
 
-    // Apply both filtering and sorting
     function applyFiltersAndSort() {
       filterProjects();
       sortProjects();
@@ -104,7 +85,6 @@ const categories = Object.values(category);
       updateURL();
     }
 
-    // Set initial active state for filter buttons based on URL
     function setInitialActiveState() {
       filterButtons.forEach((btn) => {
         const btnCategory = btn.getAttribute("data-category");
@@ -114,72 +94,56 @@ const categories = Object.values(category);
           btn.classList.remove("active");
         }
       });
-
-      // Update sort text based on current sort
       if (sortText) {
         sortText.textContent =
           currentSort === "newest" ? "Newest First" : "Oldest First";
       }
     }
 
-    // Set up event listeners for filter buttons
     filterButtons.forEach((button) => {
       button.addEventListener("click", () => {
-        // Update active state
         filterButtons.forEach((btn) => btn.classList.remove("active"));
         button.classList.add("active");
-
-        // Update current category and apply filters
         currentCategory = button.getAttribute("data-category") || "all";
         applyFiltersAndSort();
       });
     });
 
-    // Set up event listener for sort toggle
     sortToggle?.addEventListener("click", () => {
-      // Toggle sort order
       currentSort = currentSort === "newest" ? "oldest" : "newest";
-
-      // Update toggle text
       if (sortText) {
         sortText.textContent =
           currentSort === "newest" ? "Newest First" : "Oldest First";
       }
-
       applyFiltersAndSort();
     });
 
-    // Set initial active state based on URL parameters
     setInitialActiveState();
-
-    // Initial application of filters and sort
     applyFiltersAndSort();
   });
 </script>
 
 <style>
   .badge {
-    @apply text-xs px-2 py-1 bg-secondary-bg text-secondary-text;
+    @apply text-xs px-2 py-1 bg-secondary-bg text-secondary-text rounded;
   }
-
   .filter-btn {
     @apply px-3 py-1 rounded-md text-sm transition-colors;
   }
-
   .filter-btn.active {
     @apply bg-primary-accent text-white;
   }
-
   .filter-btn:not(.active) {
     @apply bg-secondary-bg text-secondary-text hover:bg-tertiary-bg;
   }
-
   .sort-toggle {
     @apply flex items-center gap-2 px-3 py-1 rounded-md text-sm bg-secondary-bg text-secondary-text hover:bg-tertiary-bg transition-colors;
   }
-
   .hidden {
     display: none;
+  }
+  .placeholder-img {
+    @apply bg-secondary-bg border-2 border-dashed border-secondary-border rounded-lg flex items-center justify-center h-32 text-muted-text text-sm;
   }
 </style>
 
@@ -207,7 +171,6 @@ const categories = Object.values(category);
             <ChevronDownIcon size={16} customClasses="sort-icon" />
             <ChevronUpIcon size={16} customClasses="sort-icon hidden" />
           </span>
-
           <span id="sort-text">Newest First</span>
         </button>
       </div>
@@ -215,31 +178,43 @@ const categories = Object.values(category);
 
     <div id="projects-container" class="grid md:grid-cols-2 gap-4">
       {
-        displayProjects.map((project) => (
+        sortedProjects.map((project) => (
           <a
-            href={project.url}
-            target="_blank"
-            class="no-underline project-item"
-            data-category={project.category}
-            data-year={project.year}
+            href={`/project/${project.slug}`}
+            class="no-underline project-item group"
+            data-category={project.data.category}
+            data-year={project.data.year}
           >
-            <GridItem className="h-full flex-col group hover:border-primary-border transition-colors ">
-              <div class="mt-2">
+            <GridItem className="h-full flex-col hover:border-primary-border transition-colors overflow-hidden">
+              <!-- Thumbnail Placeholder -->
+              <div class="placeholder-img -mx-4 -mt-4 mb-4">
+                <span>Preview Placeholder</span>
+              </div>
+              
+              <div class="flex-1">
                 <div class="flex items-center gap-2">
                   <h3 class="text-lg font-semibold text-primary-text">
-                    {project.title}
+                    {project.data.title}
                   </h3>
-                  <span class="badge capitalize">{project.category}</span>
+                  <span class="badge capitalize">{project.data.category}</span>
                 </div>
-                <p class="text-tertiary-text text-sm mt-1">{project.year}</p>
-                <p class="text-tertiary-text text-sm mt-1">
-                  {project.description}
+                <p class="text-tertiary-text text-sm mt-1">{project.data.year}</p>
+                <p class="text-tertiary-text text-sm mt-2 line-clamp-2">
+                  {project.data.description}
                 </p>
                 <div class="flex flex-wrap gap-2 mt-3">
-                  {project.tags.map((tag) => (
+                  {project.data.tags.slice(0, 4).map((tag) => (
                     <span class="badge">{tag}</span>
                   ))}
+                  {project.data.tags.length > 4 && (
+                    <span class="badge">+{project.data.tags.length - 4}</span>
+                  )}
                 </div>
+              </div>
+              
+              <div class="mt-4 pt-4 border-t border-secondary-border flex items-center text-sm text-secondary-text group-hover:text-primary-text transition-colors">
+                <span>View Details</span>
+                <ArrowRightIcon size={14} customClasses="ml-2" />
               </div>
             </GridItem>
           </a>

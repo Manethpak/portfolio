@@ -2,6 +2,7 @@
 import type Props from "./props.type";
 import { CreditSection } from "../components/section";
 import SpeedInsights from "@vercel/speed-insights/astro";
+import ClientRouter from "astro/components/ClientRouter.astro";
 import "./global.css";
 
 const {
@@ -20,6 +21,7 @@ const ogImageUrl = image.startsWith("http")
 
 <html lang="en">
   <head>
+    <ClientRouter />
     <meta charset="UTF-8" />
     <meta name="description" content={desc} />
     <meta name="viewport" content="width=device-width" />
