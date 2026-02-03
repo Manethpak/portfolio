@@ -4,7 +4,6 @@ import Grid from "@/components/bento/Grid.astro";
 import GridItem from "@/components/bento/Item.astro";
 import Header from "@/components/util/Header.astro";
 import Layout from "@/layouts/Layout.astro";
-import { CERTS, ACHIEVEMENTS, TALKS } from "@/constants";
 import { Image } from "astro:assets";
 import { ChevronDownIcon } from "astro-feather";
 
@@ -14,6 +13,17 @@ const sortedExperiences = experiences.sort(
 );
 const skills = await getCollection("skills");
 const sortedSkills = skills.sort((a, b) => a.data.order - b.data.order);
+
+const certs = await getCollection("certs");
+const sortedCerts = certs.sort((a, b) => a.data.order - b.data.order);
+
+const achievements = await getCollection("achievements");
+const sortedAchievements = achievements.sort(
+  (a, b) => a.data.order - b.data.order,
+);
+
+const talks = await getCollection("talks");
+const sortedTalks = talks.sort((a, b) => a.data.order - b.data.order);
 ---
 
 <style>
@@ -42,14 +52,14 @@ const sortedSkills = skills.sort((a, b) => a.data.order - b.data.order);
 </style>
 
 <script>
-  document.querySelectorAll('.accordion-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
+  document.querySelectorAll(".accordion-btn").forEach((btn) => {
+    btn.addEventListener("click", () => {
       const content = btn.nextElementSibling;
-      const icon = btn.querySelector('.accordion-icon');
-      
-      if (content?.classList.contains('accordion-content')) {
-        content.classList.toggle('open');
-        icon?.classList.toggle('open');
+      const icon = btn.querySelector(".accordion-icon");
+
+      if (content?.classList.contains("accordion-content")) {
+        content.classList.toggle("open");
+        icon?.classList.toggle("open");
       }
     });
   });
@@ -96,10 +106,10 @@ const sortedSkills = skills.sort((a, b) => a.data.order - b.data.order);
               </div>
 
               <button class="accordion-btn" type="button">
-                <ChevronDownIcon class="accordion-icon" size={16} />
+                <ChevronDownIcon customClasses="accordion-icon" size={16} />
                 <span>View responsibilities</span>
               </button>
-              
+
               <div class="accordion-content">
                 <ul class="list-disc list-inside space-y-2 text-sm text-secondary-text">
                   {exp.data.responsibilities.map((resp) => (
@@ -123,7 +133,11 @@ const sortedSkills = skills.sort((a, b) => a.data.order - b.data.order);
         <h2 class="text-xl font-semibold mb-4 font-serif">Education</h2>
         <div class="timeline-item">
           <h3>Bachelor of Engineering in Software Engineering</h3>
-          <h4>Kirirom Institute of Technology</h4>
+          <h4>
+            <a href="https://www.kit.edu.kh/" target="_blank">
+              Kirirom Institute of Technology
+            </a>
+          </h4>
           <time>2019 - 2023</time>
         </div>
       </section>
@@ -166,11 +180,13 @@ const sortedSkills = skills.sort((a, b) => a.data.order - b.data.order);
         <h2 class="text-xl font-semibold mb-4 font-serif">Certifications</h2>
         <div class="space-y-3">
           {
-            CERTS.map(({ name, url, issuedBy, issuedAt }) => (
+            sortedCerts.map(({ data: { name, url, issuedBy, issuedAt } }) => (
               <div>
-                <a href={url} target="_blank" class="block">
-                  <h3 class="text-base">{name}</h3>
-                </a>
+                <h3 class="text-base">
+                  <a href={url} target="_blank">
+                    {name}
+                  </a>
+                </h3>
                 <h4>{issuedBy}</h4>
                 <time>{issuedAt}</time>
               </div>
@@ -184,15 +200,19 @@ const sortedSkills = skills.sort((a, b) => a.data.order - b.data.order);
     <GridItem className="p-6 flex-col">
       <section>
         <h2 class="text-xl font-semibold mb-4 font-serif">Achievements</h2>
-        {
-          ACHIEVEMENTS.map(({ name, organizedBy, issuedAt }) => (
-            <div class="achievement-item">
-              <h3 class="text-base">{name}</h3>
-              <h4>{organizedBy}</h4>
-              <time>{issuedAt}</time>
-            </div>
-          ))
-        }
+        <div class="space-y-3">
+          {
+            sortedAchievements.map(
+              ({ data: { name, organizedBy, issuedAt } }) => (
+                <div class="achievement-item">
+                  <h3 class="text-base">{name}</h3>
+                  <h4>{organizedBy}</h4>
+                  <time>{issuedAt}</time>
+                </div>
+              ),
+            )
+          }
+        </div>
       </section>
     </GridItem>
 
@@ -201,57 +221,63 @@ const sortedSkills = skills.sort((a, b) => a.data.order - b.data.order);
       <section>
         <h2 class="text-xl font-semibold mb-4 font-serif">Talks & Sharing</h2>
         {
-          TALKS.sort((a, b) => b.date.localeCompare(a.date)).map(
-            ({
-              title,
-              event,
-              location,
-              date,
-              description,
-              slides,
-              video,
-              thumbnail,
-            }) => (
-              <div class="timeline-item flex items-start gap-4 flex-col-reverse sm:flex-row">
-                <div class="flex-1">
-                  <h3>{title}</h3>
-                  <h4>{event}</h4>
-                  <p class="text-tertiary-text mb-1 italic">{location}</p>
-                  <time>{date}</time>
-                  <p class="mt-2 text-sm text-secondary-text">{description}</p>
-                  <div class="flex gap-4 mt-3">
-                    {slides && (
-                      <a
-                        href={slides}
-                        target="_blank"
-                        class="text-blue-600 hover:text-blue-800 text-sm"
-                      >
-                        View Slides →
-                      </a>
-                    )}
-                    {video && (
-                      <a
-                        href={video}
-                        target="_blank"
-                        class="text-blue-600 hover:text-blue-800 text-sm"
-                      >
-                        Watch Video →
-                      </a>
-                    )}
+          sortedTalks
+            .sort((a, b) => b.data.date.localeCompare(a.data.date))
+            .map(
+              ({
+                data: {
+                  title,
+                  event,
+                  location,
+                  date,
+                  description,
+                  slides,
+                  video,
+                  thumbnail,
+                },
+              }) => (
+                <div class="timeline-item flex items-start gap-4 flex-col-reverse sm:flex-row">
+                  <div class="flex-1">
+                    <h3>{title}</h3>
+                    <h4>{event}</h4>
+                    <p class="text-tertiary-text mb-1 italic">{location}</p>
+                    <time>{date}</time>
+                    <p class="mt-2 text-sm text-secondary-text">
+                      {description}
+                    </p>
+                    <div class="flex gap-4 mt-3">
+                      {slides && (
+                        <a
+                          href={slides}
+                          target="_blank"
+                          class="text-blue-600 hover:text-blue-800 text-sm"
+                        >
+                          View Slides →
+                        </a>
+                      )}
+                      {video && (
+                        <a
+                          href={video}
+                          target="_blank"
+                          class="text-blue-600 hover:text-blue-800 text-sm"
+                        >
+                          Watch Video →
+                        </a>
+                      )}
+                    </div>
                   </div>
+                  {thumbnail && (
+                    <Image
+                      src={thumbnail}
+                      alt={title}
+                      width={120}
+                      height={120}
+                      class="aspect-auto rounded-md object-cover object-center"
+                    />
+                  )}
                 </div>
-                {thumbnail && (
-                  <Image
-                    src={thumbnail}
-                    alt={title}
-                    width={120}
-                    height={120}
-                    class="aspect-auto rounded-md object-cover object-center"
-                  />
-                )}
-              </div>
-            ),
-          )
+              ),
+            )
         }
       </section>
     </GridItem>
