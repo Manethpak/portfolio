@@ -4,38 +4,41 @@ import Grid from "@/components/bento/Grid.astro";
 import GridItem from "@/components/bento/Item.astro";
 import Header from "@/components/util/Header.astro";
 import Layout from "@/layouts/Layout.astro";
-import { ChevronDownIcon, ChevronUpIcon, ArrowRightIcon } from "astro-feather";
+import { ArrowRightIcon } from "astro-feather";
 
 const projects = await getCollection("projects");
 const sortedProjects = projects.sort((a, b) => b.data.year - a.data.year);
 
-// Get unique categories
+// Get unique categories and map to display labels
+const categoryLabels: Record<string, string> = {
+  featured: "Featured",
+  "open-source": "Open Source",
+  "client-work": "Client Work",
+  "side-project": "Side Project"
+};
+
 const categories = [...new Set(projects.map((p) => p.data.category))];
 ---
 
-<script>
-  document.addEventListener("DOMContentLoaded", () => {
+<script is:inline>
+  function initProjectFilters() {
     const projectItems = document.querySelectorAll(".project-item");
     const filterButtons = document.querySelectorAll(".filter-btn");
     const sortToggle = document.getElementById("sort-toggle");
     const sortText = document.getElementById("sort-text");
-    const sortIconContainer = document.getElementById("sort-icon-container");
+    const sortIcon = document.getElementById("sort-icon");
     const projectsContainer = document.getElementById("projects-container");
+    
+    if (!projectsContainer || projectItems.length === 0) return;
 
     const urlParams = new URLSearchParams(window.location.search);
     let currentCategory = urlParams.get("category") || "all";
     let currentSort = urlParams.get("sort") || "newest";
 
     function updateSortIcon() {
-      if (sortIconContainer) {
-        const icons = sortIconContainer.querySelectorAll(".sort-icon");
-        if (currentSort === "newest") {
-          icons[0].classList.remove("hidden");
-          icons[1].classList.add("hidden");
-        } else {
-          icons[0].classList.add("hidden");
-          icons[1].classList.remove("hidden");
-        }
+      const currentIcon = document.getElementById("sort-icon");
+      if (currentIcon) {
+        currentIcon.style.transform = currentSort === "newest" ? "rotate(0deg)" : "rotate(180deg)";
       }
     }
 
@@ -43,15 +46,15 @@ const categories = [...new Set(projects.map((p) => p.data.category))];
       projectItems.forEach((item) => {
         const itemCategory = item.getAttribute("data-category");
         if (currentCategory === "all" || itemCategory === currentCategory) {
-          (item as HTMLElement).style.display = "";
+          item.classList.remove("hidden");
         } else {
-          (item as HTMLElement).style.display = "none";
+          item.classList.add("hidden");
         }
       });
     }
 
     function sortProjects() {
-      const items = Array.from(projectItems);
+      const items = Array.from(projectItems).filter(item => !item.classList.contains("hidden"));
       items.sort((a, b) => {
         const yearA = parseInt(a.getAttribute("data-year") || "0");
         const yearB = parseInt(b.getAttribute("data-year") || "0");
@@ -75,7 +78,7 @@ const categories = [...new Set(projects.map((p) => p.data.category))];
       } else {
         url.searchParams.set("sort", currentSort);
       }
-      window.history.pushState({}, "", url);
+      window.history.replaceState({}, "", url);
     }
 
     function applyFiltersAndSort() {
@@ -95,32 +98,53 @@ const categories = [...new Set(projects.map((p) => p.data.category))];
         }
       });
       if (sortText) {
-        sortText.textContent =
-          currentSort === "newest" ? "Newest First" : "Oldest First";
+        sortText.textContent = currentSort === "newest" ? "Newest First" : "Oldest First";
       }
     }
 
+    // Remove existing listeners to prevent duplicates
     filterButtons.forEach((button) => {
+      const newButton = button.cloneNode(true);
+      button.parentNode?.replaceChild(newButton, button);
+    });
+    
+    // Re-query buttons after cloning
+    const freshButtons = document.querySelectorAll(".filter-btn");
+    freshButtons.forEach((button) => {
       button.addEventListener("click", () => {
-        filterButtons.forEach((btn) => btn.classList.remove("active"));
+        freshButtons.forEach((btn) => btn.classList.remove("active"));
         button.classList.add("active");
         currentCategory = button.getAttribute("data-category") || "all";
         applyFiltersAndSort();
       });
     });
 
-    sortToggle?.addEventListener("click", () => {
-      currentSort = currentSort === "newest" ? "oldest" : "newest";
-      if (sortText) {
-        sortText.textContent =
-          currentSort === "newest" ? "Newest First" : "Oldest First";
-      }
-      applyFiltersAndSort();
-    });
+    const newSortToggle = sortToggle?.cloneNode(true);
+    if (sortToggle && newSortToggle) {
+      sortToggle.parentNode?.replaceChild(newSortToggle, sortToggle);
+      newSortToggle.addEventListener("click", () => {
+        currentSort = currentSort === "newest" ? "oldest" : "newest";
+        const newSortText = document.getElementById("sort-text");
+        if (newSortText) {
+          newSortText.textContent = currentSort === "newest" ? "Newest First" : "Oldest First";
+        }
+        applyFiltersAndSort();
+      });
+    }
 
     setInitialActiveState();
     applyFiltersAndSort();
-  });
+  }
+
+  // Run on initial load
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initProjectFilters);
+  } else {
+    initProjectFilters();
+  }
+  
+  // Run on Astro page transitions
+  document.addEventListener("astro:page-load", initProjectFilters);
 </script>
 
 <style>
@@ -157,17 +181,27 @@ const categories = [...new Set(projects.map((p) => p.data.category))];
         {
           categories.map((cat) => (
             <button class="filter-btn" data-category={cat}>
-              {cat}
+              {categoryLabels[cat] || cat}
             </button>
           ))
         }
       </div>
       <div>
         <button id="sort-toggle" class="sort-toggle">
-          <span id="sort-icon-container">
-            <ChevronDownIcon size={16} customClasses="sort-icon" />
-            <ChevronUpIcon size={16} customClasses="sort-icon hidden" />
-          </span>
+          <svg 
+            id="sort-icon" 
+            width="16" 
+            height="16" 
+            viewBox="0 0 24 24" 
+            fill="none" 
+            stroke="currentColor" 
+            stroke-width="2" 
+            stroke-linecap="round" 
+            stroke-linejoin="round"
+            style="transition: transform 0.2s ease;"
+          >
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
           <span id="sort-text">Newest First</span>
         </button>
       </div>
@@ -193,7 +227,7 @@ const categories = [...new Set(projects.map((p) => p.data.category))];
                   <h3 class="text-lg font-semibold text-primary-text">
                     {project.data.title}
                   </h3>
-                  <span class="badge capitalize">{project.data.category}</span>
+                  <span class="badge">{categoryLabels[project.data.category]}</span>
                 </div>
                 <p class="text-tertiary-text text-sm mt-1">{project.data.year}</p>
                 <p class="text-tertiary-text text-sm mt-2 line-clamp-2">

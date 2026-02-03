@@ -2,7 +2,7 @@
 title: "Slecret"
 description: "Core developer for Slecret, a content publishing platform aimed to localize technical content for Cambodian developers."
 year: 2022
-category: "study"
+category: "side-project"
 url: "https://www.facebook.com/officialslecret"
 githubUrl: ""
 tags: ["Vue", "NestJS", "PostgreSQL"]

@@ -23,7 +23,7 @@ const projectsCollection = defineCollection({
     title: z.string(),
     description: z.string(),
     year: z.number(),
-    category: z.enum(["personal", "client", "work", "study"]),
+    category: z.enum(["featured", "open-source", "client-work", "side-project"]),
     url: z.string(),
     githubUrl: z.string().optional(),
     tags: z.array(z.string()),

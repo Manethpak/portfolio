@@ -2,7 +2,7 @@
 title: "Poe Telegram Bot"
 description: "A Telegram bot that connects to Poe AI models, allowing users to chat with various AI assistants directly from Telegram."
 year: 2025
-category: "personal"
+category: "side-project"
 url: "https://github.com/Manethpak/poe-tg"
 githubUrl: "https://github.com/Manethpak/poe-tg"
 tags: ["Python", "Telegram Bot", "AI", "Poe API"]

@@ -17,6 +17,14 @@ const { project } = Astro.props;
 const { Content } = await project.render();
 
 export const prerender = true;
+
+// Category labels mapping
+const categoryLabels: Record<string, string> = {
+  featured: "Featured",
+  "open-source": "Open Source",
+  "client-work": "Client Work",
+  "side-project": "Side Project"
+};
 ---
 
 <style>
@@ -40,18 +48,15 @@ export const prerender = true;
   </div>
 
   <Grid className="auto-rows-auto">
-    <!-- Thumbnail -->
-    <GridItem className="p-0 overflow-hidden">
-      <div class="placeholder-img">
-        <span>Project Preview Placeholder</span>
-      </div>
-    </GridItem>
-
     <!-- Project Header -->
     <GridItem className="p-6 flex-col">
+      <div class="placeholder-img h-64 mb-4">
+        <span>Project Preview Placeholder</span>
+      </div>
+
       <div class="flex items-center gap-2 mb-2">
         <h1 class="text-2xl font-serif font-semibold">{project.data.title}</h1>
-        <span class="badge capitalize">{project.data.category}</span>
+        <span class="badge">{categoryLabels[project.data.category]}</span>
       </div>
       <p class="text-muted-text text-sm">{project.data.year}</p>
 

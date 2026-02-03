@@ -2,7 +2,7 @@
 title: "Next.js Fullstack Starter"
 description: "A modern, type-safe fullstack starter for Next.js 15 with Prisma ORM, Better Auth, Hono API routes, and shadcn/ui components."
 year: 2025
-category: "personal"
+category: "open-source"
 url: "https://github.com/Manethpak/next-fullstack-starter"
 githubUrl: "https://github.com/Manethpak/next-fullstack-starter"
 tags: ["Next.js", "TypeScript", "Prisma", "Hono", "Tailwind CSS", "Better Auth"]

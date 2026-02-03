@@ -2,7 +2,7 @@
 title: "Trumpow ($TRMP)"
 description: "Developed a website for a layer 1 Scrypt-based blockchain meme coin that is a parody of Trump."
 year: 2025
-category: "client"
+category: "client-work"
 url: "https://trumpow.meme"
 githubUrl: ""
 tags: ["React", "Vite", "Tailwind CSS", "Blockchain"]

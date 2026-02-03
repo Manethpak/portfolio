@@ -2,7 +2,7 @@
 title: "PoolKH"
 description: "Developed the frontend and proxy server for PoolKH, a mining pool website based on miningcore."
 year: 2024
-category: "client"
+category: "client-work"
 url: "https://poolkh.com"
 githubUrl: ""
 tags: ["Next.js", "NestJS", "Blockchain", "PostgreSQL"]

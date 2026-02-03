@@ -2,7 +2,7 @@
 title: "Folded History"
 description: "Chrome extension that organizes browsing history in a structured folder format based on domains, making it easier to find and revisit specific websites."
 year: 2024
-category: "personal"
+category: "side-project"
 url: "https://github.com/Manethpak/folded-history"
 githubUrl: "https://github.com/Manethpak/folded-history"
 tags: ["TypeScript", "Chrome Extension", "React"]
