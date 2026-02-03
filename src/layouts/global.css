@@ -55,20 +55,36 @@ body {
 }
 
 h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+h2 {
   @apply font-serif font-semibold;
 }
 
 h2 {
-  @apply font-normal text-lg;
+  @apply text-xl;
+}
+
+h3 {
+  @apply text-lg font-medium;
+}
+
+h4 {
+  @apply text-base text-secondary-text font-normal font-sans;
 }
 
 p {
   @apply text-[rgb(var(--color-text-secondary))] font-sans;
+}
+
+time {
+  @apply text-sm text-muted-text;
+}
+
+.tech-tag {
+  @apply text-sm px-2 py-0.5 bg-secondary-bg text-secondary-text rounded inline-block;
+}
+
+.placeholder-img {
+  @apply bg-secondary-bg border-2 border-dashed border-secondary-border flex items-center justify-center min-h-[150px] text-muted-text;
 }
 
 a {

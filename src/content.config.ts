@@ -12,7 +12,8 @@ const experiencesCollection = defineCollection({
     type: z.enum(["full-time", "part-time", "contract", "internship"]),
     technologies: z.array(z.string()),
     order: z.number(),
-    achievements: z.array(z.string()).optional(),
+    summary: z.string(),
+    responsibilities: z.array(z.string()),
   }),
 });
 

@@ -21,7 +21,6 @@ const ogImageUrl = image.startsWith("http")
 
 <html lang="en">
   <head>
-    <ClientRouter />
     <meta charset="UTF-8" />
     <meta name="description" content={desc} />
     <meta name="viewport" content="width=device-width" />
@@ -100,6 +99,8 @@ const ogImageUrl = image.startsWith("http")
       )
     }
   </head>
+
+  <ClientRouter  transition:animate="slide" />
   <body class="bg-primary-bg text-primary-text transition-colors">
     <main class="p-4 md:p-8 max-w-3xl mx-auto">
       <slot />

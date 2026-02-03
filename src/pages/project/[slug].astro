@@ -26,9 +26,6 @@ export const prerender = true;
   .gallery-grid {
     @apply grid grid-cols-1 sm:grid-cols-2 gap-4;
   }
-  .placeholder-img {
-    @apply bg-secondary-bg border-2 border-dashed border-secondary-border rounded-lg flex items-center justify-center min-h-[200px] text-muted-text;
-  }
 </style>
 
 <Layout
@@ -57,7 +54,7 @@ export const prerender = true;
         <span class="badge capitalize">{project.data.category}</span>
       </div>
       <p class="text-muted-text text-sm">{project.data.year}</p>
-      
+
       <div class="flex gap-3 mt-4">
         <a
           href={project.data.url}
@@ -67,16 +64,18 @@ export const prerender = true;
           <ExternalLinkIcon size={16} customClasses="mr-2" />
           View Live
         </a>
-        {project.data.githubUrl && (
-          <a
-            href={project.data.githubUrl}
-            target="_blank"
-            class="btn-secondary text-sm no-underline"
-          >
-            <GithubIcon size={16} customClasses="mr-2" />
-            Source Code
-          </a>
-        )}
+        {
+          project.data.githubUrl && (
+            <a
+              href={project.data.githubUrl}
+              target="_blank"
+              class="btn-secondary text-sm no-underline"
+            >
+              <GithubIcon size={16} customClasses="mr-2" />
+              Source Code
+            </a>
+          )
+        }
       </div>
     </GridItem>
 
@@ -91,24 +90,24 @@ export const prerender = true;
     <GridItem className="p-6 flex-col">
       <h2 class="text-lg font-semibold mb-3 font-serif">Tech Stack</h2>
       <div class="flex flex-wrap gap-2">
-        {project.data.tags.map((tag) => (
-          <span class="badge">{tag}</span>
-        ))}
+        {project.data.tags.map((tag) => <span class="badge">{tag}</span>)}
       </div>
     </GridItem>
 
     <!-- Gallery -->
-    {project.data.gallery.length > 0 && (
-      <GridItem className="p-6 flex-col">
-        <h2 class="text-lg font-semibold mb-3 font-serif">Gallery</h2>
-        <div class="gallery-grid">
-          {project.data.gallery.map((_, index) => (
-            <div class="placeholder-img">
-              <span>Screenshot {index + 1} Placeholder</span>
-            </div>
-          ))}
-        </div>
-      </GridItem>
-    )}
+    {
+      project.data.gallery.length > 0 && (
+        <GridItem className="p-6 flex-col">
+          <h2 class="text-lg font-semibold mb-3 font-serif">Gallery</h2>
+          <div class="gallery-grid">
+            {project.data.gallery.map((_, index) => (
+              <div class="placeholder-img">
+                <span>Screenshot {index + 1} Placeholder</span>
+              </div>
+            ))}
+          </div>
+        </GridItem>
+      )
+    }
   </Grid>
 </Layout>

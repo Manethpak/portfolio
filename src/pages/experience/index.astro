@@ -6,9 +6,12 @@ import Header from "@/components/util/Header.astro";
 import Layout from "@/layouts/Layout.astro";
 import { CERTS, ACHIEVEMENTS, TALKS } from "@/constants";
 import { Image } from "astro:assets";
+import { ChevronDownIcon } from "astro-feather";
 
 const experiences = await getCollection("experiences");
-const sortedExperiences = experiences.sort((a, b) => a.data.order - b.data.order);
+const sortedExperiences = experiences.sort(
+  (a, b) => a.data.order - b.data.order,
+);
 const skills = await getCollection("skills");
 const sortedSkills = skills.sort((a, b) => a.data.order - b.data.order);
 ---
@@ -18,28 +21,39 @@ const sortedSkills = skills.sort((a, b) => a.data.order - b.data.order);
     @apply mb-6 relative pl-6 border-l-2 border-secondary-border;
   }
   .timeline-item::before {
-    content: '';
+    content: "";
     @apply absolute left-[-5px] top-1 w-2 h-2 rounded-full bg-primary-accent;
   }
-  h3 {
-    @apply text-base font-normal;
+  .accordion-btn {
+    @apply flex items-center gap-2 mt-2 text-sm text-tertiary-text hover:text-primary-text transition-colors cursor-pointer;
   }
-  h4 {
-    @apply text-sm text-tertiary-text font-normal font-sans;
+  .accordion-content {
+    @apply hidden mt-3 pl-0;
   }
-  time {
-    @apply text-xs text-muted-text block mt-1;
+  .accordion-content.open {
+    @apply block;
   }
-  .tech-tag {
-    @apply text-xs px-2 py-0.5 bg-secondary-bg text-secondary-text rounded mt-2 inline-block mr-1;
+  .accordion-icon {
+    @apply transition-transform duration-200;
   }
-  .cert-item {
-    @apply mb-4;
-  }
-  .achievement-item {
-    @apply mb-4;
+  .accordion-icon.open {
+    @apply rotate-180;
   }
 </style>
+
+<script>
+  document.querySelectorAll('.accordion-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const content = btn.nextElementSibling;
+      const icon = btn.querySelector('.accordion-icon');
+      
+      if (content?.classList.contains('accordion-content')) {
+        content.classList.toggle('open');
+        icon?.classList.toggle('open');
+      }
+    });
+  });
+</script>
 
 <Layout
   title="Pak Maneth | Experience & Achievements"
@@ -51,35 +65,6 @@ const sortedSkills = skills.sort((a, b) => a.data.order - b.data.order);
       subtitle="My work experience, technical skills, certifications, and notable achievements."
     />
 
-    <!-- Technical Skills -->
-    <GridItem className="p-6 flex-col">
-      <section>
-        <h2 class="text-xl font-semibold mb-4 font-serif">Technical Skills</h2>
-        <div class="space-y-6">
-          {
-            [
-              { level: "expert", label: "Expert" },
-              { level: "advanced", label: "Advanced" },
-              { level: "familiar", label: "Familiar" }
-            ].map(({ level, label }) => {
-              const skillsAtLevel = sortedSkills.filter((skill) => skill.data.proficiency === level);
-              const items = skillsAtLevel.flatMap((skill) => skill.data.items);
-              return (
-                <div class="space-y-2">
-                  <h3 class="text-sm font-medium text-secondary-text">{label}</h3>
-                  <div class="flex flex-wrap gap-1.5">
-                    {items.map((item) => (
-                      <span class="tech-tag">{item}</span>
-                    ))}
-                  </div>
-                </div>
-              );
-            })
-          }
-        </div>
-      </section>
-    </GridItem>
-
     <!-- Work Experience -->
     <GridItem className="p-6 flex-col">
       <section>
@@ -90,7 +75,11 @@ const sortedSkills = skills.sort((a, b) => a.data.order - b.data.order);
               <h3>{exp.data.role}</h3>
               <h4>
                 {exp.data.companyUrl ? (
-                  <a href={exp.data.companyUrl} target="_blank" class="underline">
+                  <a
+                    href={exp.data.companyUrl}
+                    target="_blank"
+                    class="underline"
+                  >
                     {exp.data.company}
                   </a>
                 ) : (
@@ -101,19 +90,24 @@ const sortedSkills = skills.sort((a, b) => a.data.order - b.data.order);
               <time>
                 {exp.data.startDate} - {exp.data.endDate}
               </time>
-              
+
               <div class="mt-2 text-sm text-secondary-text">
-                <p>{exp.body}</p>
-                
-                {exp.data.achievements && exp.data.achievements.length > 0 && (
-                  <ul class="list-disc list-inside mt-2 space-y-1">
-                    {exp.data.achievements.map((achievement) => (
-                      <li>{achievement}</li>
-                    ))}
-                  </ul>
-                )}
+                <p>{exp.data.summary}</p>
               </div>
+
+              <button class="accordion-btn" type="button">
+                <ChevronDownIcon class="accordion-icon" size={16} />
+                <span>View responsibilities</span>
+              </button>
               
+              <div class="accordion-content">
+                <ul class="list-disc list-inside space-y-2 text-sm text-secondary-text">
+                  {exp.data.responsibilities.map((resp) => (
+                    <li>{resp}</li>
+                  ))}
+                </ul>
+              </div>
+
               <div class="mt-2">
                 {exp.data.technologies.map((tech) => (
                   <span class="tech-tag">{tech}</span>
@@ -135,21 +129,54 @@ const sortedSkills = skills.sort((a, b) => a.data.order - b.data.order);
       </section>
     </GridItem>
 
+    <!-- Technical Skills -->
+    <GridItem className="p-6 flex-col">
+      <section>
+        <h2 class="text-xl font-semibold mb-4 font-serif">Technical Skills</h2>
+        <div class="space-y-6">
+          {
+            [
+              { level: "expert", label: "Expert" },
+              { level: "advanced", label: "Advanced" },
+              { level: "familiar", label: "Familiar" },
+            ].map(({ level, label }) => {
+              const skillsAtLevel = sortedSkills.filter(
+                (skill) => skill.data.proficiency === level,
+              );
+              const items = skillsAtLevel.flatMap((skill) => skill.data.items);
+              return (
+                <div class="space-y-2">
+                  <h3 class="font-medium text-secondary-text">{label}</h3>
+                  <div class="flex flex-wrap gap-1.5">
+                    {items.map((item) => (
+                      <span class="tech-tag">{item}</span>
+                    ))}
+                  </div>
+                </div>
+              );
+            })
+          }
+        </div>
+      </section>
+    </GridItem>
+
     <!-- Certifications -->
     <GridItem className="p-6 flex-col">
       <section>
         <h2 class="text-xl font-semibold mb-4 font-serif">Certifications</h2>
-        {
-          CERTS.map(({ name, url, issuedBy, issuedAt }) => (
-            <div class="cert-item">
-              <a href={url} target="_blank" class="block">
-                <h3 class="text-base">{name}</h3>
-              </a>
-              <h4>{issuedBy}</h4>
-              <time>{issuedAt}</time>
-            </div>
-          ))
-        }
+        <div class="space-y-3">
+          {
+            CERTS.map(({ name, url, issuedBy, issuedAt }) => (
+              <div>
+                <a href={url} target="_blank" class="block">
+                  <h3 class="text-base">{name}</h3>
+                </a>
+                <h4>{issuedBy}</h4>
+                <time>{issuedAt}</time>
+              </div>
+            ))
+          }
+        </div>
       </section>
     </GridItem>
 
@@ -175,7 +202,16 @@ const sortedSkills = skills.sort((a, b) => a.data.order - b.data.order);
         <h2 class="text-xl font-semibold mb-4 font-serif">Talks & Sharing</h2>
         {
           TALKS.sort((a, b) => b.date.localeCompare(a.date)).map(
-            ({ title, event, location, date, description, slides, video, thumbnail }) => (
+            ({
+              title,
+              event,
+              location,
+              date,
+              description,
+              slides,
+              video,
+              thumbnail,
+            }) => (
               <div class="timeline-item flex items-start gap-4 flex-col-reverse sm:flex-row">
                 <div class="flex-1">
                   <h3>{title}</h3>
@@ -214,7 +250,7 @@ const sortedSkills = skills.sort((a, b) => a.data.order - b.data.order);
                   />
                 )}
               </div>
-            )
+            ),
           )
         }
       </section>
