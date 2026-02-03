@@ -1,54 +1,56 @@
-# Astro Starter Kit: Basics
+# Portfolio Website
 
-```sh
-npm create astro@latest -- --template basics
+A minimalistic and responsive portfolio website built with Astro, showcasing my professional journey, projects, and writings.
+
+![Portfolio Website Open Graph Image](public/og-image.png)
+
+## 🛠️ Tech Stack
+
+- **Framework**: [Astro](https://astro.build/) 5.2.5
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/) with custom components
+- **Deployment**: [Vercel](https://vercel.com/) with ISR and analytics
+- **Icons**: Astro Feather icons
+- **Typography**: DM Sans & Roboto Slab fonts
+- **Animation**: Motion library for smooth interactions
+
+## 📁 Project Structure
+
+```
+src/
+├── components/
+│   ├── bento/          # Grid layout components
+│   ├── section/        # Page sections (Intro, About, Experience, etc.)
+│   └── util/           # Utility components
+├── constants/          # Project data and configurations
+├── layouts/            # Page layouts and global styles
+├── pages/              # Route pages (index, projects, experience, writing)
+├── types/              # TypeScript type definitions
+└── helper/             # Utility functions
 ```
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/basics)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/basics)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/basics/devcontainer.json)
+## 🎯 Key Sections
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+- **Home**: Introduction with navigation to main sections
+- **Experience**: Professional timeline, certifications, achievements, and talks
+- **Projects**: Filterable portfolio with work, personal, and client projects
+- **Writing**: Blog posts from Dev.to and personal thoughts
 
-![just-the-basics](https://github.com/withastro/astro/assets/2244813/a0a5533c-a856-4198-8470-2d67b1d7c554)
+## 🚀 Getting Started
 
-## 🚀 Project Structure
+```bash
+# Install dependencies
+pnpm install
 
-Inside of your Astro project, you'll see the following folders and files:
+# Start development server
+pnpm dev
 
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src/
-│   ├── components/
-│   │   └── Card.astro
-│   ├── layouts/
-│   │   └── Layout.astro
-│   └── pages/
-│       └── index.astro
-└── package.json
+# Build for production
+pnpm build
+
+# Preview production build
+pnpm preview
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## 📝 License
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+© 2025 Maneth Pak. All rights reserved.

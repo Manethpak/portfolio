@@ -52,4 +52,13 @@ export const projects = [
     tags: ["Next.js", "NestJS", "Blockchain"],
     category: category.client,
   },
+  {
+    title: "Trumpow ($TRMP)",
+    description:
+      "Developed a website for a layer 1 Scrypt-based blockchain meme coin that is a parody of Trump.",
+    year: "2025",
+    url: "https://trumpow.meme",
+    tags: ["React", "Vite", "Tailwind CSS"],
+    category: category.client,
+  },
 ];
