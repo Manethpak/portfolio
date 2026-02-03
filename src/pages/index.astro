@@ -2,16 +2,20 @@
 import Layout from "@/layouts/Layout.astro";
 import Grid from "@/components/bento/Grid.astro";
 import GridItem from "@/components/bento/Item.astro";
-import {
-  IntroSection,
-  AboutMeSection,
-  ExperienceSection,
-} from "@/components/section";
+import { IntroSection, AboutRoleSection } from "@/components/section";
 import { ArrowRightIcon } from "astro-feather";
 
 const links = [
-  { title: "Experience & Achievements", href: "/experience" },
-  { title: "Projects", href: "/project" },
+  {
+    title: "Experience",
+    subtitle: "My professional journey",
+    href: "/experience",
+  },
+  {
+    title: "Projects",
+    subtitle: "A collection of things I've built",
+    href: "/project",
+  },
 ];
 
 export const prerender = true;
@@ -20,8 +24,7 @@ export const prerender = true;
 <Layout>
   <Grid className="grid-cols-1 md:grid-cols-2 gap-y-6">
     <IntroSection colSpan="md:col-span-2" />
-    <ExperienceSection colSpan="md:col-span-1" />
-    <AboutMeSection colSpan="md:col-span-1" />
+    <AboutRoleSection colSpan="md:col-span-2" />
 
     {
       links.map((link) => (
@@ -30,7 +33,12 @@ export const prerender = true;
             href={link.href}
             class="w-full cursor-pointer p-4 h-full flex flex-row justify-between items-center"
           >
-            <h2>{link.title}</h2>
+            <div class="flex flex-col">
+              <h2>{link.title}</h2>
+              <p class="text-sm text-tertiary-text mt-1 no-underline">
+                {link.subtitle}
+              </p>
+            </div>
             <ArrowRightIcon size={16} />
           </a>
         </GridItem>

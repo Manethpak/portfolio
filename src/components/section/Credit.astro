@@ -1,8 +1,7 @@
 ---
 const links = [
-  { href: "/writing", title: "Writing" },
-  { href: "/project", title: "Project" },
   { href: "/experience", title: "Experience" },
+  { href: "/project", title: "Project" },
 ];
 
 const currentPath = Astro.url.pathname;
@@ -23,8 +22,12 @@ const isCurrentPage = (path: string) => currentPath.startsWith(path);
   </div>
   <p class="mb-1">© 2025 · Maneth Pak</p>
   <p>
-    <a target="_blank" href="https://astro.build/"> Astro </a>
+    <a target="_blank" rel="noopener noreferrer" href="https://astro.build/">
+      Astro
+    </a>
     <span class="mx-1">·</span>
-    <a target="_blank" href="https://vercel.com"> Vercel </a>
+    <a target="_blank" rel="noopener noreferrer" href="https://vercel.com">
+      Vercel
+    </a>
   </p>
 </div>

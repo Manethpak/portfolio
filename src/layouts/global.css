@@ -1,6 +1,6 @@
 :root {
   /* Background Colors */
-  --color-bg-primary: 250 250 250;
+  --color-bg-primary: 250 249 246;
   --color-bg-secondary: 245 245 245;
   --color-bg-tertiary: 229 229 229;
   --color-bg-elevated: 255 255 255;
@@ -8,8 +8,8 @@
   /* Text Colors */
   --color-text-primary: 23 23 23;
   --color-text-secondary: 82 82 82;
-  --color-text-tertiary: 115 115 115;
-  --color-text-muted: 163 163 163;
+  --color-text-tertiary: 89 89 89;
+  --color-text-muted: 138 138 138;
 
   /* Border Colors */
   --color-border-primary: 163 163 163;
@@ -26,7 +26,7 @@
 
 .dark {
   /* Background Colors */
-  --color-bg-primary: 10 10 10;
+  --color-bg-primary: 17 17 17;
   --color-bg-secondary: 38 38 38;
   --color-bg-tertiary: 64 64 64;
   --color-bg-elevated: 23 23 23;
@@ -34,8 +34,8 @@
   /* Text Colors */
   --color-text-primary: 245 245 245;
   --color-text-secondary: 163 163 163;
-  --color-text-tertiary: 115 115 115;
-  --color-text-muted: 115 115 115;
+  --color-text-tertiary: 130 130 130;
+  --color-text-muted: 150 150 150;
 
   /* Border Colors */
   --color-border-primary: 82 82 82;
@@ -55,20 +55,36 @@ body {
 }
 
 h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+h2 {
   @apply font-serif font-semibold;
 }
 
 h2 {
-  @apply font-normal text-lg;
+  @apply text-xl;
+}
+
+h3 {
+  @apply text-lg font-medium;
+}
+
+h4 {
+  @apply text-base text-secondary-text font-normal font-sans;
 }
 
 p {
   @apply text-[rgb(var(--color-text-secondary))] font-sans;
+}
+
+time {
+  @apply text-sm text-muted-text;
+}
+
+.tech-tag {
+  @apply text-sm px-2 py-0.5 bg-secondary-bg text-secondary-text rounded inline-block;
+}
+
+.placeholder-img {
+  @apply bg-secondary-bg border-2 border-dashed border-secondary-border flex items-center justify-center min-h-[150px] text-muted-text;
 }
 
 a {
@@ -81,4 +97,39 @@ a {
 
 .btn-secondary {
   @apply bg-[rgb(var(--color-accent-secondary))] dark:bg-[rgb(var(--color-accent-primary))] text-[rgb(var(--color-text-primary))] dark:text-[rgb(var(--color-text-secondary))] px-4 py-2 cursor-pointer transition-colors hover:opacity-80 flex items-center;
+}
+
+/* Scroll-triggered animations */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-on-scroll {
+  animation: fade-in-up 0.6s ease-out forwards;
+  animation-timeline: view();
+  animation-range: entry 0% cover 20%;
+}
+
+/* Stagger animation delays for lists */
+.stagger-1 {
+  animation-delay: 0.1s;
+}
+.stagger-2 {
+  animation-delay: 0.2s;
+}
+.stagger-3 {
+  animation-delay: 0.3s;
+}
+.stagger-4 {
+  animation-delay: 0.4s;
+}
+.stagger-5 {
+  animation-delay: 0.5s;
 }

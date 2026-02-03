@@ -2,6 +2,7 @@
 import type Props from "./props.type";
 import { CreditSection } from "../components/section";
 import SpeedInsights from "@vercel/speed-insights/astro";
+import ClientRouter from "astro/components/ClientRouter.astro";
 import "./global.css";
 
 const {
@@ -18,7 +19,7 @@ const ogImageUrl = image.startsWith("http")
   : new URL(image, url).toString();
 ---
 
-<html lang="en">
+<html lang="en" transition:name="root" transition:animate="none">
   <head>
     <meta charset="UTF-8" />
     <meta name="description" content={desc} />
@@ -83,7 +84,7 @@ const ogImageUrl = image.startsWith("http")
     <script is:inline>
       const theme = localStorage.getItem("theme");
       const prefersDark = window.matchMedia(
-        "(prefers-color-scheme: dark)"
+        "(prefers-color-scheme: dark)",
       ).matches;
       if (theme === "dark" || (!theme && prefersDark)) {
         document.documentElement.classList.add("dark");
@@ -98,8 +99,10 @@ const ogImageUrl = image.startsWith("http")
       )
     }
   </head>
+
   <body class="bg-primary-bg text-primary-text transition-colors">
-    <main class="p-4 md:p-8 max-w-3xl mx-auto">
+    <ClientRouter />
+    <main class="p-4 md:p-8 max-w-3xl mx-auto" transition:animate="slide">
       <slot />
 
       <CreditSection />

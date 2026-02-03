@@ -1,0 +1,123 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "@/layouts/Layout.astro";
+import Grid from "@/components/bento/Grid.astro";
+import GridItem from "@/components/bento/Item.astro";
+import { ArrowLeftIcon, ExternalLinkIcon, GithubIcon } from "astro-feather";
+
+export async function getStaticPaths() {
+  const projects = await getCollection("projects");
+  return projects.map((project) => ({
+    params: { slug: project.slug },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+const { Content } = await project.render();
+
+export const prerender = true;
+
+// Category labels mapping
+const categoryLabels: Record<string, string> = {
+  featured: "Featured",
+  "open-source": "Open Source",
+  "client-work": "Client Work",
+  "side-project": "Side Project",
+};
+---
+
+<style>
+  .badge {
+    @apply text-xs px-2 py-1 bg-secondary-bg text-secondary-text rounded;
+  }
+  .gallery-grid {
+    @apply grid grid-cols-1 sm:grid-cols-2 gap-4;
+  }
+</style>
+
+<Layout
+  title={`Pak Maneth | ${project.data.title}`}
+  desc={project.data.description}
+>
+  <div class="mb-6">
+    <a
+      href="javascript:history.back()"
+      class="inline-flex items-center gap-2 text-sm"
+    >
+      <ArrowLeftIcon size={16} />
+      Back to Projects
+    </a>
+  </div>
+
+  <Grid className="auto-rows-auto">
+    <!-- Project Header -->
+    <GridItem className="p-6 flex-col">
+      <div class="placeholder-img h-64 mb-4">
+        <span>Project Preview Placeholder</span>
+      </div>
+
+      <div class="flex items-center gap-2 mb-2">
+        <h1 class="text-2xl font-serif font-semibold">{project.data.title}</h1>
+        <span class="badge">{categoryLabels[project.data.category]}</span>
+      </div>
+      <p class="text-muted-text text-sm">{project.data.year}</p>
+
+      <div class="flex gap-3 mt-4">
+        <a
+          href={project.data.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn-primary text-sm no-underline"
+        >
+          <ExternalLinkIcon size={16} customClasses="mr-2" />
+          View Live
+        </a>
+        {
+          project.data.githubUrl && (
+            <a
+              href={project.data.githubUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn-secondary text-sm no-underline"
+            >
+              <GithubIcon size={16} customClasses="mr-2" />
+              Source Code
+            </a>
+          )
+        }
+      </div>
+    </GridItem>
+
+    <!-- Content -->
+    <GridItem className="p-6 flex-col">
+      <div class="prose prose-sm max-w-none">
+        <Content />
+      </div>
+    </GridItem>
+
+    <!-- Tech Stack -->
+    <GridItem className="p-6 flex-col">
+      <h2 class="text-lg font-semibold mb-3 font-serif">Tech Stack</h2>
+      <div class="flex flex-wrap gap-2">
+        {project.data.tags.map((tag) => <span class="badge">{tag}</span>)}
+      </div>
+    </GridItem>
+
+    <!-- Gallery -->
+    {
+      project.data.gallery.length > 0 && (
+        <GridItem className="p-6 flex-col">
+          <h2 class="text-lg font-semibold mb-3 font-serif">Gallery</h2>
+          <div class="gallery-grid">
+            {project.data.gallery.map((_, index) => (
+              <div class="placeholder-img">
+                <span>Screenshot {index + 1} Placeholder</span>
+              </div>
+            ))}
+          </div>
+        </GridItem>
+      )
+    }
+  </Grid>
+</Layout>
