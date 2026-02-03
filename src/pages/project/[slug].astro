@@ -23,7 +23,7 @@ const categoryLabels: Record<string, string> = {
   featured: "Featured",
   "open-source": "Open Source",
   "client-work": "Client Work",
-  "side-project": "Side Project"
+  "side-project": "Side Project",
 };
 ---
 
@@ -41,7 +41,10 @@ const categoryLabels: Record<string, string> = {
   desc={project.data.description}
 >
   <div class="mb-6">
-    <a href="/project" class="inline-flex items-center gap-2 text-sm">
+    <a
+      href="javascript:history.back()"
+      class="inline-flex items-center gap-2 text-sm"
+    >
       <ArrowLeftIcon size={16} />
       Back to Projects
     </a>
@@ -64,6 +67,7 @@ const categoryLabels: Record<string, string> = {
         <a
           href={project.data.url}
           target="_blank"
+          rel="noopener noreferrer"
           class="btn-primary text-sm no-underline"
         >
           <ExternalLinkIcon size={16} customClasses="mr-2" />
@@ -74,6 +78,7 @@ const categoryLabels: Record<string, string> = {
             <a
               href={project.data.githubUrl}
               target="_blank"
+              rel="noopener noreferrer"
               class="btn-secondary text-sm no-underline"
             >
               <GithubIcon size={16} customClasses="mr-2" />

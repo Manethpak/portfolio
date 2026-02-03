@@ -88,6 +88,7 @@ const sortedTalks = talks.sort((a, b) => a.data.order - b.data.order);
                   <a
                     href={exp.data.companyUrl}
                     target="_blank"
+                    rel="noopener noreferrer"
                     class="underline"
                   >
                     {exp.data.company}
@@ -134,7 +135,11 @@ const sortedTalks = talks.sort((a, b) => a.data.order - b.data.order);
         <div class="timeline-item">
           <h3>Bachelor of Engineering in Software Engineering</h3>
           <h4>
-            <a href="https://www.kit.edu.kh/" target="_blank">
+            <a
+              href="https://www.kit.edu.kh/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               Kirirom Institute of Technology
             </a>
           </h4>
@@ -183,7 +188,7 @@ const sortedTalks = talks.sort((a, b) => a.data.order - b.data.order);
             sortedCerts.map(({ data: { name, url, issuedBy, issuedAt } }) => (
               <div>
                 <h3 class="text-base">
-                  <a href={url} target="_blank">
+                  <a href={url} target="_blank" rel="noopener noreferrer">
                     {name}
                   </a>
                 </h3>
@@ -250,6 +255,7 @@ const sortedTalks = talks.sort((a, b) => a.data.order - b.data.order);
                         <a
                           href={slides}
                           target="_blank"
+                          rel="noopener noreferrer"
                           class="text-blue-600 hover:text-blue-800 text-sm"
                         >
                           View Slides →
@@ -259,6 +265,7 @@ const sortedTalks = talks.sort((a, b) => a.data.order - b.data.order);
                         <a
                           href={video}
                           target="_blank"
+                          rel="noopener noreferrer"
                           class="text-blue-600 hover:text-blue-800 text-sm"
                         >
                           Watch Video →
