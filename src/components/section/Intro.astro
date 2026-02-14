@@ -2,36 +2,33 @@
 import { Image } from "astro:assets";
 import GridItem from "../bento/Item.astro";
 import ProfileImg from "/src/assets/profile.jpg";
-import { GithubIcon, LinkedinIcon } from "astro-feather";
 import ThemeToggle from "../util/ThemeToggle.astro";
 
 const { colSpan } = Astro.props;
 
-const socials = [
-  {
-    href: "https://www.linkedin.com/in/maneth-pak",
-    icon: LinkedinIcon,
-  },
-  {
-    href: "https://github.com/manethpak",
-    icon: GithubIcon,
-  },
-];
 ---
 
 <GridItem className="justify-between gap-6 flex-col" colSpan={colSpan}>
   <div class="flex flex-col gap-6 justify-between">
     <div>
-      <h1 class="text-2xl font-normal mb-3 font-serif">Hey this is, Maneth</h1>
+      <h1>Hey! Maneth here</h1>
       <div class="flex flex-col sm:flex-row">
         <div class="space-y-2">
+          <h2>About me</h2>
           <p>
-            I build software that solves real problems. Currently focused on
-            creating products that improve how people work and live.
+            A Software Engineer graduate from <a
+              href="https://kit.edu.kh"
+              rel="noopener noreferrer"
+              target="_blank"
+              class="hover:underline">KIT,</a
+            >
+            Cambodia. With over 4 years of industry experience, I've held diverse
+            roles across various company stages, from agile startups to large-scale
+            enterprises.
           </p>
           <p>
-            When I'm not coding, I'm usually tinkering with new tech, working on
-            side projects, or exploring different cultures and cuisines.
+            When not coding, I enjoy strategy games, music, and exploring new
+            technologies.
           </p>
         </div>
         <ThemeToggle />
@@ -39,19 +36,7 @@ const socials = [
     </div>
 
     <div class="flex gap-6 mt-2 items-center">
-      {
-        socials.map(({ href, icon: Icon }) => (
-          <a
-            href={href}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="text-secondary-text hover:text-primary-text transition-colors"
-          >
-            <Icon size={24} />
-          </a>
-        ))
-      }
-      <a href="mailto:manethpak.dev@gmail.com"> manethpak.dev@gmail.com </a>
+      <a href="#quick-contact">Let’s connect →</a>
     </div>
   </div>
 </GridItem>

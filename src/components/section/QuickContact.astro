@@ -1,0 +1,43 @@
+---
+import { MailIcon, GithubIcon, LinkedinIcon } from "astro-feather";
+import GridItem from "../bento/Item.astro";
+
+const {
+  email = "manethpak.dev@gmail.com",
+  linkedin = "https://www.linkedin.com/in/maneth-pak/",
+  github = "https://github.com/manethpak",
+} = Astro.props;
+---
+
+<GridItem className="p-4">
+  <div class="flex flex-col gap-3" id="quick-contact">
+    <div class="flex items-center justify-between">
+      <h2 class="text-xl font-bold">Let’s connect</h2>
+    </div>
+
+    <div class="flex flex-col items-start justify-normal gap-2">
+      <a
+        href={linkedin}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="flex items-center gap-2 text-base"
+      >
+        <LinkedinIcon size={16} />
+        <span>LinkedIn</span>
+      </a>
+      <a
+        href={github}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="flex items-center gap-2 text-base"
+      >
+        <GithubIcon size={16} />
+        <span>GitHub</span>
+      </a>
+      <a href={`mailto:${email}`} class="flex items-center gap-2 text-base">
+        <MailIcon size={16} />
+        <span>{email}</span>
+      </a>
+    </div>
+  </div>
+</GridItem>

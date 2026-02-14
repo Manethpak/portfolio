@@ -2,7 +2,12 @@
 import Layout from "@/layouts/Layout.astro";
 import Grid from "@/components/bento/Grid.astro";
 import GridItem from "@/components/bento/Item.astro";
-import { IntroSection, AboutRoleSection } from "@/components/section";
+import {
+  IntroSection,
+  AboutRoleSection,
+  WorkingHoursSection,
+  QuickContactSection,
+} from "@/components/section";
 import { ArrowRightIcon } from "astro-feather";
 
 const links = [
@@ -25,6 +30,9 @@ export const prerender = true;
   <Grid className="grid-cols-1 md:grid-cols-2 gap-y-6">
     <IntroSection colSpan="md:col-span-2" />
     <AboutRoleSection colSpan="md:col-span-2" />
+
+    <WorkingHoursSection />
+    <QuickContactSection />
 
     {
       links.map((link) => (

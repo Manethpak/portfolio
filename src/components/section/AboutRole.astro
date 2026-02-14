@@ -6,16 +6,16 @@ const { colSpan } = Astro.props;
 
 <style>
   .role-title {
-    @apply text-base font-normal;
+    @apply text-lg font-normal;
   }
   .role-company {
-    @apply text-sm text-tertiary-text font-normal font-sans;
+    @apply text-base text-tertiary-text font-normal font-sans;
   }
   .role-date {
-    @apply text-xs text-muted-text;
+    @apply text-sm text-muted-text;
   }
   .role-description {
-    @apply text-sm mt-2 text-secondary-text;
+    @apply text-base mt-1 text-secondary-text;
   }
 </style>
 
@@ -23,9 +23,7 @@ const { colSpan } = Astro.props;
   <div>
     <h2 class="mb-3">Current Role</h2>
     <div>
-      <div class="role-title">
-        Senior Full-Stack Developer, Innovation & R&D
-      </div>
+      <div class="role-title">Senior Full-Stack Developer</div>
       <div class="role-company">
         <a
           href="https://wingbank.com.kh"
@@ -38,22 +36,13 @@ const { colSpan } = Astro.props;
       </div>
       <div class="role-date">Sep 2025 - Present</div>
       <p class="role-description">
-        Working on research, prototyping, and production deployment of AI-driven
-        systems within a regulated banking environment. Leading R&D initiatives
-        involving LLM integration and automation workflows.
+        Developer working within an Innovation team, researching and building
+        AI-integrated systems and platforms that meet the security, compliance,
+        and reliability requirements of regulated financial institutions.
       </p>
-    </div>
-  </div>
-
-  <div class="mt-4 pt-4 border-t border-primary-border">
-    <p class="text-sm text-secondary-text">
-      Software Engineering graduate with 4+ years of full-stack development
-      experience, including prior CTO and Lead Engineer roles. Specialized in
-      AI-powered platforms, system architecture, and technical leadership. When
-      not coding, I enjoy strategy games, music, and exploring new technologies.
-    </p>
-    <div class="mt-3">
-      <a href="/experience" class="text-sm">View full work history →</a>
+      <div class="mt-3">
+        <a href="/experience" class="text-sm">View full work history →</a>
+      </div>
     </div>
   </div>
 </GridItem>

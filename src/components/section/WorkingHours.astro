@@ -1,0 +1,128 @@
+---
+import { BriefcaseIcon, ClockIcon, MapPinIcon } from "astro-feather";
+import GridItem from "../bento/Item.astro";
+
+const {
+  location = "Phnom Penh, Cambodia",
+  timezone = "UTC+7",
+  hours = "Weekdays 09:00–18:00",
+  note = "Evenings 18:00–22:00 · Weekends busy",
+} = Astro.props;
+---
+
+<script>
+  let intervalId: null | NodeJS.Timeout = null;
+
+  const STATUS_CLASSES = {
+    available: "bg-[rgb(var(--color-accent-primary))]",
+    busy: "bg-[rgb(var(--color-text-tertiary))]",
+    unavailable: "bg-[rgb(var(--color-text-muted))]",
+  } as const;
+
+  function getLocalTime() {
+    return new Date(Date.now() + 7 * 60 * 60 * 1000);
+  }
+
+  function formatTime(date: Date) {
+    const hours24 = date.getUTCHours();
+    const minutes = String(date.getUTCMinutes()).padStart(2, "0");
+    const suffix = hours24 >= 12 ? "PM" : "AM";
+    const hours12 = hours24 % 12 || 12;
+    return `${hours12}:${minutes} ${suffix}`;
+  }
+
+  function resolveStatus(date: Date) {
+    const day = date.getUTCDay();
+    const hour = date.getUTCHours();
+    const isWeekend = day === 0 || day === 6;
+
+    if (isWeekend) {
+      return hour < 22 ? "busy" : "unavailable";
+    }
+
+    if (hour >= 9 && hour < 18) return "available";
+    if (hour >= 18 && hour < 22) return "busy";
+    return "unavailable";
+  }
+
+  function updateWorkingHours() {
+    const timeElement = document.getElementById("working-hours-time");
+    const statusElement = document.getElementById("working-hours-status");
+    const statusDot = document.getElementById("working-hours-dot");
+
+    if (!timeElement || !statusElement || !statusDot) return;
+
+    const localTime = getLocalTime();
+    const status = resolveStatus(localTime);
+
+    timeElement.textContent = formatTime(localTime);
+    statusElement.textContent =
+      status === "available"
+        ? "Available"
+        : status === "busy"
+          ? "Busy"
+          : "Unavailable";
+
+    statusDot.classList.remove(
+      STATUS_CLASSES.available,
+      STATUS_CLASSES.busy,
+      STATUS_CLASSES.unavailable,
+    );
+    statusDot.classList.add(STATUS_CLASSES[status]);
+  }
+
+  function startInterval() {
+    updateWorkingHours();
+    intervalId = setInterval(updateWorkingHours, 60000);
+  }
+
+  function stopInterval() {
+    if (intervalId) clearInterval(intervalId);
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const root = document.getElementById("working-hours-card");
+    if (!root) return;
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          startInterval();
+        } else {
+          stopInterval();
+        }
+      });
+    });
+
+    observer.observe(root);
+  });
+</script>
+
+<GridItem className="p-4">
+  <div class="flex flex-col gap-2" id="working-hours-card">
+    <h2 class="text-xl font-bold">Working hours</h2>
+
+    <div class="flex items-center gap-1 text-sm">
+      <MapPinIcon size={16} />
+      <span>{location}</span>
+      <span class="text-muted-text">({timezone})</span>
+    </div>
+
+    <div class="flex items-center gap-1 text-sm">
+      <BriefcaseIcon size={16} />
+      <span>{hours}</span>
+    </div>
+
+    <div class="flex items-center gap-1 text-sm">
+      <ClockIcon size={16} />
+      <span>Current time</span>
+      <time id="working-hours-time" class="tabular-nums"></time>
+    </div>
+
+    <div class="flex items-center gap-2 text-sm">
+      <span id="working-hours-dot" class="inline-flex h-2 w-2 rounded-full"
+      ></span>
+      <span id="working-hours-status">Loading…</span>
+    </div>
+  </div>
+</GridItem>
