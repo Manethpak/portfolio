@@ -5,7 +5,7 @@ import GridItem from "@/components/bento/Item.astro";
 import Header from "@/components/util/Header.astro";
 import Layout from "@/layouts/Layout.astro";
 import { Image } from "astro:assets";
-import { ChevronDownIcon } from "astro-feather";
+import { ChevronRightIcon } from "astro-feather";
 
 const experiences = await getCollection("experiences");
 const sortedExperiences = experiences.sort(
@@ -34,36 +34,16 @@ const sortedTalks = talks.sort((a, b) => a.data.order - b.data.order);
     content: "";
     @apply absolute left-[-5px] top-1 w-2 h-2 rounded-full bg-primary-accent;
   }
-  .accordion-btn {
-    @apply flex items-center gap-2 mt-2 text-sm text-tertiary-text hover:text-primary-text transition-colors cursor-pointer;
+  .accordion-summary {
+    @apply flex items-center gap-2 mt-2 text-sm text-tertiary-text hover:text-primary-text transition-colors cursor-pointer list-none w-fit;
   }
-  .accordion-content {
-    @apply hidden mt-3 pl-0;
+  .accordion-summary::-webkit-details-marker {
+    display: none;
   }
-  .accordion-content.open {
-    @apply block;
-  }
-  .accordion-icon {
-    @apply transition-transform duration-200;
-  }
-  .accordion-icon.open {
-    @apply rotate-180;
+  .accordion-summary::marker {
+    content: "";
   }
 </style>
-
-<script>
-  document.querySelectorAll(".accordion-btn").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const content = btn.nextElementSibling;
-      const icon = btn.querySelector(".accordion-icon");
-
-      if (content?.classList.contains("accordion-content")) {
-        content.classList.toggle("open");
-        icon?.classList.toggle("open");
-      }
-    });
-  });
-</script>
 
 <Layout
   title="Pak Maneth | Experience & Achievements"
@@ -81,7 +61,7 @@ const sortedTalks = talks.sort((a, b) => a.data.order - b.data.order);
         <h2 class="text-xl font-semibold mb-4 font-serif">Work Experience</h2>
         {
           sortedExperiences.map((exp) => (
-            <div class="timeline-item">
+            <article class="timeline-item">
               <h3>{exp.data.role}</h3>
               <h4>
                 {exp.data.companyUrl ? (
@@ -106,25 +86,30 @@ const sortedTalks = talks.sort((a, b) => a.data.order - b.data.order);
                 <p>{exp.data.summary}</p>
               </div>
 
-              <button class="accordion-btn" type="button">
-                <ChevronDownIcon customClasses="accordion-icon" size={16} />
-                <span>View responsibilities</span>
-              </button>
+              <details class="group accordion-details mt-2">
+                <summary class="accordion-summary border-b border-dashed border-tertiary-text/60 h-fit">
+                  <ChevronRightIcon
+                    customClasses="accordion-icon group-open:rotate-90 transition-transform duration-200"
+                    size={16}
+                  />
 
-              <div class="accordion-content">
-                <ul class="list-disc list-inside space-y-2 text-sm text-secondary-text">
-                  {exp.data.responsibilities.map((resp) => (
-                    <li>{resp}</li>
-                  ))}
-                </ul>
-              </div>
+                  <span>View responsibilities</span>
+                </summary>
+                <div class="mt-3">
+                  <ul class="list-disc list-inside space-y-2 text-sm text-secondary-text">
+                    {exp.data.responsibilities.map((resp) => (
+                      <li>{resp}</li>
+                    ))}
+                  </ul>
+                </div>
+              </details>
 
               <div class="mt-2">
                 {exp.data.technologies.map((tech) => (
                   <span class="tech-tag">{tech}</span>
                 ))}
               </div>
-            </div>
+            </article>
           ))
         }
       </section>
