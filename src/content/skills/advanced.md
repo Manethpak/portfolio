@@ -3,10 +3,10 @@ proficiency: "advanced"
 order: 2
 items:
   - "Astro"
+  - "Python"
+  - "Hono"
+  - "FastAPI"
   - "Vue.js"
-  - "Tailwind CSS"
-  - "NestJS"
-  - "Prisma"
   - "Docker"
   - "AWS"
 ---

@@ -23,7 +23,7 @@ import { Image } from "astro:assets";
     priority
     class="hidden dark:block w-20 h-20 sm:w-[120px] sm:h-fit"
   />
-  <p class="text-[10px] w-fit text-center">click me to toggle theme!</p>
+  <p class="text-[10px] w-fit text-end">click me!</p>
 </button>
 
 <style>
@@ -49,7 +49,7 @@ import { Image } from "astro:assets";
   const initTheme = () => {
     const savedTheme = localStorage.getItem("theme");
     const prefersDark = window.matchMedia(
-      "(prefers-color-scheme: dark)"
+      "(prefers-color-scheme: dark)",
     ).matches;
     const isDark = savedTheme ? savedTheme === "dark" : prefersDark;
 

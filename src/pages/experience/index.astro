@@ -5,7 +5,7 @@ import GridItem from "@/components/bento/Item.astro";
 import Header from "@/components/util/Header.astro";
 import Layout from "@/layouts/Layout.astro";
 import { Image } from "astro:assets";
-import { ChevronRightIcon } from "astro-feather";
+import { ChevronRightIcon, ChevronUpIcon } from "astro-feather";
 
 const experiences = await getCollection("experiences");
 const sortedExperiences = experiences.sort(
@@ -55,8 +55,21 @@ const sortedTalks = talks.sort((a, b) => a.data.order - b.data.order);
       subtitle="My work experience, technical skills, certifications, and notable achievements."
     />
 
+    <GridItem className="p-6 flex-col" id="contents">
+      <section>
+        <h2 class="text-xl font-semibold mb-4 font-serif">Contents</h2>
+        <div class="flex flex-col gap-2">
+          <a href="#work-experience" class="text-base"># Work Experience</a>
+          <a href="#technical-skills" class="text-base"># Technical Skills</a>
+          <a href="#certifications" class="text-base"># Certifications</a>
+          <a href="#achievements" class="text-base"># Achievements</a>
+          <a href="#talks" class="text-base"># Talks</a>
+        </div>
+      </section>
+    </GridItem>
+
     <!-- Work Experience -->
-    <GridItem className="p-6 flex-col">
+    <GridItem className="p-6 flex-col" id="work-experience">
       <section>
         <h2 class="text-xl font-semibold mb-4 font-serif">Work Experience</h2>
         {
@@ -115,7 +128,7 @@ const sortedTalks = talks.sort((a, b) => a.data.order - b.data.order);
       </section>
 
       <!-- Education -->
-      <section class="mt-8">
+      <section class="mt-8" id="education">
         <h2 class="text-xl font-semibold mb-4 font-serif">Education</h2>
         <div class="timeline-item">
           <h3>Bachelor of Engineering in Software Engineering</h3>
@@ -134,7 +147,7 @@ const sortedTalks = talks.sort((a, b) => a.data.order - b.data.order);
     </GridItem>
 
     <!-- Technical Skills -->
-    <GridItem className="p-6 flex-col">
+    <GridItem className="p-6 flex-col" id="technical-skills">
       <section>
         <h2 class="text-xl font-semibold mb-4 font-serif">Technical Skills</h2>
         <div class="space-y-6">
@@ -165,7 +178,7 @@ const sortedTalks = talks.sort((a, b) => a.data.order - b.data.order);
     </GridItem>
 
     <!-- Certifications -->
-    <GridItem className="p-6 flex-col">
+    <GridItem className="p-6 flex-col" id="certifications">
       <section>
         <h2 class="text-xl font-semibold mb-4 font-serif">Certifications</h2>
         <div class="space-y-3">
@@ -187,7 +200,7 @@ const sortedTalks = talks.sort((a, b) => a.data.order - b.data.order);
     </GridItem>
 
     <!-- Achievements -->
-    <GridItem className="p-6 flex-col">
+    <GridItem className="p-6 flex-col" id="achievements">
       <section>
         <h2 class="text-xl font-semibold mb-4 font-serif">Achievements</h2>
         <div class="space-y-3">
@@ -207,7 +220,7 @@ const sortedTalks = talks.sort((a, b) => a.data.order - b.data.order);
     </GridItem>
 
     <!-- Talks -->
-    <GridItem className="p-6 flex-col">
+    <GridItem className="p-6 flex-col" id="talks">
       <section>
         <h2 class="text-xl font-semibold mb-4 font-serif">Talks & Sharing</h2>
         {
@@ -273,5 +286,14 @@ const sortedTalks = talks.sort((a, b) => a.data.order - b.data.order);
         }
       </section>
     </GridItem>
+
+    <div class="flex justify-between">
+      <div>
+        <a href="/">← Back home</a>
+      </div>
+      <div>
+        <a href="#" class="flex">To top ^</a>
+      </div>
+    </div>
   </Grid>
 </Layout>

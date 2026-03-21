@@ -2,8 +2,8 @@
 proficiency: "familiar"
 order: 3
 items:
-  - "Python"
-  - "Hono"
+  - "Google Cloud Platform"
+  - "AWS"
   - "Vercel"
   - "CI/CD"
   - "Figma"
