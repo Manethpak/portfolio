@@ -1,20 +1,14 @@
 import { defineConfig, passthroughImageService } from "astro/config";
 
 import tailwind from "@astrojs/tailwind";
-import vercel from "@astrojs/vercel";
+
+const site = process.env.SITE_URL ?? process.env.PUBLIC_URL;
 
 // https://astro.build/config
 export default defineConfig({
+  site,
   integrations: [tailwind()],
-  output: "server",
-  adapter: vercel({
-    webAnalytics: {
-      enabled: true,
-    },
-    isr: {
-      expiration: 600,
-    },
-  }),
+  output: "static",
   image: {
     service: passthroughImageService(),
   },

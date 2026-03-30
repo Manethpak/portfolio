@@ -5,6 +5,7 @@ import GridItem from "@/components/bento/Item.astro";
 import Header from "@/components/util/Header.astro";
 import Layout from "@/layouts/Layout.astro";
 import { ArrowRightIcon } from "astro-feather";
+import { PERSON_NAME, buildAbsoluteUrl } from "@/helper/seo";
 
 const projects = await getCollection("projects");
 const sortedProjects = projects.sort((a, b) => b.data.year - a.data.year);
@@ -14,10 +15,45 @@ const categoryLabels: Record<string, string> = {
   featured: "Featured",
   "open-source": "Open Source",
   "client-work": "Client Work",
-  "side-project": "Side Project"
+  "side-project": "Side Project",
 };
 
 const categories = [...new Set(projects.map((p) => p.data.category))];
+const pageTitle = "Pak Maneth | Projects";
+const pageDescription =
+  "Project case studies and product work by Maneth Pak across web, AI, blockchain, and developer tooling.";
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  name: pageTitle,
+  description: pageDescription,
+  url: buildAbsoluteUrl("/project", Astro.site, import.meta.env.PUBLIC_URL, Astro.url),
+  mainEntity: {
+    "@type": "ItemList",
+    itemListElement: sortedProjects.map((project, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      url: buildAbsoluteUrl(
+        `/project/${project.slug}`,
+        Astro.site,
+        import.meta.env.PUBLIC_URL,
+        Astro.url,
+      ),
+      item: {
+        "@type": "SoftwareSourceCode",
+        name: project.data.title,
+        description: project.data.description,
+        author: {
+          "@type": "Person",
+          name: PERSON_NAME,
+        },
+        codeRepository: project.data.githubUrl || undefined,
+        url: project.data.url,
+        keywords: project.data.tags.join(", "),
+      },
+    })),
+  },
+};
 ---
 
 <script is:inline>
@@ -26,7 +62,6 @@ const categories = [...new Set(projects.map((p) => p.data.category))];
     const filterButtons = document.querySelectorAll(".filter-btn");
     const sortToggle = document.getElementById("sort-toggle");
     const sortText = document.getElementById("sort-text");
-    const sortIcon = document.getElementById("sort-icon");
     const projectsContainer = document.getElementById("projects-container");
     
     if (!projectsContainer || projectItems.length === 0) return;
@@ -168,7 +203,7 @@ const categories = [...new Set(projects.map((p) => p.data.category))];
   }
 </style>
 
-<Layout title="Pak Maneth | Projects" desc="A collection of things I've built.">
+<Layout title={pageTitle} desc={pageDescription} structuredData={structuredData}>
   <Grid className="auto-rows-auto">
     <Header heading="Projects" subtitle="A collection of things I've built." />
   </Grid>

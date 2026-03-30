@@ -9,6 +9,13 @@ import {
   QuickContactSection,
 } from "@/components/section";
 import { ArrowRightIcon } from "astro-feather";
+import {
+  CONTACT_EMAIL,
+  DEFAULT_DESCRIPTION,
+  PERSON_NAME,
+  SAME_AS,
+  buildAbsoluteUrl,
+} from "@/helper/seo";
 
 const links = [
   {
@@ -24,9 +31,29 @@ const links = [
 ];
 
 export const prerender = true;
+
+const structuredData = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: PERSON_NAME,
+    url: buildAbsoluteUrl("/", Astro.site, import.meta.env.PUBLIC_URL, Astro.url),
+    email: `mailto:${CONTACT_EMAIL}`,
+    jobTitle: "Software Engineer",
+    description: DEFAULT_DESCRIPTION,
+    sameAs: SAME_AS,
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: PERSON_NAME,
+    url: buildAbsoluteUrl("/", Astro.site, import.meta.env.PUBLIC_URL, Astro.url),
+    description: DEFAULT_DESCRIPTION,
+  },
+];
 ---
 
-<Layout>
+<Layout desc={DEFAULT_DESCRIPTION} structuredData={structuredData}>
   <Grid className="grid-cols-1 md:grid-cols-2 gap-y-6">
     <IntroSection colSpan="md:col-span-2" />
     <AboutRoleSection colSpan="md:col-span-2" />

@@ -5,7 +5,8 @@ import GridItem from "@/components/bento/Item.astro";
 import Header from "@/components/util/Header.astro";
 import Layout from "@/layouts/Layout.astro";
 import { Image } from "astro:assets";
-import { ChevronRightIcon, ChevronUpIcon } from "astro-feather";
+import { ChevronRightIcon } from "astro-feather";
+import { PERSON_NAME, buildAbsoluteUrl, normalizeDate } from "@/helper/seo";
 
 const experiences = await getCollection("experiences");
 const sortedExperiences = experiences.sort(
@@ -24,6 +25,61 @@ const sortedAchievements = achievements.sort(
 
 const talks = await getCollection("talks");
 const sortedTalks = talks.sort((a, b) => a.data.order - b.data.order);
+
+const pageTitle = "Pak Maneth | Experience & Achievements";
+const pageDescription =
+  "Professional experience, leadership roles, certifications, achievements, and talks from Maneth Pak.";
+const experiencePageUrl = buildAbsoluteUrl(
+  "/experience",
+  Astro.site,
+  import.meta.env.PUBLIC_URL,
+  Astro.url,
+);
+const structuredData = [
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: pageTitle,
+    description: pageDescription,
+    url: experiencePageUrl,
+    mainEntity: {
+      "@type": "ItemList",
+      itemListElement: sortedExperiences.map((exp, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        item: {
+          "@type": "Role",
+          roleName: exp.data.role,
+          description: exp.data.summary,
+          startDate: normalizeDate(exp.data.startDate),
+          endDate: normalizeDate(exp.data.endDate),
+          worksFor: {
+            "@type": "Organization",
+            name: exp.data.company,
+            url: exp.data.companyUrl,
+          },
+          skills: exp.data.technologies.join(", "),
+        },
+      })),
+    },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: PERSON_NAME,
+    url: buildAbsoluteUrl("/", Astro.site, import.meta.env.PUBLIC_URL, Astro.url),
+    hasOccupation: sortedExperiences.map((exp) => ({
+      "@type": "Occupation",
+      name: exp.data.role,
+      description: exp.data.summary,
+      skills: exp.data.technologies.join(", "),
+      occupationLocation: {
+        "@type": "City",
+        name: exp.data.location,
+      },
+    })),
+  },
+];
 ---
 
 <style>
@@ -46,8 +102,9 @@ const sortedTalks = talks.sort((a, b) => a.data.order - b.data.order);
 </style>
 
 <Layout
-  title="Pak Maneth | Experience & Achievements"
-  desc="A detailed overview of my professional journey, certifications, and achievements."
+  title={pageTitle}
+  desc={pageDescription}
+  structuredData={structuredData}
 >
   <Grid className="auto-rows-auto">
     <Header
@@ -59,10 +116,11 @@ const sortedTalks = talks.sort((a, b) => a.data.order - b.data.order);
       <section>
         <h2 class="text-xl font-semibold mb-4 font-serif">Contents</h2>
         <div class="flex flex-col gap-2">
-          <a href="#work-experience" class="text-base"># Work Experience</a>
-          <a href="#technical-skills" class="text-base"># Technical Skills</a>
-          <a href="#certifications" class="text-base"># Certifications</a>
-          <a href="#achievements" class="text-base"># Achievements</a>
+        <a href="#work-experience" class="text-base"># Work Experience</a>
+        <a href="#education" class="text-base"># Education</a>
+        <a href="#technical-skills" class="text-base"># Technical Skills</a>
+        <a href="#certifications" class="text-base"># Certifications</a>
+        <a href="#achievements" class="text-base"># Achievements</a>
           <a href="#talks" class="text-base"># Talks</a>
         </div>
       </section>
@@ -292,8 +350,8 @@ const sortedTalks = talks.sort((a, b) => a.data.order - b.data.order);
         <a href="/">← Back home</a>
       </div>
       <div>
-        <a href="#" class="flex">To top ^</a>
-      </div>
-    </div>
-  </Grid>
+         <a href="#contents" class="flex">To top ^</a>
+       </div>
+     </div>
+   </Grid>
 </Layout>

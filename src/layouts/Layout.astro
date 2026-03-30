@@ -2,21 +2,59 @@
 import type Props from "./props.type";
 import { CreditSection } from "../components/section";
 import SpeedInsights from "@vercel/speed-insights/astro";
-import ClientRouter from "astro/components/ClientRouter.astro";
+import {
+  DEFAULT_DESCRIPTION,
+  DEFAULT_TITLE,
+  buildAbsoluteUrl,
+} from "@/helper/seo";
 import "./global.css";
 
 const {
-  title = "Maneth Pak | Software Engineer",
-  desc = "Software engineer by day, eternal explorer by nature.",
+  title = DEFAULT_TITLE,
+  desc = DEFAULT_DESCRIPTION,
   image = "/og-image.png",
+  canonical,
+  robots = "index, follow",
+  ogType = "website",
   meta,
+  structuredData,
 } = Astro.props;
 
-const url = import.meta.env.PUBLIC_URL || Astro.url;
+const pageUrl =
+  canonical ??
+  buildAbsoluteUrl(
+    `${Astro.url.pathname}${Astro.url.search}`,
+    Astro.site,
+    import.meta.env.PUBLIC_URL,
+    Astro.url,
+  ) ??
+  Astro.url.toString();
 
 const ogImageUrl = image.startsWith("http")
   ? image
-  : new URL(image, url).toString();
+  : new URL(image, pageUrl).toString();
+
+const sitemapUrl = buildAbsoluteUrl(
+  "/sitemap.xml",
+  Astro.site,
+  import.meta.env.PUBLIC_URL,
+  Astro.url,
+);
+const knowledgeUrl = buildAbsoluteUrl(
+  "/knowledge.json",
+  Astro.site,
+  import.meta.env.PUBLIC_URL,
+  Astro.url,
+);
+const llmsUrl = buildAbsoluteUrl(
+  "/llms.txt",
+  Astro.site,
+  import.meta.env.PUBLIC_URL,
+  Astro.url,
+);
+const structuredDataJson = structuredData
+  ? JSON.stringify(structuredData)
+  : undefined;
 ---
 
 <html lang="en" transition:name="root" transition:animate="none">
@@ -37,10 +75,32 @@ const ogImageUrl = image.startsWith("http")
       media="(prefers-color-scheme: dark)"
     />
     <meta name="generator" content={Astro.generator} />
+    <link rel="canonical" href={pageUrl} />
+    {sitemapUrl && <link rel="sitemap" href={sitemapUrl} />}
+    {
+      knowledgeUrl && (
+        <link
+          rel="alternate"
+          type="application/json"
+          href={knowledgeUrl}
+          title="Machine-readable portfolio data"
+        />
+      )
+    }
+    {
+      llmsUrl && (
+        <link
+          rel="alternate"
+          type="text/plain"
+          href={llmsUrl}
+          title="LLMs.txt"
+        />
+      )
+    }
 
     <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content={url} />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:url" content={pageUrl} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={desc} />
     <meta property="og:image" content={ogImageUrl} />
@@ -48,7 +108,7 @@ const ogImageUrl = image.startsWith("http")
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content={url} />
+    <meta property="twitter:url" content={pageUrl} />
     <meta property="twitter:title" content={title} />
     <meta property="twitter:description" content={desc} />
     <meta property="twitter:image" content={ogImageUrl} />
@@ -67,9 +127,20 @@ const ogImageUrl = image.startsWith("http")
       content="Maneth Pak, Software Engineer, Khmer, Cambodia"
     />
     <meta name="author" content="Maneth Pak" />
-    <meta name="robots" content="index, follow" />
-    <meta name="googlebot" content="index, follow" />
+    <meta name="robots" content={robots} />
+    <meta name="googlebot" content={robots} />
     <meta name="google" content="notranslate" />
+    <meta name="format-detection" content="telephone=no" />
+
+    {
+      structuredDataJson && (
+        <script
+          is:inline
+          type="application/ld+json"
+          set:html={structuredDataJson}
+        />
+      )
+    }
 
     <!-- Load fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -101,7 +172,6 @@ const ogImageUrl = image.startsWith("http")
   </head>
 
   <body class="bg-primary-bg text-primary-text transition-colors">
-    <ClientRouter />
     <main class="p-4 md:p-8 max-w-3xl mx-auto">
       <slot />
 

@@ -4,6 +4,7 @@ import Layout from "@/layouts/Layout.astro";
 import Grid from "@/components/bento/Grid.astro";
 import GridItem from "@/components/bento/Item.astro";
 import { ArrowLeftIcon, ExternalLinkIcon, GithubIcon } from "astro-feather";
+import { PERSON_NAME, buildAbsoluteUrl } from "@/helper/seo";
 
 export async function getStaticPaths() {
   const projects = await getCollection("projects");
@@ -25,6 +26,35 @@ const categoryLabels: Record<string, string> = {
   "client-work": "Client Work",
   "side-project": "Side Project",
 };
+
+const pageTitle = `Pak Maneth | ${project.data.title}`;
+const projectPageUrl = buildAbsoluteUrl(
+  `/project/${project.slug}`,
+  Astro.site,
+  import.meta.env.PUBLIC_URL,
+  Astro.url,
+);
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareSourceCode",
+  name: project.data.title,
+  description: project.data.description,
+  url: projectPageUrl,
+  author: {
+    "@type": "Person",
+    name: PERSON_NAME,
+  },
+  creator: {
+    "@type": "Person",
+    name: PERSON_NAME,
+  },
+  codeRepository: project.data.githubUrl || undefined,
+  sameAs: project.data.url,
+  programmingLanguage: project.data.tags,
+  keywords: project.data.tags.join(", "),
+  dateCreated: String(project.data.year),
+  abstract: project.data.description,
+};
 ---
 
 <style>
@@ -37,8 +67,10 @@ const categoryLabels: Record<string, string> = {
 </style>
 
 <Layout
-  title={`Pak Maneth | ${project.data.title}`}
+  title={pageTitle}
   desc={project.data.description}
+  ogType="article"
+  structuredData={structuredData}
 >
   <div class="mb-6">
     <a
