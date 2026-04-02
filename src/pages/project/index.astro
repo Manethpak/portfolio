@@ -4,7 +4,7 @@ import Grid from "@/components/bento/Grid.astro";
 import GridItem from "@/components/bento/Item.astro";
 import Header from "@/components/util/Header.astro";
 import Layout from "@/layouts/Layout.astro";
-import { ArrowRightIcon } from "astro-feather";
+import { ArrowRightIcon, ExternalLinkIcon } from "astro-feather";
 import { PERSON_NAME, buildAbsoluteUrl } from "@/helper/seo";
 
 const projects = await getCollection("projects");
@@ -12,16 +12,15 @@ const sortedProjects = projects.sort((a, b) => b.data.year - a.data.year);
 
 // Get unique categories and map to display labels
 const categoryLabels: Record<string, string> = {
-  featured: "Featured",
+  sdk: "SDK & Library",
   "open-source": "Open Source",
-  "client-work": "Client Work",
-  "side-project": "Side Project",
+  "dev-tool": "Dev Tool",
 };
 
 const categories = [...new Set(projects.map((p) => p.data.category))];
 const pageTitle = "Pak Maneth | Projects";
 const pageDescription =
-  "Project case studies and product work by Maneth Pak across web, AI, blockchain, and developer tooling.";
+  "Open-source projects, SDKs, and developer tools by Maneth Pak.";
 const structuredData = {
   "@context": "https://schema.org",
   "@type": "CollectionPage",
@@ -201,12 +200,40 @@ const structuredData = {
   .hidden {
     display: none;
   }
+  .studio-card {
+    @apply border-2 border-primary-border p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 transition-colors;
+  }
+  .studio-card:hover {
+    @apply border-primary-text;
+  }
 </style>
 
 <Layout title={pageTitle} desc={pageDescription} structuredData={structuredData}>
   <Grid className="auto-rows-auto">
-    <Header heading="Projects" subtitle="A collection of things I've built." />
+    <Header heading="Projects" subtitle="Open-source tools, SDKs, and things I've built." />
   </Grid>
+
+  <!-- Zerostack Studio Card -->
+  <div class="mt-8">
+    <a
+      href="https://zerostack.work"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="studio-card block no-underline group"
+    >
+      <div class="flex-1">
+        <p class="text-xs text-muted-text uppercase tracking-wider mb-1">Dev Studio</p>
+        <h3 class="text-lg font-semibold text-primary-text font-serif">Zerostack</h3>
+        <p class="text-secondary-text text-sm mt-1">
+          My development studio -- where I take on product and engineering work with a small team. If you're looking for a partner to build with, check us out.
+        </p>
+      </div>
+      <div class="flex items-center gap-2 text-sm text-secondary-text group-hover:text-primary-text transition-colors shrink-0">
+        <span>zerostack.work</span>
+        <ExternalLinkIcon size={14} />
+      </div>
+    </a>
+  </div>
 
   <div class="mt-8">
     <!-- Filter and Sort Controls -->
@@ -251,13 +278,24 @@ const structuredData = {
             data-category={project.data.category}
             data-year={project.data.year}
           >
-            <GridItem className="h-full flex-col hover:border-primary-border transition-colors overflow-hidden">
-              <!-- Thumbnail Placeholder -->
-              <div class="placeholder-img -mx-4 -mt-4 mb-4">
-                <span>Preview Placeholder</span>
-              </div>
+            <GridItem className="h-full flex-col hover:border-primary-border transition-colors overflow-hidden p-0">
+              <!-- Thumbnail -->
+              {
+                project.data.thumbnail && project.data.thumbnail !== "/placeholder-project.jpg" ? (
+                  <img
+                    src={project.data.thumbnail}
+                    alt={project.data.title}
+                    class="w-full aspect-[1200/620] object-cover border-b-2 border-primary-border"
+                    loading="lazy"
+                  />
+                ) : (
+                  <div class="placeholder-img w-full aspect-[1200/620] flex items-center justify-center border-b-2 border-primary-border">
+                    <span>Preview Placeholder</span>
+                  </div>
+                )
+              }
               
-              <div class="flex-1">
+              <div class="p-4 flex-1">
                 <div class="flex items-center gap-2">
                   <h3 class="text-lg font-semibold text-primary-text">
                     {project.data.title}
@@ -278,7 +316,7 @@ const structuredData = {
                 </div>
               </div>
               
-              <div class="mt-4 pt-4 border-t border-secondary-border flex items-center text-sm text-secondary-text group-hover:text-primary-text transition-colors">
+              <div class="px-4 py-2 border-t border-secondary-border flex items-center justify-end text-sm text-secondary-text group-hover:text-primary-text transition-colors">
                 <span>View Details</span>
                 <ArrowRightIcon size={14} customClasses="ml-2" />
               </div>

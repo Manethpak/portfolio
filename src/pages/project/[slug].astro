@@ -21,10 +21,9 @@ export const prerender = true;
 
 // Category labels mapping
 const categoryLabels: Record<string, string> = {
-  featured: "Featured",
+  sdk: "SDK & Library",
   "open-source": "Open Source",
-  "client-work": "Client Work",
-  "side-project": "Side Project",
+  "dev-tool": "Dev Tool",
 };
 
 const pageTitle = `Pak Maneth | ${project.data.title}`;
@@ -83,11 +82,21 @@ const structuredData = {
   </div>
 
   <Grid className="auto-rows-auto">
-    <!-- Project Header -->
-    <GridItem className="p-6 flex-col">
-      <div class="placeholder-img h-64 mb-4">
-        <span>Project Preview Placeholder</span>
-      </div>
+      <!-- Project Header -->
+      <GridItem className="p-6 flex-col">
+        {
+          project.data.thumbnail && project.data.thumbnail !== "/placeholder-project.jpg" ? (
+            <img
+              src={project.data.thumbnail}
+              alt={project.data.title}
+              class="w-full aspect-[1200/620] object-cover mb-4 border-2 border-primary-border"
+            />
+          ) : (
+            <div class="placeholder-img h-64 mb-4">
+              <span>Project Preview Placeholder</span>
+            </div>
+          )
+        }
 
       <div class="flex items-center gap-2 mb-2">
         <h1 class="text-2xl font-serif font-semibold">{project.data.title}</h1>
