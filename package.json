@@ -5,7 +5,9 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro check && astro build",
+    "build": "pnpm run build:site && pnpm run cv:pdf",
+    "build:site": "astro check && astro build",
+    "cv:pdf": "node scripts/generate-cv-pdf.mjs",
     "preview": "astro preview",
     "astro": "astro"
   },
@@ -24,6 +26,12 @@
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.13",
-    "@types/jsdom": "^21.1.7"
+    "@types/jsdom": "^21.1.7",
+    "playwright-chromium": "^1.59.1"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "playwright-chromium"
+    ]
   }
 }
